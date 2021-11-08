@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'plugins/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static 'plugins/css/style.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'plugins/images/favicon.ico' %}" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <!-- include header bar here ------------------------------->
+            {% include "hod_template/header_template.html" %}
+      </nav>
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+
+        {% include "hod_template/sidebar_template.html" %}
+
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-home"></i>
+                </span>
+                
+                {% block page_title %} 
+                Home
+                {% endblock page_title %}
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span><a href="/admin_home">Home</a> 
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Dashboard
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+
+            {% block content %}
+            {% include 'hod_template/content_template.html'%}
+
+            {% endblock content %}
+          </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            {% include "hod_template/footer_template.html" %}
+          <!-- page-body-wrapper ends -->
+        </div>
+        
+        <!-- main-panel ends -->
+      </div>
+      <!-- partial -->
+      <!-- inclue side bar here ----------------------------------------->
+      
+      
+    </div>
+    <!-- include custom js here ------------------------------------------->
+    {% include "hod_template/custom_template.html" %}
+  </body>
+</html>

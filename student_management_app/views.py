@@ -9,32 +9,43 @@ from student_management_app.EmailBackEnd import EmailBackEnd
 def ShowDemoPage(request):
     return render(request,"demo.html")
 
-def ShowLoginPage(request):
+def loginPage(request):
     return render(request,"login_page.html")
 
 def doLogin(request):
-    if request.method!="POST":
+    if request.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
-        if user!=None:
-            login(request,user)
-            if user.user_type == "1":
-                return HttpResponseRedirect('/admin_home')
-            elif user.user_type == "2":
-                return HttpResponse("Teacher login" + str(user.user_type))
+        user = EmailBackEnd.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
+        if user != None:
+            login(request, user)
+            user_type = user.user_type
+            #return HttpResponse("Email: "+request.POST.get('email')+ " Password: "+request.POST.get('password'))
+            if user_type == '1':
+                return redirect('admin_home')
+                
+            elif user_type == '2':
+                # return HttpResponse("Teacher Login")
+                return redirect('teacher_home')
+                
+            elif user_type == '3':
+                # return HttpResponse("Student Login")
+                return redirect('student_home')
             else:
-                return HttpResponse("Student login" + str(user.user_type))
+                messages.error(request, "Invalid Login!")
+                return redirect('login')
         else:
-            messages.error(request,"Invalid Login Details")
-            return HttpResponseRedirect("/")
+            messages.error(request, "Invalid Login Credentials!")
+            #return HttpResponseRedirect("/")
+            return redirect('login')
 
-def GetUserDetails(request):
+
+def get_user_details(request):
     if request.user!=None:
         return HttpResponse("User :" + request.user.email+" Usertype: "+request.user.user_type)
     else:
         return HttpResponse("Please Login First!")
 
-def LogoutUser(request):
+def logout_user(request):
     logout(request)
     return HttpResponseRedirect("/")

@@ -4,7 +4,8 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item nav-profile">
-      <a href="#" class="nav-link">
+      <a href="{% url 'admin_profile' %}" class="nav-link">
+        {{ user.first_name }} {{ user.last_name }}
         <div class="nav-profile-image">
           <img src="{% static 'plugins/images/faces/face1.jpg' %}" alt="profile">
           <span class="login-status online"></span>
@@ -18,7 +19,8 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/admin_home">
+      {% url 'admin_home' as admin_home %}
+      <a class="nav-link" href="{{ admin_home }}">
         <span class="menu-title">Dashboard</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
@@ -32,10 +34,41 @@
       </a>
       <div class="collapse" id="general-pages">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="manage_teacher"> Manage Teacher </a></li>
-          <li class="nav-item"> <a class="nav-link" href="manage_student"> Manage Student </a></li>
-          <li class="nav-item"> <a class="nav-link" href="manage_course"> Manage Course </a></li>
-          <li class="nav-item"> <a class="nav-link" href="manage_subject"> Manage Subject </a></li>
+          <li class="nav-item">
+            {% url 'manage_teacher' as manage_teacher %}
+            {% url 'edit_teacher' teacher_id=id as edit_teacher %}
+            <a class="nav-link {% if request.path == manage_teacher %} active {% endif %} {% if request.path == edit_teacher %} active {% endif %}" href="{{ manage_teacher }}"> 
+               Manage Teacher 
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_student' as manage_student %}
+            {% url 'edit_student' student_id=id as edit_student %}
+            <a class="nav-link {% if request.path == manage_student %} active {% endif %} {% if request.path == edit_student %} active {% endif %}" href="{{ manage_student }}">
+              Manage Student 
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_course' as manage_course %}
+            {% url 'edit_course' course_id=id as edit_course %}
+            <a class="nav-link {% if request.path == manage_course %} active {% endif %} {% if request.path == edit_course %} active {% endif %}" href=" {{ manage_course }}"> 
+              Manage Course 
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_subject' as manage_subject %}
+            {% url 'edit_subject' subject_id=id as edit_subject %}
+            <a class="nav-link {% if request.path == manage_subject %} active {% endif %} {% if request.path == edit_subject %} active {% endif %}" href=" {{ manage_subject }}">
+              Manage Subject 
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'manage_session' as manage_session %}
+            {% url 'edit_session' session_id=id as edit_session %}
+            <a class="nav-link {% if request.path == manage_session %} active {% endif %} {% if request.path == edit_session %} active {% endif %}" href="{{ manage_session }}">
+                Manage Session 
+            </a>
+          </li>
         </ul>
       </div>
     </li>
@@ -48,43 +81,74 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="/add_teacher">Add Teacher</a></li>
-          <li class="nav-item"> <a class="nav-link" href="/add_student">Add Student</a></li>
-          <li class="nav-item"> <a class="nav-link" href="/add_course">Add Course</a></li>
-          <li class="nav-item"> <a class="nav-link" href="/add_subject">Add Subject</a></li>
+          <li class="nav-item">
+            {% url 'add_teacher' as add_teacher %}
+             <a class="nav-link {% if request.path == add_teacher %} active {% endif %}" href="{{ add_teacher }}">
+               Add Teacher
+              </a>
+            </li>
+          <li class="nav-item"> 
+            {% url 'add_student' as add_student %}
+            <a class="nav-link {% if request.path == add_student %} active {% endif %}" href="{{ add_student }}">
+              Add Student
+            </a>
+          </li>
+          <li class="nav-item"> 
+            {% url 'add_course' as add_course %}
+            <a class="nav-link {% if request.path == add_course %} active {% endif %}" href="{{ add_course }}">
+              Add Course
+            </a>
+          </li>
+          <li class="nav-item">
+            {% url 'add_subject' as add_subject %}
+             <a class="nav-link {% if request.path == add_subject %} active {% endif %}" href="{{ add_subject }}">
+               Add Subject
+              </a>
+            </li>
+            <li class="nav-item">
+              {% url 'add_session' as add_session %}
+               <a class="nav-link {% if request.path == add_session %} active {% endif %}" href="{{ add_session }}">
+                 Add Session
+                </a>
+              </li>
         </ul>
       </div>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      {% url 'admin_view_attendance' as admin_view_attendance %}
+      <a class="nav-link {% if request.path == admin_view_attendance %} active {% endif %}" href="{{ admin_view_attendance }}">
         <span class="menu-title">View Attendance</span>
         <i class="mdi mdi-contacts menu-icon"></i>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      {% url 'teacher_feedback_message' as teacher_feedback_message %}
+      <a class="nav-link {% if request.path == teacher_feedback_message %} active {% endif %}" href="{{ teacher_feedback_message }}">
         <span class="menu-title">Teacher Feedback</span>
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      {% url 'student_feedback_message' as student_feedback_message %}
+      <a class="nav-link {% if request.path == student_feedback_message %} active {% endif %}" href="{{ student_feedback_message }}">
         <span class="menu-title">Student Feedback</span>
         <i class="mdi mdi-chart-bar menu-icon"></i>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      {% url 'teacher_leave_view' as teacher_leave_view %}
+      <a class="nav-link {% if request.path == teacher_leave_view %} active {% endif %}" href="{{ teacher_leave_view }}">
         <span class="menu-title">Teacher Leave</span>
         <i class="mdi mdi-table-large menu-icon"></i>
       </a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      {% url 'student_leave_view' as student_leave_view %}
+      <a class="nav-link {% if request.path == student_leave_view %} active {% endif %}" href="{{ student_leave_view }}">
         <span class="menu-title">Student Leave</span>
         <i class="mdi mdi-table-large menu-icon"></i>
       </a>

@@ -6,6 +6,33 @@ Manage Teacher
 
 
 {% block content %}
+    <a class="btn btn-primary" href="{% url 'add_teacher' %}" role="button">+ Add Teacher</a> <br/>&nbsp;
+
+    {% comment %} Display Messages {% endcomment %}
+        {% if messages %}
+        <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% elif message.tags == "success" %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+
     <div class="card">
         <div class="card-body">
         <div class="search-field d-none d-md-block">
@@ -44,10 +71,13 @@ Manage Teacher
                         <td> {{ teacher.admin.last_name }}</td>
                         <td> {{ teacher.admin.username }}</td>
                         <td> {{ teacher.admin.email }}</td>
-                        <td> {{ teacher.admin.address }}</td>
+                        <td> {{ teacher.address }}</td>
                         <td> {{ teacher.admin.last_login }}</td>
                         <td> {{ teacher.admin.date_joined }}</td>
-                        <td><a href="/edit_teacher/{{ teacher.admin.id }}" class="btn btn-success">Edit</a></td>
+                        <td>
+                            <a href="{% url 'edit_teacher' teacher.admin.id %}" class="btn btn-success">Edit</a> 
+                            <a href="{% url 'delete_teacher' teacher.admin.id %}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

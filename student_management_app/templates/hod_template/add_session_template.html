@@ -1,7 +1,7 @@
 {% extends 'hod_template/base_template.html'%}
 {% load static %}
 {% block page_title %} 
-Add Subject
+Add Session Year
 {% endblock page_title %}
 
 
@@ -9,9 +9,9 @@ Add Subject
 
 <div class="card">
     <div class="card-body">
-      <h4 class="card-title">Form Add Subject</h4>
+      <h4 class="card-title">Form Add Session Year</h4>
       
-      <form class="forms-sample" action="{% url 'add_subject_save' %}" method="post">
+      <form class="forms-sample" action="{% url 'add_session_save' %}" method="post">
         {% csrf_token %}
 
         {% comment %} Display Messages {% endcomment %}
@@ -40,27 +40,15 @@ Add Subject
         {% endif %}
 
         <div class="form-group">
-            <label >Subject Name</label>
-            <input type="text" class="form-control" name="subject" placeholder="Enter Subject">
+            <label >Session Start Year</label>
+            <input type="date" class="form-control" name="session_start_year" >
         </div>
         <div class="form-group">
-            <label >Course</label>
-            <select class="form-control" name="course">
-                {% for course in courses %}
-                    <option value="{{ course.id }}">{{ course.course_name }}</option>
-                {% endfor%}
-            </select>
+            <label >Session End Year</label>
+            <input type="date" class="form-control" name="session_end_year">
         </div>
 
-        <div class="form-group">
-            <label >Teacher</label>
-            <select class="form-control" name="teacher">
-                {% for teacher in teachers %}
-                    <option value="{{ teacher.id }}">{{ teacher.first_name }} {{teacher.last_name}}</option>
-                {% endfor%}
-            </select>
-        </div>
-        <button type="submit" class="btn btn-gradient-primary mr-2 ">Add Subject</button>
+        <button type="submit" class="btn btn-gradient-primary mr-2 ">Add Session Year</button>
         <button class="btn btn-light">Cancel</button>
       </form>
     </div>

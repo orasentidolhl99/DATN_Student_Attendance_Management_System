@@ -1,12 +1,12 @@
 {% extends 'hod_template/base_template.html'%}
 {% load static %}
 {% block page_title %} 
-Manage Course
+Manage Session
 {% endblock page_title %}
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_course' %}" role="button">+ Add Course</a> <br/>&nbsp;
+    <a class="btn btn-primary" href="{% url 'add_session' %}" role="button">+ Add Session</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -35,35 +35,35 @@ Manage Course
 
     <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Manage Course</h4>
-          <p class="card-description"> Course Details <code>.table-striped</code>
-          </p>
-          <table class="table table-striped p-0 card-body">
+            <h4 class="card-title">Manage Session</h4>
+            <p class="card-description"> Session Details <code>.table-striped</code>
+            </p>
+            <table class="table table-striped p-0 card-body">
             <thead>
-              <tr>
+                <tr>
                 <th> ID </th>
-                <th> Course </th>
-                <th>Created At</th>
-                <th>Updated At</th>
+                <th> Session Start Year </th>
+                <th> Session End Year </th>
                 <th> Action </th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
-            {% for course in courses %}
+            {% for session_year in session_years %}
                 <tr>
-                    <td> {{ course.id }}</td>
-                    <td> {{ course.course_name }}</td>
-                    <td>{{ course.created_at }}</td>
-                    <td>{{ course.updated_at }}</td>
+                    <td> {{ session_year.id }}</td>
+                    <td> {{ session_year.session_start_year }}</td>
+                    <td> {{ session_year.session_end_year }}</td>
+                    
                     <td>
-                      <a href="{% url 'edit_course' course.id %}" class="btn btn-success">Edit</a>
-                      <a href="{% url 'delete_course' course.id %}" class="btn btn-success">Delete</a>
+                        <a href="{% url 'edit_session' session_year.id %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'delete_session' session_year.id %}" class="btn btn-success">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
-          </table>
+            </table>
         </div>
-    </div>  
+    </div>
+
 
 {% endblock content %}

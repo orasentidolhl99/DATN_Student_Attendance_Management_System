@@ -1,0 +1,21 @@
+{% extends 'hod_template/base_template.html'%}
+{% load static %}
+{% block page_title %} 
+Edit Student | Username: {{ username }} | #ID : {{ id }}
+{% endblock page_title %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Edit Student</h4>
+      
+      {% comment %} Displaying the Django Form using forms.py EditStudentForm {% endcomment %}
+      {% url 'add_student_save' as action_path %}
+      {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Student" %}
+    </div>
+  </div>
+
+
+{% endblock content %}

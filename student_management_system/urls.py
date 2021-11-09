@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from student_management_system import settings
-from student_management_app import views, HodViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),

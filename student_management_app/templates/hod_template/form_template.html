@@ -1,4 +1,4 @@
-<form class="forms-sample" action="{{ action_path }}" method="post">
+<form class="forms-sample" action="{{ action_path }}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
     {% comment %} Display Messages {% endcomment %}

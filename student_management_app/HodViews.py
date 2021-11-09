@@ -622,7 +622,7 @@ def student_feedback_message_reply(request):
 
 
 def teacher_feedback_message(request):
-    feedbacks = FeedBackTeachers.objects.all()
+    feedbacks = FeedBackTeacher.objects.all()
     context = {
         "feedbacks": feedbacks
     }
@@ -635,7 +635,7 @@ def teacher_feedback_message_reply(request):
     feedback_reply = request.POST.get('reply')
 
     try:
-        feedback = FeedBackTeachers.objects.get(id=feedback_id)
+        feedback = FeedBackTeacher.objects.get(id=feedback_id)
         feedback.feedback_reply = feedback_reply
         feedback.save()
         return HttpResponse("True")

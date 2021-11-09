@@ -35,7 +35,6 @@ def add_teacher_save(request):
         except:
             messages.error(request, "Failed to Add Teacher!")
             return HttpResponseRedirect('add_teacher')
-
 def add_course(request):
     return render(request,"hod_template/add_course_template.html")
 

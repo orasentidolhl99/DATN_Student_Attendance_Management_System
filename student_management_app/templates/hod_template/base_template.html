@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
+    <title>Student Attendance Management System</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{% static 'plugins/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'plugins/vendors/css/vendor.bundle.base.css' %}">
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'plugins/css/style.css' %}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{% static 'plugins/images/favicon.ico' %}" />
+    {% block custom_css%} {% endblock custom_css%}
   </head>
   <body>
     <div class="container-scroller">
@@ -47,11 +48,11 @@
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">
-                    <span></span><a href="/admin_home">Home</a> 
+                    <span></span><a href="/admin_home"><h4>Home</h4></a> 
                   </li>
-                  <li class="breadcrumb-item active" aria-current="page">
+                  <!-- <li class="breadcrumb-item active" aria-current="page">
                     <span></span>Dashboard
-                  </li>
+                  </li> -->
                 </ul>
               </nav>
             </div>

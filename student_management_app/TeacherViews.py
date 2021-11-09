@@ -10,64 +10,62 @@ import json
 
 from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackTeacher, LeaveReportStudent, LeaveReportTeacher, Attendance, AttendanceReport
 
+
 def teacher_home(request):
-    return HttpResponse("<h2> Login by teacher</h2>")
+    # Fetching All Students under teacher
 
-# def teacher_home(request):
-#     # Fetching All Students under teacher
-
-#     subjects = Subjects.objects.filter(teacher_id=request.user.id)
-#     course_id_list = []
-#     for subject in subjects:
-#         course = Courses.objects.get(id=subject.course_id.id)
-#         course_id_list.append(course.id)
+    subjects = Subjects.objects.filter(teacher_id=request.user.id)
+    course_id_list = []
+    for subject in subjects:
+        course = Courses.objects.get(id=subject.course_id.id)
+        course_id_list.append(course.id)
     
-#     final_course = []
-#     # Removing Duplicate Course Id
-#     for course_id in course_id_list:
-#         if course_id not in final_course:
-#             final_course.append(course_id)
+    final_course = []
+    # Removing Duplicate Course Id
+    for course_id in course_id_list:
+        if course_id not in final_course:
+            final_course.append(course_id)
     
-#     students_count = Students.objects.filter(course_id__in=final_course).count()
-#     subject_count = subjects.count()
+    students_count = Students.objects.filter(course_id__in=final_course).count()
+    subject_count = subjects.count()
 
-#     # Fetch All Attendance Count
-#     attendance_count = Attendance.objects.filter(subject_id__in=subjects).count()
-#     # Fetch All Approve Leave
-#     teacher = Teachers.objects.get(admin=request.user.id)
-#     leave_count = LeaveReportTeacher.objects.filter(teacher_id=teacher.id, leave_status=1).count()
+    # Fetch All Attendance Count
+    attendance_count = Attendance.objects.filter(subject_id__in=subjects).count()
+    # Fetch All Approve Leave
+    teacher = Teachers.objects.get(admin=request.user.id)
+    leave_count = LeaveReportTeacher.objects.filter(teacher_id=teacher.id, leave_status=1).count()
 
-#     #Fetch Attendance Data by Subjects
-#     subject_list = []
-#     attendance_list = []
-#     for subject in subjects:
-#         attendance_count1 = Attendance.objects.filter(subject_id=subject.id).count()
-#         subject_list.append(subject.subject_name)
-#         attendance_list.append(attendance_count1)
+    #Fetch Attendance Data by Subjects
+    subject_list = []
+    attendance_list = []
+    for subject in subjects:
+        attendance_count1 = Attendance.objects.filter(subject_id=subject.id).count()
+        subject_list.append(subject.subject_name)
+        attendance_list.append(attendance_count1)
 
-#     students_attendance = Students.objects.filter(course_id__in=final_course)
-#     student_list = []
-#     student_list_attendance_present = []
-#     student_list_attendance_absent = []
-#     for student in students_attendance:
-#         attendance_present_count = AttendanceReport.objects.filter(status=True, student_id=student.id).count()
-#         attendance_absent_count = AttendanceReport.objects.filter(status=False, student_id=student.id).count()
-#         student_list.append(student.admin.first_name+" "+ student.admin.last_name)
-#         student_list_attendance_present.append(attendance_present_count)
-#         student_list_attendance_absent.append(attendance_absent_count)
+    students_attendance = Students.objects.filter(course_id__in=final_course)
+    student_list = []
+    student_list_attendance_present = []
+    student_list_attendance_absent = []
+    for student in students_attendance:
+        attendance_present_count = AttendanceReport.objects.filter(status=True, student_id=student.id).count()
+        attendance_absent_count = AttendanceReport.objects.filter(status=False, student_id=student.id).count()
+        student_list.append(student.admin.first_name+" "+ student.admin.last_name)
+        student_list_attendance_present.append(attendance_present_count)
+        student_list_attendance_absent.append(attendance_absent_count)
 
-#     context={
-#         "students_count": students_count,
-#         "attendance_count": attendance_count,
-#         "leave_count": leave_count,
-#         "subject_count": subject_count,
-#         "subject_list": subject_list,
-#         "attendance_list": attendance_list,
-#         "student_list": student_list,
-#         "attendance_present_list": student_list_attendance_present,
-#         "attendance_absent_list": student_list_attendance_absent
-#     }
-#     return render(request, "teacher_template/teacher_home_template.html", context)
+    context={
+        "students_count": students_count,
+        "attendance_count": attendance_count,
+        "leave_count": leave_count,
+        "subject_count": subject_count,
+        "subject_list": subject_list,
+        "attendance_list": attendance_list,
+        "student_list": student_list,
+        "attendance_present_list": student_list_attendance_present,
+        "attendance_absent_list": student_list_attendance_absent
+    }
+    return render(request, "teacher_template/base_template.html", context)
 
 
 
@@ -111,7 +109,7 @@ def teacher_apply_leave_save(request):
 
 def teacher_feedback(request):
     teacher_obj = Teachers.objects.get(admin=request.user.id)
-    feedback_data = FeedBackTeachers.objects.filter(teacher_id=teacher_obj)
+    feedback_data = FeedBackTeacher.objects.filter(teacher_id=teacher_obj)
     context = {
         "feedback_data":feedback_data
     }

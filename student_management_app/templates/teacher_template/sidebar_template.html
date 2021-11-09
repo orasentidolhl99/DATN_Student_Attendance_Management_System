@@ -1,0 +1,77 @@
+{% load static %}
+
+
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <a href="{% url 'teacher_profile' %}" class="nav-link">
+        {{ user.first_name }} {{ user.last_name }}
+        <div class="nav-profile-image ml-4 ">
+          <img src="{% static 'plugins/images/faces/face1.jpg' %}" alt="profile">
+          <span class="login-status online"></span>
+          <!--change to offline or busy as needed-->
+        </div>
+        
+        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      {% url 'teacher_home' as teacher_home %}
+      <a class="nav-link" href="{{ teacher_home }}">
+        <span class="menu-title">Home</span>
+        <i class="mdi mdi-home menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+        {% url 'teacher_take_attendance' as teacher_take_attendance %}
+      <a class="nav-link {% if request.path == teacher_take_attendance %} active {% endif %}" href="{{ teacher_take_attendance }}">
+        <span class="menu-title">Take Attendance</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+      {% url 'teacher_update_attendance' as teacher_update_attendance %}
+      <a class="nav-link {% if request.path == teacher_update_attendance %} active {% endif %}" href="{{ teacher_update_attendance }}">
+        <span class="menu-title">View Update Attendance</span>
+        <i class="mdi mdi-chart-bar menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+        {% url 'teacher_add_result' as teacher_add_result %}
+      <a class="nav-link {% if request.path == teacher_add_result %} active {% endif %}" href="{{ teacher_add_result }}">
+        <span class="menu-title">Add Result</span>
+        <i class="mdi mdi-table-large menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+        {% url 'teacher_apply_leave' as teacher_apply_leave %}
+      <a class="nav-link {% if request.path == teacher_apply_leave %} active {% endif %}" href="{{ teacher_apply_leave }}">
+        <span class="menu-title">Apply Leave</span>
+        <i class="mdi mdi-table-large menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+
+    <li class="nav-item">
+        {% url 'teacher_feedback' as teacher_feedback %}
+        <a href="{{ teacher_feedback }}" class="nav-link {% if request.path == teacher_feedback %} active {% endif %}">
+        <span class="menu-title">Feedback</span>
+        <i class="mdi mdi-table-large menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+ 

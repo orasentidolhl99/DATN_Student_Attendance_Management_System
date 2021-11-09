@@ -39,7 +39,7 @@ def admin_home(request):
         subject_list.append(subject.subject_name)
         student_count_list_in_subject.append(student_count)
     
-    # For Saffs
+    # For teacher
     teacher_attendance_present_list=[]
     teacher_attendance_leave_list=[]
     teacher_name_list=[]

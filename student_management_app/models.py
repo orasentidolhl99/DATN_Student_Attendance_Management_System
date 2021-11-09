@@ -12,6 +12,9 @@ class CustomUser(AbstractUser):
 
 class AdminHOD(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
@@ -19,6 +22,9 @@ class AdminHOD(models.Model):
 
 class Teachers(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,24 +41,27 @@ class Courses(models.Model):
 class Subjects(models.Model):
     id = models.AutoField(primary_key=True)
     subject_name = models.CharField(max_length=255)
-    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE)
-    teacher_id = models.ForeignKey(Teachers, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Courses, on_delete=models.CASCADE, default=1)
+    teacher_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
 
 class Students(models.Model):
-    id = models.AutoField(primary_key=True)
-    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=255)
-    profile_pic = models.FileField()
-    address = models.TextField()
-    course_id = models.ForeignKey(Courses,on_delete=models.DO_NOTHING)
-    session_start_year = models.DateField()
-    session_end_year = models.DateField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    id=models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    admin=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    gender=models.CharField(max_length=255)
+    profile_pic=models.FileField()
+    address=models.TextField()
+    course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING)
+    session_start_year=models.DateField()
+    session_end_year=models.DateField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
 class Attendance(models.Model):
@@ -85,7 +94,7 @@ class LeaveReportStudent(models.Model):
 
 class LeaveReportTeacher(models.Model):
     id = models.AutoField(primary_key=True)
-    staff_id = models.ForeignKey(Teachers, on_delete=models.CASCADE)
+    teacher_id = models.ForeignKey(Teachers, on_delete=models.CASCADE)
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)

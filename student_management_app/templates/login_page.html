@@ -41,15 +41,16 @@
                   <div class="mt-3">
                     <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" >SIGN IN</button>
                   </div>
-                  <div class="row">
+                  <div class="form-group">
                     {% if messages %}
-                    <div class="col-12">
                       {% for message in messages %}
                       {% if message.tags == 'error' %}
-                      <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div>
+                      <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                      {% endif %}
+                      {% if message.tags == 'success' %}
+                      <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
                       {% endif %}
                       {% endfor %}
-                    </div>
                     {% endif %}
                   </div>
                 </form>

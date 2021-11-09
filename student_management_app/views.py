@@ -1,10 +1,9 @@
-from django.contrib.auth import authenticate,login, logout
-
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from student_management_app.EmailBackEnd import EmailBackEnd
-from django.contrib import messages
 
 # Create your views here.
 def ShowDemoPage(request):
@@ -20,7 +19,12 @@ def doLogin(request):
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user!=None:
             login(request,user)
-            return HttpResponseRedirect('/admin_home')
+            if user.user_type == "1":
+                return HttpResponseRedirect('/admin_home')
+            elif user.user_type == "2":
+                return HttpResponse("Teacher login" + str(user.user_type))
+            else:
+                return HttpResponse("Student login" + str(user.user_type))
         else:
             messages.error(request,"Invalid Login Details")
             return HttpResponseRedirect("/")

@@ -11,23 +11,23 @@ Add Courses
     <div class="card-body">
       <h4 class="card-title">Form Add Courses</h4>
       
-      <form class="forms-sample" action="/add_course" method="post">
+      <form class="forms-sample" action="/add_course_save" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label >Course Name</label>
             <input type="text" class="form-control" name="course" placeholder="Enter Course">
         </div>
         <div class="form-group">
-            {% if messages %}
-                {% for message in messages %}
-                {% if message.tags == 'error' %}
-                <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div>
-                {% endif %}
-                {% if message.tags == 'success' %}
-                <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div>
-                {% endif %}
-                {% endfor %}
+          {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
             {% endif %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+          {% endif %}
         </div>
 
 

@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
-from .models import CustomUser
+from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+import json
+
+from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students
 
 
 def admin_home(request):
@@ -36,9 +41,9 @@ def add_course(request):
 
 def add_course_save(request):
     if request.method!="POST":
-        return HttpResponseRedirect("Method Not Allowed")
+        return HttpResponse("Method Not Allowed")
     else:
-        course=request.POST.get("course")
+        course = request.POST.get('course')
         try:
             course_model=Courses(course_name=course)
             course_model.save()
@@ -49,7 +54,8 @@ def add_course_save(request):
             return HttpResponseRedirect("/add_course")
 
 def add_student(request):
-    return render(request,'hod_template/add_student_template.html')
+    courses = Courses.objects.all()
+    return render(request,'hod_template/add_student_template.html', {"courses": courses})
 
 def add_student_save(request):
     if request.method != "POST":
@@ -70,12 +76,6 @@ def add_student_save(request):
             user.students.address = address
             course_obj = Courses.objects.get(id=course_id)
             user.students.course_id = course_obj
-
-            start_date = datetime.datetime.strptime(session_start, '%d-%m-%y').strftime('%Y-%m-%d')
-            end_date = datetime.datetime.strptime(session_end, '%d-%m-%y').strftime('%Y-%m-%d')
-
-
-
             user.students.session_start_year = start_date
             user.students.session_end_year = end_date
             user.students.gender = gender
@@ -86,3 +86,47 @@ def add_student_save(request):
         except:
             messages.error(request, "Failed to Add Student!")
             return HttpResponseRedirect('add_student')
+
+def add_subject(request):
+    courses = Courses.objects.all()
+    teachers = CustomUser.objects.filter(user_type=2)
+    context = {
+        "courses": courses,
+        "teachers": teachers
+    }
+    return render(request,"hod_template/add_subject_template.html", context)
+
+def add_subject_save(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        subject_name = request.POST.get('subject_name')
+        course_id = request.POST.get('course')
+        course = Courses.objects.get(id=course_id)        
+        teacher_id = request.POST.get('teacher')
+        teacher = CustomUser.objects.get(id = teacher_id)
+
+        try:
+            subject = Subjects(subject_name=subject_name, course_id=course, teacher_id=teacher)
+            subject.save()
+            messages.success(request, "Subject Added Successfully!")
+            return HttpResponseRedirect('add_subject')
+        except:
+            messages.error(request, "Failed to Add Subject!")
+            return HttpResponseRedirect('add_subject')
+
+def manage_teacher(request):
+    teachers = Teachers.objects.all()
+    return render(request,'hod_template/manage_teacher_template.html',{"teachers": teachers})
+
+def manage_student(request):
+    students = Students.objects.all()
+    return render(request, 'hod_template/manage_student_template.html', {"students": students})
+
+def manage_course(request):
+    courses = Courses.objects.all()
+    return render(request,'hod_template/manage_course_template.html',{"courses": courses})
+
+def manage_subject(request):
+    subjects = Subjects.objects.all()
+    return render(request,'hod_template/manage_subject_template.html',{"subjects": subjects})

@@ -1,0 +1,58 @@
+{% extends 'student_template/base_template.html'%}
+{% load static %}
+{% block page_title %} 
+Result
+{% endblock page_title %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Form Result</h4>
+
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Result</h4>
+                    <p class="card-description"> Result Details <code>.table-striped</code>
+                    </p>
+                    <div class="card-body table-responsive p-0">
+                        <table class = "table table-striped table-hover text-nowrap ">
+                            <thead>
+                                <tr>
+                                    <th>#ID</th>
+                                    <th>Subject</th>
+                                    <th>Assignments Marks</th>
+                                    <th>Exam Marks</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in student_result %}
+                                <tr>
+                                    <td>{{ row.id }}</td>
+                                    <td>{{ row.subject_id.subject_name }}</td>
+                                    <td>{{ row.subject_assignment_marks }}</td>
+                                    <td>{{ row.subject_exam_marks }}</td>
+                                    <td>
+                                        {% if row.subject_exam_marks >= 40 %}
+                                            <span class="alert alert-success">Pass</span>
+                                        {% else %}
+                                            <span class="alert alert-danger">Fail</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

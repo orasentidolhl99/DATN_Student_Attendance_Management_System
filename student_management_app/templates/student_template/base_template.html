@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Student Management System | Teacher Dashboard</title>
+    <title>Student Attendance Management System | Student Dashboard</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{% static 'plugins/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'plugins/vendors/css/vendor.bundle.base.css' %}">
@@ -27,7 +27,7 @@
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <!-- include header bar here ------------------------------->
-            {% include "teacher_template/header_template.html" %}
+            {% include "student_template/header_template.html" %}
             {% block header_main %} 
             
             {% endblock header_main %}
@@ -35,7 +35,7 @@
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
 
-        {% include "teacher_template/sidebar_template.html" %}
+        {% include "student_template/sidebar_template.html" with user=user id=id %}
 
         <div class="main-panel">
           <div class="content-wrapper">
@@ -52,7 +52,7 @@
               <nav aria-label="breadcrumb">
                 <ul class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">
-                    <span></span><a href="/teacher_home"><h4>Home</h4></a> 
+                    <span></span><a href="{% url 'student_home' %}"><h4>Home</h4></a> 
                   </li>
                   <!-- <li class="breadcrumb-item active" aria-current="page">
                     <span></span>Dashboard
@@ -63,13 +63,13 @@
 
 
             {% block content %}
-            {% include 'teacher_template/teacher_home_template.html'%}
+            {% include 'student_template/student_home_template.html'%}
 
             {% endblock content %}
           </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
-            {% include "teacher_template/footer_template.html" %}
+            {% include "student_template/footer_template.html" %}
           <!-- page-body-wrapper ends -->
         </div>
         
@@ -81,6 +81,10 @@
       
     </div>
     <!-- include custom js here ------------------------------------------->
-    {% include "teacher_template/custom_template.html" %}
+    {% include "student_template/custom_template.html" %}
+
+    {% comment %} For Custom JS {% endcomment %}
+    {% block custom_js %}
+    {% endblock custom_js %}
   </body>
 </html>

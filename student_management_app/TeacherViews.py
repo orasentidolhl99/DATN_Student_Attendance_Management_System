@@ -8,8 +8,8 @@ from django.core import serializers
 import json
 
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackTeacher, LeaveReportStudent, LeaveReportTeacher, Attendance, AttendanceReport
 
+from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportTeacher, FeedBackTeacher, StudentResult
 
 def teacher_home(request):
     # Fetching All Students under teacher
@@ -65,7 +65,7 @@ def teacher_home(request):
         "attendance_present_list": student_list_attendance_present,
         "attendance_absent_list": student_list_attendance_absent
     }
-    return render(request, "teacher_template/base_template.html", context)
+    return render(request, "teacher_template/teacher_home_template.html", context)
 
 
 

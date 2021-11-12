@@ -46,9 +46,9 @@ urlpatterns = [
     path('student_feedback_message_reply/', HodViews.student_feedback_message_reply, name="student_feedback_message_reply"),
     path('teacher_feedback_message/', HodViews.teacher_feedback_message, name="teacher_feedback_message"),
     path('teacher_feedback_message_reply/', HodViews.teacher_feedback_message_reply, name="teacher_feedback_message_reply"),
-    path('student_leave_view/', HodViews.student_leave_view, name="student_leave_view"),
-    path('student_leave_approve/<leave_id>/', HodViews.student_leave_approve, name="student_leave_approve"),
-    path('student_leave_reject/<leave_id>/', HodViews.student_leave_reject, name="student_leave_reject"),
+    # path('student_leave_view/', HodViews.student_leave_view, name="student_leave_view"),
+    # path('student_leave_approve/<leave_id>/', HodViews.student_leave_approve, name="student_leave_approve"),
+    # path('student_leave_reject/<leave_id>/', HodViews.student_leave_reject, name="student_leave_reject"),
     path('teacher_leave_view/', HodViews.teacher_leave_view, name="teacher_leave_view"),
     path('teacher_leave_approve/<leave_id>/', HodViews.teacher_leave_approve, name="teacher_leave_approve"),
     path('teacher_leave_reject/<leave_id>/', HodViews.teacher_leave_reject, name="teacher_leave_reject"),
@@ -76,6 +76,9 @@ urlpatterns = [
     path('teacher_profile_update/', TeacherViews.teacher_profile_update, name="teacher_profile_update"),
     path('teacher_add_result/', TeacherViews.teacher_add_result, name="teacher_add_result"),
     path('teacher_add_result_save/', TeacherViews.teacher_add_result_save, name="teacher_add_result_save"),
+    path('student_leave_view/', TeacherViews.student_leave_view, name="student_leave_view"),
+    path('student_leave_approve/<leave_id>/', TeacherViews.student_leave_approve, name="student_leave_approve"),
+    path('student_leave_reject/<leave_id>/', TeacherViews.student_leave_reject, name="student_leave_reject"),
 
     # URLS for Student
     path('student_home/', StudentViews.student_home, name="student_home"),

@@ -41,11 +41,11 @@ Edit Session Year
 
         <div class="form-group">
             <label >Session Start Year</label>
-            <input type="date" class="form-control" name="session_start_year" value="{{ session_year.session_start_year|date:'Y-m-d' }}">
+            <input type="date" class="form-control" name="session_start_year" value="{{ session_year.session_start_year|date:'Y-m-d, H:i:s' }}">
         </div>
         <div class="form-group">
             <label >Session End Year</label>
-            <input type="date" class="form-control" name="session_end_year" value="{{ session_year.session_end_year|date:'Y-m-d' }}">
+            <input type="date" class="form-control" name="session_end_year" value="{{ session_year.session_end_year|date:'Y-m-d, H:i:s' }}">
         </div>
 
         <input type="hidden" name="session_id" value="{{ session_year.id }}" />

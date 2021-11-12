@@ -43,10 +43,10 @@ Edit Teacher | Username: {{ teacher.admin.username }} | #ID : {{ teacher.admin.i
             <label >Email address</label>
             <input type="email" class="form-control" value="{{ teacher.admin.email }}" name="email">
         </div>
-        <div class="form-group">
+        {% comment %} <div class="form-group">
             <label >Password</label>
             <input type="password" class="form-control" value="{{ teacher.admin.password }}" name="password">
-        </div>
+        </div>{% endcomment %}
         <div class="form-group">
             <label >First Name</label>
             <input type="text" class="form-control" value="{{ teacher.admin.first_name }}" name="first_name">

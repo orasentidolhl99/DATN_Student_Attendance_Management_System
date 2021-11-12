@@ -9,7 +9,7 @@ import json
 
 
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportTeacher, FeedBackTeacher, StudentResult
+from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportTeacher, FeedBackTeacher, StudentResult, LeaveReportStudent
 
 def teacher_home(request):
     # Fetching All Students under teacher
@@ -66,6 +66,27 @@ def teacher_home(request):
         "attendance_absent_list": student_list_attendance_absent
     }
     return render(request, "teacher_template/teacher_home_template.html", context)
+
+
+def student_leave_view(request):
+    leaves = LeaveReportStudent.objects.all()
+    context = {
+        "leaves": leaves
+    }
+    return render(request, 'teacher_template/student_leave_view.html', context)
+
+def student_leave_approve(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 1
+    leave.save()
+    return redirect('student_leave_view')
+
+
+def student_leave_reject(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 2
+    leave.save()
+    return redirect('student_leave_view')
 
 
 

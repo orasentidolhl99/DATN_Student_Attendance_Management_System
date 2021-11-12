@@ -124,7 +124,7 @@ def manage_teacher(request):
     return render(request, "hod_template/manage_teacher_template.html", context)
 
 def edit_teacher(request, teacher_id):
-    teacher = Teachers().objects.get(admin=teacher_id)
+    teacher = Teachers.objects.get(admin=teacher_id)
 
     context = {
         "teacher": teacher,
@@ -388,6 +388,7 @@ def edit_student(request, student_id):
     request.session['student_id'] = student_id
 
     student = Students.objects.get(admin=student_id)
+    # student = Students.objects.get(admin=student_id)
     form = EditStudentForm()
     # Filling the form with Data from Database
     form.fields['email'].initial = student.admin.email

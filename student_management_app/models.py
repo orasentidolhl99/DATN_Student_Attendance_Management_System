@@ -15,6 +15,7 @@ class CustomUser(AbstractUser):
     user_type_data = ((1, "HOD"), (2, "Teacher"), (3, "Student"))
     user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
 
+
 class AdminHOD(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -62,9 +63,10 @@ class Students(models.Model):
     gender=models.CharField(max_length=255)
     profile_pic=models.FileField()
     address=models.TextField()
-    course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING)
-    session_start_year=models.DateField()
-    session_end_year=models.DateField()
+    course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING, default=1)
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
+    # session_start_year=models.DateField()
+    # session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -73,6 +75,7 @@ class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     subject_id = models.ForeignKey(Subjects,on_delete=models.DO_NOTHING)
     attendance_date = models.DateTimeField(auto_now_add=True)
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -159,7 +162,7 @@ def create_user_profile(sender,instance,created,**kwargs):
         if instance.user_type==2:
             Teachers.objects.create(admin=instance,address="")
         if instance.user_type==3:
-            Students.objects.create(admin=instance,course_id=Courses.objects.get(id=1),session_start_year="2020-01-01",session_end_year="2021-01-01",address="",profile_pic="",gender="")
+            Students.objects.create(admin=instance,course_id=Courses.objects.get(id=1),session_year_id=SessionYearModel.objects.get(id=1),address="",profile_pic="",gender="")
 
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):

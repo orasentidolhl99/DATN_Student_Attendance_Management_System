@@ -12,8 +12,8 @@ Edit Student | Username: {{ username }} | #ID : {{ id }}
       <h4 class="card-title">Edit Student</h4>
       
       {% comment %} Displaying the Django Form using forms.py EditStudentForm {% endcomment %}
-      {% url 'add_student_save' as action_path %}
-      {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Student" %}
+      {% url 'edit_student_save' as action_path %}
+      {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Update Student" %}
     </div>
   </div>
 

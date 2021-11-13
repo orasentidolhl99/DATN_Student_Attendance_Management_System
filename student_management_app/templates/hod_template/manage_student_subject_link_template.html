@@ -1,0 +1,87 @@
+{% extends 'hod_template/base_template.html'%}
+{% load static %}
+{% block page_title %} 
+Manage Course
+{% endblock page_title %}
+
+
+{% block content %}
+    <a class="btn btn-primary" href="{% url 'add_subject' %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
+
+    {% comment %} Display Messages {% endcomment %}
+        {% if messages %}
+        <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% elif message.tags == "success" %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+    {% endif %}
+
+    <div class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+        <div class="swal-modal" role="dialog" aria-modal="true"><div class="swal-content">
+
+        <input class="swal-content__input" placeholder="Type your password" type="password"></div><div class="swal-footer"><div class="swal-button-container">
+
+            <button class="swal-button swal-button--confirm btn btn-primary">OK</button>
+
+            <div class="swal-button__loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Manage Students in Subjects</h4>
+            <p class="card-description"> {{ subject.subject_name }} - {{ subject.teacher_id.first_name }} <code>.table-striped</code>
+            </p>
+            <table class="table table-striped p-0 card-body">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Student Name</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    {% comment %} <th>Action</th> {% endcomment %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in student_subject_link %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.student_id.admin.first_name }}</td>
+                        <td>{{ student.created_at }}</td>
+                        <td>{{ student.updated_at }}</td>
+                        {% comment %} <td>
+                            <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
+                            <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
+                        </td> {% endcomment %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock content %}
+

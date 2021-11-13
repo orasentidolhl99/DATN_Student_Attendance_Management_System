@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.urls import reverse
 from django.core.files.storage import FileSystemStorage
@@ -7,7 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, FeedBackStudent, FeedBackTeacher, LeaveReportStudent, LeaveReportTeacher, Attendance, AttendanceReport
+from student_management_app.models import (CustomUser, Teachers,
+                                           Courses, Subjects,
+                                           Students, SessionYearModel,
+                                           FeedBackStudent, FeedBackTeacher,
+                                           LeaveReportStudent, LeaveReportTeacher,
+                                           Attendance, AttendanceReport,
+                                           StudentSubjectLink)
 from .forms import AddStudentForm, EditStudentForm
 
 
@@ -175,7 +181,14 @@ def delete_teacher(request, teacher_id):
         messages.error(request, "Failed to Delete Teacher.")
         return redirect('manage_teacher')
 
-
+def manage_student_subject_link(request, subject_id):
+    subject = Subjects.objects.get(id=subject_id)
+    student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
+    context = {
+        'subject': subject,
+        'student_subject_link': student_subject_link
+    }
+    return render(request,"hod_template/manage_student_subject_link_template.html", context=context)
 
 
 def add_course(request):

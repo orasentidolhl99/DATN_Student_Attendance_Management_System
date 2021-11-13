@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .import HodViews, TeacherViews, StudentViews
+from . import HodViews, TeacherViews, StudentViews
 
 
 urlpatterns = [
@@ -57,6 +57,7 @@ urlpatterns = [
     path('admin_get_attendance_student/', HodViews.admin_get_attendance_student, name="admin_get_attendance_student"),
     path('admin_profile/', HodViews.admin_profile, name="admin_profile"),
     path('admin_profile_update/', HodViews.admin_profile_update, name="admin_profile_update"),
+    path('manage_student_subject_link/<subject_id>/', HodViews.manage_student_subject_link, name="manage_student_subject_link"),
     
 
      # URLS for teacher

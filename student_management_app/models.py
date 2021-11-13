@@ -7,8 +7,8 @@ from django.dispatch import receiver
 
 class SessionYearModel(models.Model):
     id = models.AutoField(primary_key=True)
-    session_start_year = models.DateField()
-    session_end_year = models.DateField()
+    session_start_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
+    session_end_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     objects = models.Manager()
     
 class CustomUser(AbstractUser):
@@ -64,18 +64,26 @@ class Students(models.Model):
     profile_pic=models.FileField()
     address=models.TextField()
     course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING, default=1)
-    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.DO_NOTHING, default=1)
     # session_start_year=models.DateField()
     # session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
+class StudentSubjectLink(models.Model):
+    id = models.AutoField(primary_key=True)
+    student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subjects, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     subject_id = models.ForeignKey(Subjects,on_delete=models.DO_NOTHING)
     attendance_date = models.DateTimeField(auto_now_add=True)
-    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
+    session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.DO_NOTHING, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()

@@ -60,6 +60,7 @@ Manage Course
                 <td>{{ subject.created_at }}</td>
                 <td>{{ subject.updated_at }}</td>
                 <td>
+                    <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
                     <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
                     <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
                 </td>

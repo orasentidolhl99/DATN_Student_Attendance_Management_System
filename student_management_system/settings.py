@@ -25,7 +25,7 @@ SECRET_KEY = '@*kz2)^w&cc2y199^3h1p^4-*6h+j1&x5@3o0v@tyr=&j-$vrk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    # 'student_management_app.LoginCheckMiddleWare.LoginCheckMiddleWare',
+    'student_management_app.LoginCheckMiddleWare.LoginCheckMiddleWare',
 ]
 
 ROOT_URLCONF = 'student_management_system.urls'
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'student_management_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'student_management_app/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

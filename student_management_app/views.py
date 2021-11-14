@@ -4,6 +4,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from student_management_app.EmailBackEnd import EmailBackEnd
+from student_management_app.models import CustomUser, Courses, SessionYearModel
+from student_management_system import settings
+
+import datetime
+import json
+import os
 
 # Create your views here.
 def ShowDemoPage(request):

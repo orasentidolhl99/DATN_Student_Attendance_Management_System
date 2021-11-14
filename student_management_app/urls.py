@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 from . import HodViews, TeacherViews, StudentViews
+from django.conf.urls.static import static
+from student_management_system import settings
 
 
 urlpatterns = [
@@ -92,4 +94,4 @@ urlpatterns = [
     path('student_profile/', StudentViews.student_profile, name="student_profile"),
     path('student_profile_update/', StudentViews.student_profile_update, name="student_profile_update"),
     path('student_view_result/', StudentViews.student_view_result, name="student_view_result"),
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

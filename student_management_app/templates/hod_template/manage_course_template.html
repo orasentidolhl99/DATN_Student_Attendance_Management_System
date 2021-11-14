@@ -57,7 +57,8 @@ Manage Course
                     <td>{{ course.updated_at }}</td>
                     <td>
                       <a href="{% url 'edit_course' course.id %}" class="btn btn-success">Edit</a>
-                      <a href="{% url 'delete_course' course.id %}" class="btn btn-success">Delete</a>
+                      <input href="{% url 'delete_course' course.id %}" class="btn btn-danger" type="submit" value="Delete">
+                      
                     </td>
                 </tr>
             {% endfor %}

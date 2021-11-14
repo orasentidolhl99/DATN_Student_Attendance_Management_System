@@ -13,3 +13,7 @@ step 3: Run code
 
 step4: click!
 -> 127.0.0.1:8000
+
+---------------------------------------------------
+Theme: https://www.bootstrapdash.com/product/purple-free-admin-template/
+Download: https://github.com/BootstrapDash/PurpleAdmin-Free-Admin-Template

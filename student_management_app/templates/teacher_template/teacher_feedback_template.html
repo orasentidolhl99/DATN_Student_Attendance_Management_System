@@ -44,7 +44,21 @@ Feedback Message
             </div>
 
             <button type="submit" class="btn btn-gradient-primary mr-2 ">Leave a Feedback</button>
-            <button class="btn btn-light">Cancel</button>
+            <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
+            <script>
+                function cancel() {
+                    c=confirm("Do you really want to cancel?");
+            
+                    // Of course, the following could be shortened to "return c;"
+                    if (c==true)
+                    {
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            </script>
 
             <div class="card">
                 <div class="card-body">

@@ -56,7 +56,7 @@ Manage Session
                     
                     <td>
                         <a href="{% url 'edit_session' session_year.id %}" class="btn btn-success">Edit</a>
-                        <a href="{% url 'delete_session' session_year.id %}" class="btn btn-success">Delete</a>
+                        <a href="{% url 'delete_session' session_year.id %}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             {% endfor %}

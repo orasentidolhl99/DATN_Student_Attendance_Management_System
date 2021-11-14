@@ -8,7 +8,9 @@ Leave Report and Apply for Leave
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Apply For Leave</h4>
+        <h4 class="card-title">Form Apply For Leave</h4>
+        <hr>
+        <br>
 
         {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -64,46 +66,47 @@ Leave Report and Apply for Leave
                         return false;
                     }
                 }
-            </script>
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Leave Apply History</h4>
-                    <p class="card-description"> Leave Apply History <code>.table-striped</code>
-                    </p>
-                    <div class="card-body table-responsive p-0">
-                        <table class = "table table-striped table-hover text-nowrap ">
-                            <thead>
-                                <tr>
-                                    <th>#ID</th>
-                                    <th>Leave Date</th>
-                                    <th>Leave Message</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for leave in leave_data %}
-                                <tr>
-                                    <td>{{ leave.id }}</td>
-                                    <td>{{ leave.leave_date }}</td>
-                                    <td>{{ leave.leave_message }}</td>
-                                    <td>
-                                        {% if leave.leave_status == 1 %}
-                                            <span class="alert alert-success">Approved</span>
-                                        {% elif leave.leave_status == 2 %}
-                                            <span class="alert alert-danger">Rejected</span>
-                                        {% else %}
-                                            <span class="alert alert-warning">Pending</span>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                </div>
+            </script>      
+    </div>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Leave Apply History</h4>
+            <p class="card-description"> Detailed information sheet about Student leave
+            </p>
+            <hr>
+            <div class="card-body table-responsive p-0">
+                <table class = "table table-striped table-hover text-nowrap ">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Leave Date</th>
+                            <th>Leave Message</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leave_data %}
+                        <tr>
+                            <td>{{ leave.id }}</td>
+                            <td>{{ leave.leave_date }}</td>
+                            <td>{{ leave.leave_message }}</td>
+                            <td>
+                                {% if leave.leave_status == 1 %}
+                                    <span class="alert alert-success">Approved</span>
+                                {% elif leave.leave_status == 2 %}
+                                    <span class="alert alert-danger">Rejected</span>
+                                {% else %}
+                                    <span class="alert alert-warning">Pending</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+            
+        </div>
     </div>
 </div>
 

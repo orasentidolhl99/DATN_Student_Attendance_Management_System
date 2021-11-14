@@ -10,7 +10,8 @@ Add Student
 <div class="card">
     <div class="card-body">
       <h4 class="card-title">Form Add Student</h4>
-      
+      <hr>
+      <br>
       {% url 'add_student_save' as action_path %}
       {% include 'hod_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Student" %}
     </div>

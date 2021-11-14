@@ -69,6 +69,12 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
     function applyStyles() {
       //Applying perfect scrollbar
       if (!body.hasClass("rtl")) {
+        if ($('.settings-panel .tab-content .tab-pane.scroll-wrapper').length) {
+          const settingsPanelScroll = new PerfectScrollbar('.settings-panel .tab-content .tab-pane.scroll-wrapper');
+        }
+        if ($('.chats').length) {
+          const chatsScroll = new PerfectScrollbar('.chats');
+        }
         if (body.hasClass("sidebar-fixed")) {
           var fixedSidebarScroll = new PerfectScrollbar('#sidebar .nav');
         }
@@ -109,6 +115,37 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
           document.msExitFullscreen();
         }
       }
-    })
+    }) 
+
+    if ($.cookie('purple-pro-banner')!="true") {
+      document.querySelector('#proBanner').classList.add('d-flex');
+      document.querySelector('.navbar').classList.remove('fixed-top');
+    }
+    else {
+      document.querySelector('#proBanner').classList.add('d-none');
+      document.querySelector('.navbar').classList.add('fixed-top');
+    }
+    
+    if ($( ".navbar" ).hasClass( "fixed-top" )) {
+      document.querySelector('.page-body-wrapper').classList.remove('pt-0');
+      document.querySelector('.navbar').classList.remove('pt-5');
+    }
+    else {
+      document.querySelector('.page-body-wrapper').classList.add('pt-0');
+      document.querySelector('.navbar').classList.add('pt-5');
+      document.querySelector('.navbar').classList.add('mt-3');
+      
+    }
+    document.querySelector('#bannerClose').addEventListener('click',function() {
+      document.querySelector('#proBanner').classList.add('d-none');
+      document.querySelector('#proBanner').classList.remove('d-flex');
+      document.querySelector('.navbar').classList.remove('pt-5');
+      document.querySelector('.navbar').classList.add('fixed-top');
+      document.querySelector('.page-body-wrapper').classList.add('proBanner-padding-top');
+      document.querySelector('.navbar').classList.remove('mt-3');
+      var date = new Date();
+      date.setTime(date.getTime() + 24 * 60 * 60 * 1000); 
+      $.cookie('purple-pro-banner', "true", { expires: date });
+    });
   });
 })(jQuery);

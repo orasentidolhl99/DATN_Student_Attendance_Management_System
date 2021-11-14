@@ -8,7 +8,7 @@ Feedback Message
 {% block content %}
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Leave a Feedback Message</h4>
+        <h4 class="card-title">Form Leave a Feedback Message</h4>
 
         {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -39,12 +39,11 @@ Feedback Message
             {% csrf_token %}
 
             <div class="form-group">
-                <label>Feedback Message </label>
+                <label>Students fill in the form the reason for wanting to take leave </label>
                 <textarea name="feedback_message" class="form-control" rows="6" placeholder="Feedback Message"></textarea>
             </div>
 
             <button type="submit" class="btn btn-gradient-primary mr-2 ">Leave a Feedback</button>
-            
             <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
             <script>
                 function cancel() {
@@ -59,36 +58,37 @@ Feedback Message
                         return false;
                     }
                 }
-            </script>
-
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Feedback History</h4>
-                    <p class="card-description"> LFeedback History <code>.table-striped</code>
-                    </p>
-                    <div class="card-body table-responsive p-0">
-                        <table class = "table table-striped table-hover text-nowrap ">
-                            <thead>
-                                <tr>
-                                    <th>#ID</th>
-                                    <th>Feedback Message</th>
-                                    <th>Feedback Reply</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for row in feedback_data %}
-                                <tr>
-                                    <td>{{ row.id }}</td>
-                                    <td>{{ row.feedback }}</td>
-                                    <td>{{ row.feedback_reply }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                </div>
+            </script> 
+    </div>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Feedback History</h4>
+            <p class="card-description"> Detailed information sheet about Students feedback
+            </p>
+            <hr>
+            <div class="card-body table-responsive p-0">
+                <table class = "table table-striped table-hover text-nowrap ">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Feedback Message</th>
+                            <th>Feedback Reply</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in feedback_data %}
+                        <tr>
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.feedback }}</td>
+                            <td>{{ row.feedback_reply }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+            
+        </div>
     </div>
 </div>
 

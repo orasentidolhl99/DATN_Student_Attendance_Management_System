@@ -1,12 +1,12 @@
 {% extends 'hod_template/base_template.html'%}
 {% load static %}
 {% block page_title %} 
-Manage Course
+Manage Student to Subject
 {% endblock page_title %}
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_subject' %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
+    <a class="btn btn-primary" href="{% url 'add_student_subject_link' subject.course_id.id %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -33,29 +33,6 @@ Manage Course
         </div>
     {% endif %}
 
-    <div class="swal-overlay swal-overlay--show-modal" tabindex="-1">
-        <div class="swal-modal" role="dialog" aria-modal="true">
-            <div class="swal-content">
-
-            <input class=" form-control swal-content__input" style="width: 235px;" placeholder="Type your password!" type="password">
-            </div> <br> 
-
-            <div class="swal-footer">
-                <div class="swal-button-container">
-
-                    <button class="swal-button swal-button--confirm btn btn-primary">OK</button>
-
-                    <div class="swal-button__loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="card">
         <div class="card-body">
@@ -69,20 +46,20 @@ Manage Course
                     <th>Student Name</th>
                     <th>Created At</th>
                     <th>Updated At</th>
-                    {% comment %} <th>Action</th> {% endcomment %}
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                {% for student in student_subject_link %}
+                {% for student_subject in student_subject_link %}
                     <tr>
-                        <td>{{ student.id }}</td>
-                        <td>{{ student.student_id.admin.first_name }}</td>
-                        <td>{{ student.created_at }}</td>
-                        <td>{{ student.updated_at }}</td>
-                        {% comment %} <td>
-                            <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
-                            <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
-                        </td> {% endcomment %}
+                        <td>{{ student_subject.id }}</td>
+                        <td>{{ student_subject.student_id.admin.first_name }}</td>
+                        <td>{{ student_subject.created_at }}</td>
+                        <td>{{ student_subject.updated_at }}</td>
+                        <td>
+                            {% comment %} <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a>  {% endcomment %}
+                            <a href="{% url 'delete_student_subject_link' student_subject.id %}" class="btn btn-danger">Delete</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

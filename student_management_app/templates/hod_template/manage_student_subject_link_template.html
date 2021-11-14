@@ -6,7 +6,7 @@ Manage Student to Subject
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_student_subject_link' subject.course_id.id %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
+    <a class="btn btn-primary" href="{% url 'add_student_subject_link' subject.id %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
         {% if messages %}

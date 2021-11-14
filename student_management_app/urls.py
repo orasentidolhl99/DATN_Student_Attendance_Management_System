@@ -59,8 +59,8 @@ urlpatterns = [
     path('admin_get_attendance_student/', HodViews.admin_get_attendance_student, name="admin_get_attendance_student"),
     path('admin_profile/', HodViews.admin_profile, name="admin_profile"),
     path('admin_profile_update/', HodViews.admin_profile_update, name="admin_profile_update"),
-    path('add_student_subject_link/<course_id>/', HodViews.add_student_subject_link, name="add_student_subject_link"),
-    path('add_student_subject_link_save/', HodViews.add_student_subject_link_save, name="add_student_subject_link_save"),
+    path('add_student_subject_link/<subject_id>/', HodViews.add_student_subject_link, name="add_student_subject_link"),
+    path('add_student_subject_link_save/<subject_id>/', HodViews.add_student_subject_link_save, name="add_student_subject_link_save"),
     path('manage_student_subject_link/<subject_id>/', HodViews.manage_student_subject_link, name="manage_student_subject_link"),
     path('delete_student_subject_link/<student_subject_id>/', HodViews.delete_student_subject_link, name="delete_student_subject_link"),
     

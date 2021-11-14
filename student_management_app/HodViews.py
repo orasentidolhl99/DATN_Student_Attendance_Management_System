@@ -181,39 +181,42 @@ def delete_teacher(request, teacher_id):
         messages.error(request, "Failed to Delete Teacher.")
         return redirect('manage_teacher')
 
+# not yet
+def add_student_subject_link(request, subject_id):
+    subjects = Subjects.objects.get(id=subject_id)
+    
+    students = Students.objects.filter(course_id=subjects.course_id)
 
-def add_student_subject_link(request, course_id):
-    course = Courses.objects.get(id=course_id)
-    subjects = Subjects.objects.filter(course_id=course)
-    students = Students.objects.filter(course_id=course)
+    student_subject_link = [student.student_id for student in StudentSubjectLink.objects.filter(subject_id=subjects)]
+    
+    get_students_others = [student for student in students if student not in student_subject_link]
+
     context = {
         'subjects': subjects,
-        'students': students
+        'students': get_students_others
     }
     return render(request, "hod_template/add_student_subject_link.html", context=context)
 
-def add_student_subject_link_save(request):
+# not yet
+def add_student_subject_link_save(request, subject_id):
     if request.method != "POST":
         messages.error(request, "Invalid Method ")
-        return redirect('add_teacher')
+        return redirect('add_student_subject_link', subject_id)
     else:
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        address = request.POST.get('address')
+        student_id = request.POST.get('student_id')
+        
+        subject = Subjects.objects.get(id=subject_id)
+        student = Students.objects.get(id=student_id)
+        
+        print(f"student_id = {student_id}, subject_id = {subject_id}")
         try:
-            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)
-            user.teachers.address = address
-            user.teachers.name = first_name
-            user.teachers.email = email
-            user.save()
-            messages.success(request, "Teacher Added Successfully!")
-            return redirect('add_teacher')
+            student_subject = StudentSubjectLink.objects.create(student_id=student, subject_id=subject)
+            student_subject.save()
+            messages.success(request, "Student Subject Added Successfully!")
+            return redirect('manage_student_subject_link', subject_id)
         except:
-            messages.error(request, "Failed to Add Teacher!")
-            return redirect('add_teacher')
+            messages.error(request, "Failed to Add Student Subject!")
+            return redirect('add_student_subject_link_save', subject_id)
         
 def manage_student_subject_link(request, subject_id):
     subject = Subjects.objects.get(id=subject_id)
@@ -227,13 +230,14 @@ def manage_student_subject_link(request, subject_id):
 
 def delete_student_subject_link(request, student_subject_id):
     student_subject_link = StudentSubjectLink.objects.get(id=student_subject_id)
+    subject_id = student_subject_link.subject_id.id
     try:
         student_subject_link.delete()
         messages.success(request, "Student Subject Deleted Successfully.")
-        return redirect('manage_student_subject_link', student_subject_id)
+        return redirect('manage_student_subject_link', subject_id)
     except:
         messages.error(request, "Failed to Delete Course.")
-        return redirect('manage_student_subject_link', student_subject_id)
+        return redirect('manage_student_subject_link', subject_id)
 
 
 def add_course(request):

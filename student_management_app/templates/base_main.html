@@ -34,7 +34,7 @@
                 {% if user.user_type == '2' %}
                     {% include "teacher_template/header_template.html" %}
                 {% else %}
-                    {% include "hod_template/header_template.html" %}
+                    {% include "admin_template/header_template.html" %}
                 {% endif %}
             {% endif %}
       </nav>
@@ -47,7 +47,7 @@
             {% if user.user_type == '2' %}
                 {% include "teacher_template/sidebar_template.html" %}
             {% else %}
-                {% include "hod_template/sidebar_template.html" %}
+                {% include "admin_template/sidebar_template.html" %}
             {% endif %}
         {% endif %}
 

@@ -1,0 +1,57 @@
+{% extends 'base_main.html'%}
+{% load static %}
+{% block page_title %} 
+Add Student Subject
+{% endblock page_title %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Form Add Student Subject</h4>
+      
+      <form class="forms-sample" action="{% url 'add_student_subject_link_save' subjects.id %}" method="post">
+        {% csrf_token %}
+
+        {% comment %} Display Messages {% endcomment %}
+        {% if messages %}
+        <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% elif message.tags == "success" %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+        {{ subjects.course_id.course_name }} - {{ subjects.subject_name }}
+        <div class="form-group">
+            <label> Students </label>
+            <select class="form-control" name="student_id">
+                {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.admin.username }} {{ student.admin.first_name }} {{student.admin.last_name}}</option>
+                {% endfor%}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-gradient-primary mr-2 ">Add Student Subject</button>
+        <button class="btn btn-light">Cancel</button>
+      </form>
+    </div>
+</div>
+
+
+{% endblock content %}

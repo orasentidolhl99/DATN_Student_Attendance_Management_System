@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from student_management_app.EmailBackEnd import EmailBackEnd
+from student_management_app.email_back_end import email_back_end
 from student_management_app.models import CustomUser, Courses, SessionYearModel
 from student_management_system import settings
 
@@ -23,7 +23,7 @@ def doLogin(request):
     if request.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        user = EmailBackEnd.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
+        user = email_back_end.authenticate(request, username=request.POST.get('email'), password=request.POST.get('password'))
         if user != None:
             login(request, user)
             user_type = user.user_type

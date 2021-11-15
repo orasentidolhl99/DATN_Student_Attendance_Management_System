@@ -1,4 +1,4 @@
-{% extends 'student_template/base_template.html'%}
+{% extends 'base_main.html'%}
 {% load static %}
 {% block custom_css %}
 <style>
@@ -43,7 +43,7 @@ View Attendance Data
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Attendance Data</h4>
-                    <p class="card-description"> Attendance Data <code>.table-striped</code>
+                    <!-- <p class="card-description"> Attendance Data <code>.table-striped</code> -->
                     </p>
                     
                     {% for attendance_report in attendance_reports %}

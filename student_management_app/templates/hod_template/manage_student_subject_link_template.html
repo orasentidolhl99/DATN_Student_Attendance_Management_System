@@ -1,4 +1,4 @@
-{% extends 'hod_template/base_template.html'%}
+{% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
 Manage Student to Subject
@@ -37,7 +37,7 @@ Manage Student to Subject
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Manage Students in Subjects</h4>
-            <p class="card-description"> Detailed information sheet about 
+            <!-- <p class="card-description"> Detailed information sheet about  -->
                 <code style="color:crimson;"> <b> {{ subject.subject_name }} - {{ subject.teacher_id.first_name }} </b> </code>
             </p>
             <hr>

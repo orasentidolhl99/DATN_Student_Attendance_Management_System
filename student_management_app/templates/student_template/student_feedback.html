@@ -1,4 +1,4 @@
-{% extends 'student_template/base_template.html'%}
+{% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
 Feedback Message
@@ -40,6 +40,8 @@ Feedback Message
 
             <div class="form-group">
                 <label>Students fill in the form the reason for wanting to take leave </label>
+                <hr>
+                <br>
                 <textarea name="feedback_message" class="form-control" rows="6" placeholder="Feedback Message"></textarea>
             </div>
 

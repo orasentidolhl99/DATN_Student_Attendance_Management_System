@@ -98,5 +98,10 @@
       })
     }
   }
+  
 
 })(jQuery);
+
+function DeleteCourse(id){
+  console.log(id);
+}

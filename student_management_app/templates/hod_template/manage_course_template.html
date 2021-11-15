@@ -1,42 +1,28 @@
-{% extends 'hod_template/base_template.html'%}
+{% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
 Manage Course
 {% endblock page_title %}
 
 
+{% block js %}
+
+<!-- <script>
+  function DeleteCourse(id){
+    console.log(id);
+  }
+</script> -->
+
+{% endblock %}
+
 {% block content %}
     <a class="btn btn-primary" href="{% url 'add_course' %}" role="button">+ Add Course</a> <br/>&nbsp;
 
-    {% comment %} Display Messages {% endcomment %}
-        {% if messages %}
-        <div class="form-group">
-        <div class="col-12">
-            {% for message in messages %}
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% elif message.tags == "success" %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        </div>
-        {% endif %}
-
+    
     <div class="card">
         <div class="card-body">
           <h4 class="card-title">Form Manage Course</h4>
-          <p class="card-description"> Detailed information sheet about Courses</p>
+          <!-- <p class="card-description"> Detailed information sheet about Courses</p> -->
           <hr>
           <br>
           <table class="table table-striped p-0 card-body">
@@ -58,7 +44,8 @@ Manage Course
                     <td>{{ course.updated_at }}</td>
                     <td>
                       <a href="{% url 'edit_course' course.id %}" class="btn btn-success">Edit</a>
-                      <input href="{% url 'delete_course' course.id %}" class="btn btn-danger" type="submit" value="Delete">
+                      <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">Delete</a>
+                      <!-- <a href="#" class="btn btn-danger" onclick="DeleteCourse({{ course.id }})">Delete</a> -->
                       
                     </td>
                 </tr>

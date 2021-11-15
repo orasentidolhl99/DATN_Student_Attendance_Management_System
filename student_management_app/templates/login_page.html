@@ -1,3 +1,6 @@
+
+
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -74,16 +77,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="{% static 'plugins/vendors/js/vendor.bundle.base.js' %}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="{% static 'plugins/js/off-canvas.js' %}"></script>
-    <script src="{% static 'plugins/js/hoverable-collapse.js' %}"></script>
-    <script src="{% static 'plugins/js/misc.js' %}"></script>
-    <!-- endinject -->
+    {% include "script_template.html" %}
   </body>
 </html>

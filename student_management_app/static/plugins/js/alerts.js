@@ -98,23 +98,10 @@
       })
     }
   }
-
-  $("#btn_submit").on('click',function(e){ //also can use on submit
-    e.preventDefault(); //prevent submit
-    var jns_srt = $("#i_dok").val();
-
-    swal({
-        title: "Are you sure?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes!",
-        cancelButtonText: "Cancel",
-        closeOnConfirm: true
-    }, function () { 
-        //I don't know what to write here. 
-        });
-});
+  
 
 })(jQuery);
 
+function DeleteCourse(id){
+  console.log(id);
+}

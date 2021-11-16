@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
-class login_check_middle_ware(MiddlewareMixin):
+class LoginCheckMiddleWare(MiddlewareMixin):
     
     def process_view(self, request, view_func, view_args, view_kwargs):
         modulename = view_func.__module__

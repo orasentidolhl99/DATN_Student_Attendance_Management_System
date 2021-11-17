@@ -14,7 +14,7 @@ from student_management_app.models import (CustomUser, Teachers,
                                            LeaveReportStudent, LeaveReportTeacher,
                                            Attendance, AttendanceReport,
                                            StudentSubjectLink)
-from .forms import AddStudentForm, EditStudentForm
+from student_management_app.forms import AddStudentForm, EditStudentForm
 
 def admin_home(request):
     return render(request,"admin_template/content_template.html")
@@ -252,13 +252,22 @@ def add_course_save(request):
         return redirect('add_course')
     else:
         course = request.POST.get('course')
+        if not course:
+            messages.error(request, f"Please enter course!")
+            return redirect('add_course')
+        
         try:
+            check_course = Courses.objects.filter(course_name=course)
+            if check_course:
+                messages.error(request, f"Course \"{course}\" is really existing!")
+                return redirect('add_course')
+            
             course_model = Courses(course_name=course)
             course_model.save()
-            messages.success(request, "Course Added Successfully!")
-            return redirect('add_course')
+            messages.success(request, f"Course \"{course}\" added successfully.")
+            return redirect('add_course')   
         except:
-            messages.error(request, "Failed to Add Course!")
+            messages.error(request, f"Failed to Add Course \"{course}\"!")
             return redirect('add_course')
 
 def manage_course(request):
@@ -282,24 +291,31 @@ def edit_course_save(request):
     else:
         course_id = request.POST.get('course_id')
         course_name = request.POST.get('course')
-
+        if not course_name:
+            messages.error(request, f"Please enter course!")
+            return redirect('/edit_course/' + course_id)
+        
         try:
             course = Courses.objects.get(id=course_id)
+            if str(course.course_name) == str(course_name):
+                messages.error(request, f"Course \"{course_name}\" is really existing!")
+                return redirect('/edit_course/' + course_id)
+            
             course.course_name = course_name
             course.save()
-
-            messages.success(request, "Course Updated Successfully.")
-            return redirect('/edit_course/'+course_id)
+            messages.success(request, f"Course \"{course_name}\" updated successfully.")
+            return redirect('/edit_course/' + course_id)
 
         except:
             messages.error(request, "Failed to Update Course.")
-            return redirect('/edit_course/'+course_id)
+            return redirect('/edit_course/' + course_id)
 
 def delete_course(request, course_id):
     course = Courses.objects.get(id=course_id)
+    course_name = course.course_name
     try:
         course.delete()
-        messages.success(request, "Course Deleted Successfully.")
+        messages.success(request, f"Course \"{course_name}\" deleted successfully.")
         return redirect('manage_course')
     except:
         messages.error(request, "Failed to Delete Course.")

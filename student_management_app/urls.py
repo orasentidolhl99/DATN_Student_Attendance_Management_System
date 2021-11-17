@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from . import admin_views, teacher_views, student_views
+from .controllers import admin_views, teacher_views, student_views
 from django.conf.urls.static import static
 from student_management_system import settings
 

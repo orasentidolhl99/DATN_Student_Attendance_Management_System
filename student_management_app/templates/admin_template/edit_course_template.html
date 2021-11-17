@@ -11,7 +11,7 @@ Edit Course | #ID : {{ course.id }}
     <div class="card-body">
       <h4 class="card-title">Edit Course</h4>
       
-      <form class="forms-sample" action="{% url 'add_course_save' %}" method="post">
+      <form class="forms-sample" action="{% url 'edit_course_save' %}" method="post">
         {% csrf_token %}
 
         {% comment %} Display Messages {% endcomment %}

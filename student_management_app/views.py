@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from student_management_app.email_back_end import EmailBackEnd
+from student_management_app.controllers.email_back_end import EmailBackEnd
 from student_management_app.models import CustomUser, Courses, SessionYearModel
 from student_management_system import settings
 

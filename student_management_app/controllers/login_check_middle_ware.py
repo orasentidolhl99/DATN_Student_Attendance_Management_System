@@ -7,13 +7,12 @@ class LoginCheckMiddleWare(MiddlewareMixin):
     
     def process_view(self, request, view_func, view_args, view_kwargs):
         modulename = view_func.__module__
-        # print(modulename)
         user = request.user
 
         #Check whether the user is logged in or not
         if user.is_authenticated:
             if user.user_type == "1":
-                if modulename == "student_management_app.admin_views":
+                if modulename == "student_management_app.controllers.admin_views":
                     pass
                 elif modulename == "student_management_app.views" or modulename == "django.views.static":
                     pass
@@ -21,7 +20,7 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                     return redirect("admin_home")
             
             elif user.user_type == "2":
-                if modulename == "student_management_app.teacher_views":
+                if modulename == "student_management_app.controllers.teacher_views":
                     pass
                 elif modulename == "student_management_app.views" or modulename == "django.views.static":
                     pass
@@ -29,7 +28,7 @@ class LoginCheckMiddleWare(MiddlewareMixin):
                     return redirect("teacher_home")
             
             elif user.user_type == "3":
-                if modulename == "student_management_app.student_views":
+                if modulename == "student_management_app.controllers.student_views":
                     pass
                 elif modulename == "student_management_app.views" or modulename == "django.views.static":
                     pass

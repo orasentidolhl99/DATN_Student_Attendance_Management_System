@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    # 'student_management_app.login_check_middle_ware.LoginCheckMiddleWare',
+    # 'student_management_app.views.login_check_middle_ware.LoginCheckMiddleWare',
 ]
 
 ROOT_URLCONF = 'student_management_system.urls'
@@ -134,4 +134,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 AUTH_USER_MODEL = "student_management_app.CustomUser"
-AUTHENTICATION_BACKENDS=['student_management_app.email_back_end.EmailBackEnd']
+AUTHENTICATION_BACKENDS=['student_management_app.controllers.email_back_end.EmailBackEnd']

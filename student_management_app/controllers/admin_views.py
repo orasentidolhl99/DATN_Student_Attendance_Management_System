@@ -278,7 +278,14 @@ def manage_course(request):
     return render(request, 'admin_template/manage_course_template.html', context)
 
 def edit_course(request, course_id):
-    course = Courses.objects.get(id=course_id)
+    try:
+        course = Courses.objects.get(id=course_id)
+        if not course:
+            messages.error(request, f"Course not found!")
+            return redirect('manage_course')
+    except:
+        messages.error(request, f"Failed to edit Course!")
+        return redirect('manage_course')
     context = {
         "course": course,
         "id": course_id
@@ -320,10 +327,6 @@ def delete_course(request, course_id):
     except:
         messages.error(request, "Failed to Delete Course.")
         return redirect('manage_course')
-
-
-
-
 
 def add_session(request):
     return render(request, "admin_template/add_session_template.html")

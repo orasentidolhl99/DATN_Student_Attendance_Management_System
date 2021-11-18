@@ -15,7 +15,6 @@ class CustomUser(AbstractUser):
     user_type_data = ((1, "HOD"), (2, "Teacher"), (3, "Student"))
     user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
 
-
 class AdminHOD(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -52,7 +51,6 @@ class Subjects(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
-
 
 class Students(models.Model):
     id=models.AutoField(primary_key=True)

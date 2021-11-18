@@ -7,13 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 
-from student_management_app.models import (CustomUser, Teachers,
-                                           Courses, Subjects,
-                                           Students, SessionYearModel,
-                                           FeedBackStudent, FeedBackTeacher,
-                                           LeaveReportStudent, LeaveReportTeacher,
-                                           Attendance, AttendanceReport,
-                                           StudentSubjectLink)
+from student_management_app.models import (
+    CustomUser, Teachers, Courses,
+    Subjects,Students, SessionYearModel,
+    FeedBackStudent, FeedBackTeacher,
+    LeaveReportStudent, LeaveReportTeacher,
+    Attendance, AttendanceReport,
+    StudentSubjectLink
+)
+
 from student_management_app.forms import AddStudentForm, EditStudentForm
 
 def admin_home(request):
@@ -97,8 +99,6 @@ def admin_home(request):
 #     return render(request, "admin_template/base_template.html", context)
 
 
-
-
 def add_teacher(request):
     return render(request, "admin_template/add_teacher_template.html")
 
@@ -114,7 +114,12 @@ def add_teacher_save(request):
         password = request.POST.get('password')
         address = request.POST.get('address')
         try:
-            user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=2)
+            user = CustomUser.objects.create_user(username=username,
+                                                  password=password,
+                                                  email=email,
+                                                  first_name=first_name,
+                                                  last_name=last_name,
+                                                  user_type=2)
             user.teachers.address = address
             user.teachers.name = first_name
             user.teachers.email = email
@@ -133,8 +138,14 @@ def manage_teacher(request):
     return render(request, "admin_template/manage_teacher_template.html", context)
 
 def edit_teacher(request, teacher_id):
-    teacher = Teachers.objects.get(admin=teacher_id)
-
+    try:
+        teacher = Teachers.objects.get(admin=teacher_id)
+        if not teacher:
+            messages.error(request, f"Teacher not found!")
+            return redirect('manage_teacher')
+    except:
+        messages.error(request, f"Failed to edit Teacher!")
+        return redirect('manage_teacher')
     context = {
         "teacher": teacher,
         "id": teacher_id
@@ -167,11 +178,13 @@ def edit_teacher_save(request):
             teacher_model.save()
 
             messages.success(request, "Teacher Updated Successfully.")
-            return redirect('/edit_teacher/'+teacher_id)
+            # return redirect('/edit_teacher/'+teacher_id)
+            return redirect('manage_teacher')
 
         except:
             messages.error(request, "Failed to Update Teacher.")
-            return redirect('/edit_teacher/'+teacher_id)
+            # return redirect('/edit_teacher/'+teacher_id)
+            return redirect('manage_teacher')
 
 def delete_teacher(request, teacher_id):
     teacher = Teachers.objects.get(admin=teacher_id)
@@ -187,12 +200,15 @@ def delete_teacher(request, teacher_id):
 # not yet
 def add_student_subject_link(request, subject_id):
     subjects = Subjects.objects.get(id=subject_id)
-    
     students = Students.objects.filter(course_id=subjects.course_id)
 
-    student_subject_link = [student.student_id for student in StudentSubjectLink.objects.filter(subject_id=subjects)]
-    
-    get_students_others = [student for student in students if student not in student_subject_link]
+    student_subject_link = [
+        student.student_id for student in StudentSubjectLink.objects\
+            .filter(subject_id=subjects)
+    ]
+    get_students_others = [
+        student for student in students if student not in student_subject_link
+    ]
 
     context = {
         'subjects': subjects,
@@ -311,12 +327,14 @@ def edit_course_save(request):
             course.course_name = course_name
             course.save()
             messages.success(request, f"Course \"{course_name}\" updated successfully.")
-            return redirect('/edit_course/' + course_id)
+            # return redirect('/edit_course/' + course_id)
+            return redirect('manage_course')
 
         except:
             messages.error(request, "Failed to Update Course.")
-            return redirect('/edit_course/' + course_id)
-
+            # return redirect('/edit_course/' + course_id)
+            return redirect('manage_course')
+        
 def delete_course(request, course_id):
     course = Courses.objects.get(id=course_id)
     course_name = course.course_name
@@ -327,6 +345,7 @@ def delete_course(request, course_id):
     except:
         messages.error(request, "Failed to Delete Course.")
         return redirect('manage_course')
+
 
 def add_session(request):
     return render(request, "admin_template/add_session_template.html")
@@ -594,10 +613,12 @@ def add_subject_save(request):
             subject = Subjects(subject_name=subject_name, course_id=course, teacher_id=teacher)
             subject.save()
             messages.success(request, "Subject Added Successfully!")
-            return redirect('add_subject')
+            # return redirect('add_subject')
+            return redirect('/manage_subject/')
         except:
             messages.error(request, "Failed to Add Subject!")
-            return redirect('add_subject')
+            # return redirect('add_subject')
+            return redirect('/manage_subject/')
 
 def manage_subject(request):
     subjects = Subjects.objects.all()
@@ -608,9 +629,17 @@ def manage_subject(request):
 
 
 def edit_subject(request, subject_id):
-    subject = Subjects.objects.get(id=subject_id)
-    courses = Courses.objects.all()
-    teachers = CustomUser.objects.filter(user_type='2')
+    
+    try:
+        subject = Subjects.objects.get(id=subject_id)
+        courses = Courses.objects.all()
+        teachers = CustomUser.objects.filter(user_type='2')
+        if not subject:
+            messages.error(request, f"Subject not found!")
+            return redirect('manage_subject')
+    except:
+        messages.error(request, f"Failed to edit Subject!")
+        return redirect('manage_subject')
     context = {
         "subject": subject,
         "courses": courses,
@@ -628,27 +657,37 @@ def edit_subject_save(request):
         subject_name = request.POST.get('subject')
         course_id = request.POST.get('course')
         teacher_id = request.POST.get('teacher')
+        
+        if not subject_name:
+            messages.error(request, f"Please enter subject!")
+            return redirect('/edit_subject/' + subject_id)
 
         try:
             subject = Subjects.objects.get(id=subject_id)
-            subject.subject_name = subject_name
-
             course = Courses.objects.get(id=course_id)
-            subject.course_id = course
-
             teacher = CustomUser.objects.get(id=teacher_id)
+            
+            check_subject_exist = Subjects.objects\
+                .filter(subject_name=str(subject_name),
+                        course_id=course, teacher_id=teacher)
+            
+            if check_subject_exist:
+                messages.error(request, f"Subject \"{subject_name}\" is really existing!")
+                return redirect('/edit_subject/' + subject_id)
+            
+            subject.subject_name = subject_name
+            subject.course_id = course
             subject.teacher_id = teacher
             
             subject.save()
-
             messages.success(request, "Subject Updated Successfully.")
-            # return redirect('/edit_subject/'+subject_id)
-            return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
+            # return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
+            return redirect('/manage_subject/')
 
         except:
             messages.error(request, "Failed to Update Subject.")
-            return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
-            # return redirect('/edit_subject/'+subject_id)
+            # return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id}))
+            return redirect('/manage_subject/')
 
 
 

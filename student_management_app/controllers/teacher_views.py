@@ -102,8 +102,10 @@ def teacher_take_attendance(request):
 
 def teacher_apply_leave(request):
     teacher_obj = Teachers.objects.get(admin=request.user.id)
+    subjects = Subjects.objects.filter(teacher_id=request.user.id)
     leave_data = LeaveReportTeacher.objects.filter(teacher_id=teacher_obj)
     context = {
+        "subjects": subjects,
         "leave_data": leave_data
     }
     return render(request, "teacher_template/teacher_apply_leave_template.html", context)
@@ -116,10 +118,16 @@ def teacher_apply_leave_save(request):
     else:
         leave_date = request.POST.get('leave_date')
         leave_message = request.POST.get('leave_message')
-
+        leave_subject = request.POST.get('leave_subject')
+        
         teacher_obj = Teachers.objects.get(admin=request.user.id)
+        subject_obj = Subjects.objects.get(id=leave_subject)
         try:
-            leave_report = LeaveReportTeacher(teacher_id=teacher_obj, leave_date=leave_date, leave_message=leave_message, leave_status=0)
+            leave_report = LeaveReportTeacher(teacher_id=teacher_obj,
+                                              subject_id=subject_obj,
+                                              leave_date=leave_date,
+                                              leave_message=leave_message,
+                                              leave_status=0)
             leave_report.save()
             messages.success(request, "Applied for Leave.")
             return redirect('teacher_apply_leave')

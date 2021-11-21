@@ -39,7 +39,15 @@ Leave Report and Apply for Leave
 
         <form class="forms-sample" action="{% url 'student_apply_leave_save' %}" method="post">
             {% csrf_token %}
-
+            <div class="form-group">
+                <label >Subject Name</label>
+                <select class="form-control" name="leave_subject" id="leave_subject">
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}">{{ subject.subject_id.subject_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label>Leave Date </label>
                 <input type="date" name="leave_date" class="form-control" />
@@ -80,6 +88,7 @@ Leave Report and Apply for Leave
                     <thead>
                         <tr>
                             <th>#ID</th>
+                            <th>Subject Name</th>
                             <th>Leave Date</th>
                             <th>Leave Message</th>
                             <th>Status</th>
@@ -89,6 +98,7 @@ Leave Report and Apply for Leave
                         {% for leave in leave_data %}
                         <tr>
                             <td>{{ leave.id }}</td>
+                            <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
                             <td>{{ leave.leave_message }}</td>
                             <td>

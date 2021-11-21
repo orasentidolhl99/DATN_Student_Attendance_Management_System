@@ -99,6 +99,7 @@ class AttendanceReport(models.Model):
 class LeaveReportStudent(models.Model):
     id = models.AutoField(primary_key=True)
     student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING, null=True)
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)
@@ -109,6 +110,7 @@ class LeaveReportStudent(models.Model):
 class LeaveReportTeacher(models.Model):
     id = models.AutoField(primary_key=True)
     teacher_id = models.ForeignKey(Teachers, on_delete=models.CASCADE)
+    subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING, null=True)
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)

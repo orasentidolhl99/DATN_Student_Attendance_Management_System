@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage #To upload Profile Pictu
 from django.urls import reverse
 import datetime
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, Attendance, AttendanceReport, LeaveReportStudent, FeedBackStudent, StudentResult
+from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, Attendance, AttendanceReport, LeaveReportStudent, FeedBackStudent, StudentResult, StudentSubjectLink
 
 def student_home(request):
     return render(request, "student_template/student_home_template.html")
@@ -95,8 +95,10 @@ def student_view_attendance_post(request):
 
 def student_apply_leave(request):
     student_obj = Students.objects.get(admin=request.user.id)
+    subjects = StudentSubjectLink.objects.filter(student_id=student_obj)
     leave_data = LeaveReportStudent.objects.filter(student_id=student_obj)
     context = {
+        "subjects": subjects,
         "leave_data": leave_data
     }
     return render(request, 'student_template/student_apply_leave.html', context)
@@ -109,10 +111,17 @@ def student_apply_leave_save(request):
     else:
         leave_date = request.POST.get('leave_date')
         leave_message = request.POST.get('leave_message')
-
+        leave_subject = request.POST.get('leave_subject')
+        
         student_obj = Students.objects.get(admin=request.user.id)
+        subject_obj = StudentSubjectLink.objects.get(id=leave_subject)
+        
         try:
-            leave_report = LeaveReportStudent(student_id=student_obj, leave_date=leave_date, leave_message=leave_message, leave_status=0)
+            leave_report = LeaveReportStudent(student_id=student_obj,
+                                              subject_id=subject_obj.subject_id,
+                                              leave_date=leave_date,
+                                              leave_message=leave_message,
+                                              leave_status=0)
             leave_report.save()
             messages.success(request, "Applied for Leave.")
             return redirect('student_apply_leave')

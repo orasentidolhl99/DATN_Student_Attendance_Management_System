@@ -20,8 +20,9 @@ Leave Apply by Teachers
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Teacher ID</th>
+                        {% comment %} <th>Teacher ID</th> {% endcomment %}
                         <th>Teacher Name</th>
+                        <th>Subject Name</th>
                         <th>Leave Date</th>
                         <th>Leave Message</th>
                         <th>Applied On</th>
@@ -32,8 +33,9 @@ Leave Apply by Teachers
                     <tbody>
                         <tr>
                             <td>{{ leave.id }}</td>
-                            <td>{{ leave.teacher_id.admin.id }}</td>
+                            {% comment %} <td>{{ leave.teacher_id.admin.id }}</td> {% endcomment %}
                             <td>{{ leave.teacher_id.admin.first_name }} {{ feedback.teacher_id.admin.last_name }}</td> 
+                            <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
                             <td>{{ leave.leave_message }}</td>
                             <td>{{ leave.created_at }}</td>

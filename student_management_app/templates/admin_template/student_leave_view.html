@@ -18,6 +18,7 @@ Leave Apply by Students
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Subject Name</th>
                         <th>Student ID</th>
                         <th>Student Name</th>
                         <th>Leave Date</th>
@@ -30,7 +31,8 @@ Leave Apply by Students
                     <tbody>
                         <tr>
                             <td>{{ leave.id }}</td>
-                            <td>{{ leave.student_id.admin.id }}</td>
+                            <td>{{ leave.subject_id.subject_name }}</td>
+                            <td>{{ leave.student_id.admin.user_name }}</td>
                             <td>{{ leave.student_id.admin.first_name }} {{ feedback.student_id.admin.last_name }}</td> 
                             <td>{{ leave.leave_date }}</td>
                             <td>{{ leave.leave_message }}</td>

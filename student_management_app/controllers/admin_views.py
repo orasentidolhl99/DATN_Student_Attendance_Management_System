@@ -6,6 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
+from datetime import datetime
 
 from student_management_app.models import (
     CustomUser, Teachers, Courses,
@@ -175,6 +176,7 @@ def edit_teacher_save(request):
             # INSERTING into teacher Model
             teacher_model = Teachers.objects.get(admin=teacher_id)
             teacher_model.address = address
+            teacher_model.updated_at = datetime.now()
             teacher_model.save()
 
             messages.success(request, "Teacher Updated Successfully.")
@@ -325,6 +327,7 @@ def edit_course_save(request):
                 return redirect('/edit_course/' + course_id)
             
             course.course_name = course_name
+            course.updated_at = datetime.now()
             course.save()
             messages.success(request, f"Course \"{course_name}\" updated successfully.")
             # return redirect('/edit_course/' + course_id)
@@ -395,6 +398,7 @@ def edit_session_save(request):
             session_year = SessionYearModel.objects.get(id=session_id)
             session_year.session_start_year = session_start_year
             session_year.session_end_year = session_end_year
+            session_year.updated_at = datetime.now()
             session_year.save()
 
             messages.success(request, "Session Year Updated Successfully.")
@@ -413,11 +417,6 @@ def delete_session(request, session_id):
     except:
         messages.error(request, "Failed to Delete Session.")
         return redirect('manage_session')
-
-
-
-
-
 
 
 def add_student(request):
@@ -491,7 +490,7 @@ def edit_student(request, student_id):
     request.session['student_id'] = student_id
 
     student = Students.objects.get(admin=student_id)
-    # student = Students.objects.get(admin=student_id)
+
     form = EditStudentForm()
     # Filling the form with Data from Database
     form.fields['email'].initial = student.admin.email
@@ -554,6 +553,11 @@ def edit_student_save(request):
                 student_model = Students.objects.get(admin=student_id)
                 student_model.address = address
 
+                if int(course_id) != int(student_model.course_id.id):
+                    # delete the student in subject - course old
+                    all_student = StudentSubjectLink.objects.filter(student_id=student_model)
+                    for student in all_student:
+                        student.delete()
                 course = Courses.objects.get(id=course_id)
                 student_model.course_id = course
 
@@ -563,6 +567,9 @@ def edit_student_save(request):
                 student_model.gender = gender
                 if profile_pic_url != None:
                     student_model.profile_pic = profile_pic_url
+                    
+                student_model.updated_at = datetime.now()
+                
                 student_model.save()
                 # Delete student_id SESSION after the data is updated
                 del request.session['student_id']
@@ -678,6 +685,7 @@ def edit_subject_save(request):
             subject.subject_name = subject_name
             subject.course_id = course
             subject.teacher_id = teacher
+            subject.updated_at = datetime.now()
             
             subject.save()
             messages.success(request, "Subject Updated Successfully.")

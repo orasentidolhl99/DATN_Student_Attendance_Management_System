@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from student_management_system import settings
+import os
 # Create your models here.
 
 class SessionYearModel(models.Model):
@@ -68,6 +69,16 @@ class Students(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
+
+def get_upload_path(instance, filename):
+    return f'{settings.PATH_IMAGE}/{filename}'
+
+class PostImageStudent(models.Model):
+    username = models.CharField(max_length=250)
+    images = models.FileField(upload_to = get_upload_path)
+    
+    def __str__(self):
+        return self.username + ' - ' + os.path.basename(self.images.path)
 
 class StudentSubjectLink(models.Model):
     id = models.AutoField(primary_key=True)

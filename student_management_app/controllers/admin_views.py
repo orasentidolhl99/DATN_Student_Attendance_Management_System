@@ -14,10 +14,11 @@ from student_management_app.models import (
     FeedBackStudent, FeedBackTeacher,
     LeaveReportStudent, LeaveReportTeacher,
     Attendance, AttendanceReport,
-    StudentSubjectLink
+    StudentSubjectLink, PostImageStudent
 )
 
 from student_management_app.forms import AddStudentForm, EditStudentForm
+from student_management_system import settings
 
 def admin_home(request):
     return render(request,"admin_template/content_template.html")
@@ -470,12 +471,38 @@ def add_student_save(request):
                 user.students.profile_pic = profile_pic_url
                 user.save()
                 messages.success(request, "Student Added Successfully!")
-                return redirect('add_student')
+                return redirect(f'/add_image_detect/{username}/{last_name}/{first_name}')
             except:
                 messages.error(request, "Failed to Add Student!")
                 return redirect('add_student')
         else:
             return redirect('add_student')
+
+def add_image_detect(request, username, last_name, first_name):
+    
+    context = {
+        "username": username,
+        "last_name": last_name,
+        "first_name": first_name
+    }
+    return render(request, 'admin_template/add_image_detect.html', context)
+
+
+def add_image_detect_save(request):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        settings.PATH_IMAGE = str(title)
+        
+        for file_num in range(0, int(length)):
+            PostImageStudent.objects.create(
+                username=title,
+                images=request.FILES.get(f'images{file_num}')
+            )
+            
+    return redirect('add_student')
 
 def manage_student(request):
     students = Students.objects.all()

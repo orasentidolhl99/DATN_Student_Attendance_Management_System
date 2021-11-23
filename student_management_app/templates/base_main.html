@@ -7,18 +7,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Student Attendance Management System</title>
-    <!-- plugins:css -->
+
     <link rel="stylesheet" href="{% static 'plugins/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'plugins/vendors/css/vendor.bundle.base.css' %}">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!-- Layout styles -->
     <link rel="stylesheet" href="{% static 'plugins/css/style.css' %}">
-    <!-- End layout styles -->
     <link rel="shortcut icon" href="{% static 'plugins/images/favicon.ico' %}" />
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
     {% block custom_css%} {% endblock custom_css%}
   </head>
@@ -26,17 +20,16 @@
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <!-- include header bar here ------------------------------->
-            
-            {% if user.user_type == '3' %}
-                {% include "student_template/header_template.html" %}
+        <!-- include header bar here -->
+        {% if user.user_type == '3' %}
+            {% include "student_template/header_template.html" %}
+        {% else %}
+            {% if user.user_type == '2' %}
+                {% include "teacher_template/header_template.html" %}
             {% else %}
-                {% if user.user_type == '2' %}
-                    {% include "teacher_template/header_template.html" %}
-                {% else %}
-                    {% include "admin_template/header_template.html" %}
-                {% endif %}
+                {% include "admin_template/header_template.html" %}
             {% endif %}
+        {% endif %}
       </nav>
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
@@ -50,8 +43,6 @@
                 {% include "admin_template/sidebar_template.html" %}
             {% endif %}
         {% endif %}
-
-        
 
         <div class="main-panel">
           <div class="content-wrapper">
@@ -98,11 +89,11 @@
         <!-- main-panel ends -->
       </div>
       <!-- partial -->
-      <!-- inclue side bar here ----------------------------------------->
+      <!-- inclue side bar here -->
       
       
     </div>
-    <!-- include custom js here ------------------------------------------->
+    <!-- include custom js here -->
     {% include "script_template.html" %}
   </body>
 </html>

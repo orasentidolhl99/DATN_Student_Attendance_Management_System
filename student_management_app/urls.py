@@ -41,6 +41,9 @@ urlpatterns = [
     path('manage_student/', admin_views.manage_student, name="manage_student"),
     path('delete_student/<student_id>/', admin_views.delete_student, name="delete_student"),
     
+    path('add_image_detect/<username>/<last_name>/<first_name>', admin_views.add_image_detect, name="add_image_detect"),
+    path('add_image_detect_save/', admin_views.add_image_detect_save, name="add_image_detect_save"),
+    
     path('add_subject/', admin_views.add_subject, name="add_subject"),
     path('add_subject_save/', admin_views.add_subject_save, name="add_subject_save"),
     path('manage_subject/', admin_views.manage_subject, name="manage_subject"),

@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="{% static 'plugins/vendors/css/vendor.bundle.base.css' %}">
     <link rel="stylesheet" href="{% static 'plugins/css/style.css' %}">
     <link rel="shortcut icon" href="{% static 'plugins/images/favicon.ico' %}" />
-    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    {% comment %} <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'plugins/css/filepond.css' %}">
 
     {% block custom_css%} {% endblock custom_css%}
   </head>

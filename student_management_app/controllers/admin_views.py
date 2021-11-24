@@ -7,6 +7,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 from datetime import datetime
+import os
+from student_management_app.utils import (
+    remove_accent, ten_image_students
+)
 
 from student_management_app.models import (
     CustomUser, Teachers, Courses,
@@ -125,6 +129,7 @@ def add_teacher_save(request):
             user.teachers.address = address
             user.teachers.name = first_name
             user.teachers.email = email
+            user.teachers.password = password
             user.save()
             messages.success(request, "Teacher Added Successfully!")
             return redirect('add_teacher')
@@ -190,10 +195,12 @@ def edit_teacher_save(request):
             return redirect('manage_teacher')
 
 def delete_teacher(request, teacher_id):
-    teacher = Teachers.objects.get(admin=teacher_id)
+    # teacher = Teachers.objects.get(admin=teacher_id)
+    user = CustomUser.objects.get(id=teacher_id)
     try:
-        teacher.delete()
-        teacher.admin.delete()
+        # teacher.delete()
+        # teacher.admin.delete()
+        user.delete()
         messages.success(request, "Teacher Deleted Successfully.")
         return redirect('manage_teacher')
     except:
@@ -363,7 +370,8 @@ def add_session_save(request):
         session_end_year = request.POST.get('session_end_year')
 
         try:
-            sessionyear = SessionYearModel(session_start_year=session_start_year, session_end_year=session_end_year)
+            sessionyear = SessionYearModel(session_start_year=session_start_year,
+                                           session_end_year=session_end_year)
             sessionyear.save()
             messages.success(request, "Session Year added Successfully!")
             return redirect("add_session")
@@ -450,15 +458,19 @@ def add_student_save(request):
             # Upload only if file is selected
             if len(request.FILES) != 0:
                 profile_pic = request.FILES['profile_pic']
-                fs = FileSystemStorage()
-                filename = fs.save(profile_pic.name, profile_pic)
-                profile_pic_url = fs.url(filename)
+                # fs = FileSystemStorage(location='media/profile_pic/')
+                # filename = fs.save(profile_pic.name, profile_pic)
+                # profile_pic_url = fs.url('profile_pic/' + filename)
             else:
                 profile_pic_url = None
 
-
             try:
-                user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
+                user = CustomUser.objects.create_user(username=username,
+                                                      password=password,
+                                                      email=email, 
+                                                      first_name=first_name,
+                                                      last_name=last_name,
+                                                      user_type=3)
                 user.students.address = address
 
                 course_obj = Courses.objects.get(id=course_id)
@@ -466,9 +478,14 @@ def add_student_save(request):
 
                 session_year_obj = SessionYearModel.objects.get(id=session_year_id)
                 user.students.session_year_id = session_year_obj
-
+                
+                user.students.name = first_name
+                user.students.email = email
+                user.students.password = password
+                
                 user.students.gender = gender
-                user.students.profile_pic = profile_pic_url
+                # user.students.profile_pic = profile_pic_url
+                user.students.profile_pic = profile_pic
                 user.save()
                 messages.success(request, "Student Added Successfully!")
                 return redirect(f'/add_image_detect/{username}/{last_name}/{first_name}')
@@ -482,8 +499,8 @@ def add_image_detect(request, username, last_name, first_name):
     
     context = {
         "username": username,
-        "last_name": last_name,
-        "first_name": first_name
+        "last_name": str(remove_accent(last_name)),
+        "first_name": str(remove_accent(first_name))
     }
     return render(request, 'admin_template/add_image_detect.html', context)
 
@@ -491,18 +508,21 @@ def add_image_detect(request, username, last_name, first_name):
 def add_image_detect_save(request):
     if request.method == 'POST':
         length = request.POST.get('length')
-        title = request.POST.get('title')
-        description = request.POST.get('description')
+        # check_ten = ten_image_students(length)
 
-        settings.PATH_IMAGE = str(title)
+        student_id = request.POST.get('student_id')
+        last_name = request.POST.get('last_name')
+        first_name = request.POST.get('first_name')
+        
+        settings.PATH_IMAGE = str(student_id + '_' + first_name)
         
         for file_num in range(0, int(length)):
             PostImageStudent.objects.create(
-                username=title,
+                username=student_id,
                 images=request.FILES.get(f'images{file_num}')
             )
-            
     return redirect('add_student')
+        
 
 def manage_student(request):
     students = Students.objects.all()
@@ -543,7 +563,7 @@ def edit_student_save(request):
     else:
         student_id = request.session.get('student_id')
         if student_id == None:
-            return redirect('/manage_student')
+            return redirect('manage_student')
 
         form = EditStudentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -611,9 +631,26 @@ def edit_student_save(request):
 
 
 def delete_student(request, student_id):
-    student = Students.objects.get(admin=student_id)
+    # student = Students.objects.get(admin=student_id)
+    user = CustomUser.objects.get(id=student_id)
+    
+    all_post_image_student = PostImageStudent.objects.filter(username=user.username)
+    path_post_image_student = str(user.username) + '_' + str(remove_accent(user.first_name))
     try:
-        student.delete()
+        # # delete student
+        # student.delete()
+        user.delete()
+        # delete post image student
+        for image_student in all_post_image_student:
+            image_student.delete()
+        
+        # delete folder image
+        dir_path = 'media/datasets/' + path_post_image_student
+        try:
+            os.rmdir(dir_path)
+        except OSError as e:
+            print("Error: %s : %s" % (dir_path, e.strerror))
+            
         messages.success(request, "Student Deleted Successfully.")
         return redirect('manage_student')
     except:

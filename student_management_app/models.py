@@ -53,6 +53,9 @@ class Subjects(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
+def upload_profile_pic(instance, filename):
+    return f'profile_pic/{filename}'
+
 class Students(models.Model):
     id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -60,7 +63,7 @@ class Students(models.Model):
     password = models.CharField(max_length=255)
     admin=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     gender=models.CharField(max_length=255)
-    profile_pic=models.FileField()
+    profile_pic=models.FileField(upload_to = upload_profile_pic)
     address=models.TextField()
     course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING, default=1)
     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.DO_NOTHING, default=1)
@@ -69,9 +72,12 @@ class Students(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
+    
+    def __str__(self):
+        return self.admin.username + ' - ' + self.admin.first_name
 
 def get_upload_path(instance, filename):
-    return f'{settings.PATH_IMAGE}/{filename}'
+    return f'datasets/{settings.PATH_IMAGE}/{filename}'
 
 class PostImageStudent(models.Model):
     username = models.CharField(max_length=250)

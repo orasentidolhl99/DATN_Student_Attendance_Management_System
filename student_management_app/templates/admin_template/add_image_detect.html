@@ -5,65 +5,71 @@ Add Image Detect Student | {{ username }} - {{ last_name }} {{ first_name }}
 {% endblock page_title %}
 
 {% block content %}
-    <div id="commmonname"></div>
-    <input type="file" multiple>
-    <button type="button" id="saveBtn" class="btn btn-gradient-primary mr-2">Save</button>
+    <div class="card">
+        <div class="card-body">
+            <div id="commmonname"></div>
+            <input type="file" multiple>
+            <button type="button" id="saveBtn" class="btn btn-gradient-primary mr-2">Save</button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var files = []
-            FilePond.registerPlugin(FilePondPluginFileValidateSize);
-            FilePond.registerPlugin(FilePondPluginFileValidateType);
-            FilePond.setOptions({
-                allowMultiple:true,
-                maxFiles:10,
-                maxFileSize: '10MB'
-            })
-            const inputElement = document.querySelector('input[type="file"]');
-            const pond = FilePond.create( inputElement, {
-                acceptedFileTypes:['image/png', 'image/jpeg'],
-                onaddfile: (err, fileItem) => {
-                    if (!err) {
-                    files.push(fileItem.file)
-                    }
-                    console.log(files)
-                },
-                onremovefile: (err, fileItem) => {
-                    const index = files.indexOf(fileItem.file)
-                    if (index > -1) {
-                        files.splice(index, 1)
-                    }
-                    console.log(files)
-                }
-            } );
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var files = []
+                    FilePond.registerPlugin(FilePondPluginFileValidateSize);
+                    FilePond.registerPlugin(FilePondPluginFileValidateType);
+                    FilePond.setOptions({
+                        allowMultiple:true,
+                        maxFiles:10,
+                        maxFileSize: '10MB'
+                    })
+                    const inputElement = document.querySelector('input[type="file"]');
+                    const pond = FilePond.create( inputElement, {
+                        acceptedFileTypes:['image/png', 'image/jpeg'],
+                        onaddfile: (err, fileItem) => {
+                            if (!err) {
+                            files.push(fileItem.file)
+                            }
+                            console.log(files)
+                        },
+                        onremovefile: (err, fileItem) => {
+                            const index = files.indexOf(fileItem.file)
+                            if (index > -1) {
+                                files.splice(index, 1)
+                            }
+                            console.log(files)
+                        }
+                    } );
 
-            var formData = new FormData();
-            $(document).on('click', '#saveBtn', function(e) {
-                formData.append('length', files.length)
-                formData.append('title', '{{username}}')
-                formData.append('description', '{{first_name}}')
-                for (var i = 0; i < files.length; i++) {
-                    formData.append('images' + i, files[i])
-                }
-                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+                    var formData = new FormData();
+                    $(document).on('click', '#saveBtn', function(e) {
+                        formData.append('length', files.length)
+                        formData.append('student_id', '{{username}}')
+                        formData.append('last_name', '{{ last_name }}')
+                        formData.append('first_name', '{{ first_name }}')
+                        for (var i = 0; i < files.length; i++) {
+                            formData.append('images' + i, files[i])
+                        }
+                        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url "add_image_detect_save" %}',
-                    data: formData,
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    enctype: 'multipart/form-data',
-                    success: function (){
-                        var result = '<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">Image student detect has been created!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
-                        $("#commmonname").html(result)
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log(xhr.status + ":" + xhr.responseText)
-                    }
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url "add_image_detect_save" %}',
+                            data: formData,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            enctype: 'multipart/form-data',
+                            success: function (){
+                                var result = '<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">Image student detect has been created!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                                $("#commmonname").html(result)
+                                location.href='{% url "manage_student" %}' //this will redirect to manage_student
+                            },
+                            error: function(xhr, errmsg, err) {
+                                console.log(xhr.status + ":" + xhr.responseText)
+                            }
+                        })
+                    })
                 })
-            })
-        })
-    </script>
+            </script>
+        </div>
+    </div>
 {% endblock %}

@@ -69,7 +69,7 @@ Manage Student
                         <td>{{ student.admin.email }}</td>
                         <td>{{ student.address }}</td>
                         <td>{{ student.gender }}</td>
-                        <td> <img src="{{ student.profile_pic }}" style="width: 100px;" /> </td>
+                        <td> <img src="{{ student.profile_pic.url }}" style="height:50px; width:50px;" /> </td>
                         <td>{{ student.session_year_id.session_start_year }}</td>
                         <td>{{ student.session_year_id.session_end_year }}</td>
                         <td>{{ student.course_id.course_name }}</td>

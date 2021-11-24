@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    
+    # delete file image student
+    'django_cleanup.apps.CleanupConfig',
     'student_management_app',
 ]
 

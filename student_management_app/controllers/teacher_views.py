@@ -10,7 +10,12 @@ from datetime import datetime
 
 
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, SessionYearModel, Attendance, AttendanceReport, LeaveReportTeacher, FeedBackTeacher, StudentResult, LeaveReportStudent
+from student_management_app.models import (
+    CustomUser, Teachers, Courses, Subjects,
+    Students, SessionYearModel, Attendance, 
+    AttendanceReport, LeaveReportTeacher,
+    FeedBackTeacher, StudentResult, LeaveReportStudent
+)
 
 def teacher_home(request):
     # Fetching All Students under teacher
@@ -255,7 +260,7 @@ def teacher_feedback_save(request):
         teacher_obj = Teachers.objects.get(admin=request.user.id)
 
         try:
-            add_feedback = FeedBackTeachers(teacher_id=teacher_obj, feedback=feedback, feedback_reply="")
+            add_feedback = FeedBackTeacher(teacher_id=teacher_obj, feedback=feedback, feedback_reply="")
             add_feedback.save()
             messages.success(request, "Feedback Sent.")
             return redirect('teacher_feedback')

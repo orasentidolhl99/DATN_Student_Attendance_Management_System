@@ -330,7 +330,9 @@ def teacher_profile_update(request):
 
 
 def student_leave_view(request):
-    leaves = LeaveReportStudent.objects.all()
+    # find all subject 
+    all_subjects_in_teacher = Subjects.objects.filter(teacher_id=request.user.id)
+    leaves = LeaveReportStudent.objects.filter(subject_id__in=all_subjects_in_teacher)
     context = {
         "leaves": leaves
     }

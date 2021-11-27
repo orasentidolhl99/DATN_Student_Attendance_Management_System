@@ -7,11 +7,11 @@
 /* eslint-disable */
 
 (function(global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined'
-        ? factory(exports)
-        : typeof define === 'function' && define.amd
-        ? define(['exports'], factory)
-        : ((global = global || self), factory((global.FilePond = {})));
+    typeof exports === 'object' && typeof module !== 'undefined' ?
+        factory(exports) :
+        typeof define === 'function' && define.amd ?
+        define(['exports'], factory) :
+        ((global = global || self), factory((global.FilePond = {})));
 })(this, function(exports) {
     'use strict';
 
@@ -84,15 +84,13 @@
         var query = function query(str) {
             var _queryHandles;
             for (
-                var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
-                _key < _len;
-                _key++
+                var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++
             ) {
                 args[_key - 1] = arguments[_key];
             }
-            return queryHandles[str]
-                ? (_queryHandles = queryHandles)[str].apply(_queryHandles, args)
-                : null;
+            return queryHandles[str] ?
+                (_queryHandles = queryHandles)[str].apply(_queryHandles, args) :
+                null;
         };
 
         var api = {
@@ -163,9 +161,9 @@
             attributes = className;
             className = null;
         }
-        var element = isSVGElement(tag)
-            ? document.createElementNS(ns, tag)
-            : document.createElement(tag);
+        var element = isSVGElement(tag) ?
+            document.createElementNS(ns, tag) :
+            document.createElement(tag);
         if (className) {
             if (isSVGElement(tag)) {
                 attr(element, 'class', className);
@@ -224,13 +222,14 @@
 
     var testElement = isBrowser() ? createElement('svg') : {};
     var getChildCount =
-        'children' in testElement
-            ? function(el) {
-                  return el.children.length;
-              }
-            : function(el) {
-                  return el.childNodes.length;
-              };
+        'children' in testElement ?
+
+        function(el) {
+            return el.children.length;
+        } :
+        function(el) {
+            return el.childNodes.length;
+        };
 
     var getViewRect = function getViewRect(elementRect, childViews, offset, scale) {
         var left = offset[0] || elementRect.left;
@@ -547,9 +546,9 @@
         // default is single definition
         // we check if transform is set, if so, we check if property is set
         var def =
-            definition[category] && typeof definition[category][property] === 'object'
-                ? definition[category][property]
-                : definition[category] || definition;
+            definition[category] && typeof definition[category][property] === 'object' ?
+            definition[category][property] :
+            definition[category] || definition;
 
         var type = typeof def === 'string' ? def : def.type;
         var props = typeof def === 'object' ? Object.assign({}, def) : {};
@@ -769,9 +768,9 @@
             return [viewProps['scaleX'] || 0, viewProps['scaleY'] || 0];
         };
         var getRect = function getRect() {
-            return view.rect
-                ? getViewRect(view.rect, view.childViews, getOffset(), getScale())
-                : null;
+            return view.rect ?
+                getViewRect(view.rect, view.childViews, getOffset(), getScale()) :
+                null;
         };
         viewInternalAPI.rect = { get: getRect };
         viewExternalAPI.rect = { get: getRect };
@@ -975,11 +974,12 @@
                 destroy = _ref$destroy === void 0 ? function() {} : _ref$destroy,
                 _ref$filterFrameActio = _ref.filterFrameActionsForChild,
                 filterFrameActionsForChild =
-                    _ref$filterFrameActio === void 0
-                        ? function(child, actions) {
-                              return actions;
-                          }
-                        : _ref$filterFrameActio,
+                _ref$filterFrameActio === void 0 ?
+
+                function(child, actions) {
+                    return actions;
+                } :
+                _ref$filterFrameActio,
                 _ref$didCreateView = _ref.didCreateView,
                 didCreateView = _ref$didCreateView === void 0 ? function() {} : _ref$didCreateView,
                 _ref$didWriteView = _ref.didWriteView,
@@ -1135,29 +1135,29 @@
 
                     // append new elements to DOM and update those
                     childViews
-                        //.filter(child => !child.element.parentNode)
+                    //.filter(child => !child.element.parentNode)
                         .forEach(function(child, index) {
-                            // skip
-                            if (child.element.parentNode) {
-                                return;
-                            }
+                        // skip
+                        if (child.element.parentNode) {
+                            return;
+                        }
 
-                            // append to DOM
-                            internalAPI.appendChild(child.element, index);
+                        // append to DOM
+                        internalAPI.appendChild(child.element, index);
 
-                            // call read (need to know the size of these elements)
-                            child._read();
+                        // call read (need to know the size of these elements)
+                        child._read();
 
-                            // re-call write
-                            child._write(
-                                ts,
-                                filterFrameActionsForChild(child, frameActions),
-                                shouldOptimize
-                            );
+                        // re-call write
+                        child._write(
+                            ts,
+                            filterFrameActionsForChild(child, frameActions),
+                            shouldOptimize
+                        );
 
-                            // we just added somthing to the dom, no rest
-                            resting = false;
-                        });
+                        // we just added somthing to the dom, no rest
+                        resting = false;
+                    });
 
                     // update resting state
                     isResting = resting;
@@ -1506,11 +1506,11 @@
     };
 
     var toNumber = function toNumber(value) {
-        return isNumber(value)
-            ? value
-            : isString(value)
-            ? toString(value).replace(/[a-z]+/gi, '')
-            : 0;
+        return isNumber(value) ?
+            value :
+            isString(value) ?
+            toString(value).replace(/[a-z]+/gi, '') :
+            0;
     };
 
     var toInt = function toInt(value) {
@@ -1888,9 +1888,9 @@
                 return obj &&
                     typeof Symbol === 'function' &&
                     obj.constructor === Symbol &&
-                    obj !== Symbol.prototype
-                    ? 'symbol'
-                    : typeof obj;
+                    obj !== Symbol.prototype ?
+                    'symbol' :
+                    typeof obj;
             };
         }
 
@@ -2342,11 +2342,11 @@
     }
 
     function _getPrototypeOf(o) {
-        _getPrototypeOf = Object.setPrototypeOf
-            ? Object.getPrototypeOf
-            : function _getPrototypeOf(o) {
-                  return o.__proto__ || Object.getPrototypeOf(o);
-              };
+        _getPrototypeOf = Object.setPrototypeOf ?
+            Object.getPrototypeOf :
+            function _getPrototypeOf(o) {
+                return o.__proto__ || Object.getPrototypeOf(o);
+            };
         return _getPrototypeOf(o);
     }
 
@@ -2438,11 +2438,11 @@
     }
 
     function _interopRequireDefault(obj) {
-        return obj && obj.__esModule
-            ? obj
-            : {
-                  default: obj,
-              };
+        return obj && obj.__esModule ?
+            obj :
+            {
+                default: obj,
+            };
     }
 
     function _interopRequireWildcard(obj) {
@@ -2455,9 +2455,9 @@
                 for (var key in obj) {
                     if (Object.prototype.hasOwnProperty.call(obj, key)) {
                         var desc =
-                            Object.defineProperty && Object.getOwnPropertyDescriptor
-                                ? Object.getOwnPropertyDescriptor(obj, key)
-                                : {};
+                            Object.defineProperty && Object.getOwnPropertyDescriptor ?
+                            Object.getOwnPropertyDescriptor(obj, key) :
+                            {};
 
                         if (desc.get || desc.set) {
                             Object.defineProperty(newObj, key, desc);
@@ -2721,7 +2721,7 @@
     function _iterableToArrayLimitLoose(arr, i) {
         var _arr = [];
 
-        for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done; ) {
+        for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done;) {
             _arr.push(_step.value);
 
             if (i && _arr.length === i) break;
@@ -2768,9 +2768,9 @@
     function _initializerWarningHelper(descriptor, context) {
         throw new Error(
             'Decorating class property failed. Please ensure that ' +
-                'proposal-class-properties is enabled and set to use loose mode. ' +
-                'To use proposal-class-properties in spec mode with decorators, wait for ' +
-                'the next major version of decorators in stage 2.'
+            'proposal-class-properties is enabled and set to use loose mode. ' +
+            'To use proposal-class-properties in spec mode with decorators, wait for ' +
+            'the next major version of decorators in stage 2.'
         );
     }
 
@@ -2949,7 +2949,10 @@
         };
 
         var api = {
-            elementsDefinitionOrder: [['method'], ['field']],
+            elementsDefinitionOrder: [
+                ['method'],
+                ['field']
+            ],
             initializeInstanceElements: function(O, elements) {
                 ['method', 'field'].forEach(function(kind) {
                     elements.forEach(function(element) {
@@ -3131,10 +3134,10 @@
                 if (kind !== 'method' && kind !== 'field') {
                     throw new TypeError(
                         'An element descriptor\'s .kind property must be either "method" or' +
-                            ' "field", but a decorator created an element descriptor with' +
-                            ' .kind "' +
-                            kind +
-                            '"'
+                        ' "field", but a decorator created an element descriptor with' +
+                        ' .kind "' +
+                        kind +
+                        '"'
                     );
                 }
 
@@ -3145,10 +3148,10 @@
                 if (placement !== 'static' && placement !== 'prototype' && placement !== 'own') {
                     throw new TypeError(
                         'An element descriptor\'s .placement property must be one of "static",' +
-                            ' "prototype" or "own", but a decorator created an element descriptor' +
-                            ' with .placement "' +
-                            placement +
-                            '"'
+                        ' "prototype" or "own", but a decorator created an element descriptor' +
+                        ' with .placement "' +
+                        placement +
+                        '"'
                     );
                 }
 
@@ -3214,9 +3217,9 @@
                 if (kind !== 'class') {
                     throw new TypeError(
                         'A class descriptor\'s .kind property must be "class", but a decorator' +
-                            ' created a class descriptor with .kind "' +
-                            kind +
-                            '"'
+                        ' created a class descriptor with .kind "' +
+                        kind +
+                        '"'
                     );
                 }
 
@@ -3338,9 +3341,9 @@
                         if (_hasDecorators(other)) {
                             throw new ReferenceError(
                                 "Decorators can't be placed on different accessors with for " +
-                                    'the same property (' +
-                                    element.key +
-                                    ').'
+                                'the same property (' +
+                                element.key +
+                                ').'
                             );
                         }
 
@@ -3499,9 +3502,7 @@
                 for (
                     var _len = arguments.length,
                         args = new Array(_len > 1 ? _len - 1 : 0),
-                        _key = 1;
-                    _key < _len;
-                    _key++
+                        _key = 1; _key < _len; _key++
                 ) {
                     args[_key - 1] = arguments[_key];
                 }
@@ -3511,9 +3512,7 @@
                 for (
                     var _len2 = arguments.length,
                         args = new Array(_len2 > 1 ? _len2 - 1 : 0),
-                        _key2 = 1;
-                    _key2 < _len2;
-                    _key2++
+                        _key2 = 1; _key2 < _len2; _key2++
                 ) {
                     args[_key2 - 1] = arguments[_key2];
                 }
@@ -3778,7 +3777,9 @@
         dropOnPage: [false, Type.BOOLEAN], // Allow dropping of files anywhere on page (prevents browser from opening file if dropped outside of Up)
         dropOnElement: [true, Type.BOOLEAN], // Drop needs to happen on element (set to false to also load drops outside of Up)
         dropValidation: [false, Type.BOOLEAN], // Enable or disable validating files on drop
-        ignoredFiles: [['.ds_store', 'thumbs.db', 'desktop.ini'], Type.ARRAY],
+        ignoredFiles: [
+            ['.ds_store', 'thumbs.db', 'desktop.ini'], Type.ARRAY
+        ],
 
         // Upload related
         instantUpload: [true, Type.BOOLEAN], // Should upload files immediately on drop
@@ -3789,7 +3790,9 @@
         chunkUploads: [false, Type.BOOLEAN], // Enable chunked uploads
         chunkForce: [false, Type.BOOLEAN], // Force use of chunk uploads even for files smaller than chunk size
         chunkSize: [5000000, Type.INT], // Size of chunks (5MB default)
-        chunkRetryDelays: [[500, 1000, 3000], Type.ARRAY], // Amount of times to retry upload of a chunk when it fails
+        chunkRetryDelays: [
+            [500, 1000, 3000], Type.ARRAY
+        ], // Amount of times to retry upload of a chunk when it fails
 
         // The server api end points to use for uploading (see docs)
         server: [null, Type.SERVER_API],
@@ -3807,7 +3810,7 @@
         labelThousandsSeparator: [getThousandsSeparator(), Type.STRING], // Default is locale separator
 
         labelIdle: [
-            'Drag & Drop your files or <span class="filepond--label-action">Browse</span>',
+            'Drag & Drop or <span class="filepond--label-action">Browse</span>',
             Type.STRING,
         ],
 
@@ -3902,10 +3905,14 @@
         styleButtonRemoveItemAlign: [false, Type.BOOLEAN],
 
         // custom initial files array
-        files: [[], Type.ARRAY],
+        files: [
+            [], Type.ARRAY
+        ],
 
         // show support by displaying credits
-        credits: [['https://pqina.nl/', 'Powered by PQINA'], Type.ARRAY],
+        credits: [
+            ['https://pqina.nl/', 'Powered by PQINA'], Type.ARRAY
+        ],
     };
 
     var getItemByQuery = function getItemByQuery(items, query) {
@@ -4068,9 +4075,9 @@
 
             GET_PANEL_ASPECT_RATIO: function GET_PANEL_ASPECT_RATIO() {
                 var isShapeCircle = /circle/.test(state.options.stylePanelLayout);
-                var aspectRatio = isShapeCircle
-                    ? 1
-                    : getNumericAspectRatioFromString(state.options.stylePanelAspectRatio);
+                var aspectRatio = isShapeCircle ?
+                    1 :
+                    getNumericAspectRatioFromString(state.options.stylePanelAspectRatio);
                 return aspectRatio;
             },
 
@@ -4243,9 +4250,9 @@
         var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
         var extension = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
         var file =
-            typeof type === 'string'
-                ? blob.slice(0, blob.size, type)
-                : blob.slice(0, blob.size, blob.type);
+            typeof type === 'string' ?
+            blob.slice(0, blob.size, type) :
+            blob.slice(0, blob.size, blob.type);
         file.lastModifiedDate = new Date();
 
         // copy relative path
@@ -4377,9 +4384,7 @@
         var _iteratorError = undefined;
         try {
             for (
-                var _iterator = rows[Symbol.iterator](), _step;
-                !(_iteratorNormalCompletion = (_step = _iterator.next()).done);
-                _iteratorNormalCompletion = true
+                var _iterator = rows[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true
             ) {
                 var header = _step.value;
 
@@ -4504,13 +4509,13 @@
                 function(error) {
                     api.fire(
                         'error',
-                        typeof error === 'string'
-                            ? {
-                                  type: 'error',
-                                  code: 0,
-                                  body: error,
-                              }
-                            : error
+                        typeof error === 'string' ?
+                        {
+                            type: 'error',
+                            code: 0,
+                            body: error,
+                        } :
+                        error
                     );
                 },
                 function(computable, current, total) {
@@ -4585,8 +4590,7 @@
         var headersReceived = false;
 
         // set default options
-        options = Object.assign(
-            {
+        options = Object.assign({
                 method: 'POST',
                 headers: {},
                 withCredentials: false,
@@ -4775,9 +4779,9 @@
                     createResponse(
                         'load',
                         xhr.status,
-                        action.method === 'HEAD'
-                            ? null
-                            : getFileFromBlob(onload(xhr.response), filename),
+                        action.method === 'HEAD' ?
+                        null :
+                        getFileFromBlob(onload(xhr.response), filename),
                         headers
                     )
                 );
@@ -4876,11 +4880,11 @@
             if (isObject(metadata)) formData.append(name, JSON.stringify(metadata));
 
             var headers =
-                typeof action.headers === 'function'
-                    ? action.headers(file, metadata)
-                    : Object.assign({}, action.headers, {
-                          'Upload-Length': file.size,
-                      });
+                typeof action.headers === 'function' ?
+                action.headers(file, metadata) :
+                Object.assign({}, action.headers, {
+                    'Upload-Length': file.size,
+                });
 
             var requestParams = Object.assign({}, action, {
                 headers: headers,
@@ -4915,9 +4919,9 @@
             var requestUrl = buildURL(apiUrl, chunkServer.url, state.serverId);
 
             var headers =
-                typeof action.headers === 'function'
-                    ? action.headers(state.serverId)
-                    : Object.assign({}, action.headers);
+                typeof action.headers === 'function' ?
+                action.headers(state.serverId) :
+                Object.assign({}, action.headers);
 
             var requestParams = {
                 headers: headers,
@@ -5014,14 +5018,14 @@
             var requestUrl = buildURL(apiUrl, chunkServer.url, state.serverId);
 
             var headers =
-                typeof chunkServer.headers === 'function'
-                    ? chunkServer.headers(chunk)
-                    : Object.assign({}, chunkServer.headers, {
-                          'Content-Type': 'application/offset+octet-stream',
-                          'Upload-Offset': chunk.offset,
-                          'Upload-Length': file.size,
-                          'Upload-Name': file.name,
-                      });
+                typeof chunkServer.headers === 'function' ?
+                chunkServer.headers(chunk) :
+                Object.assign({}, chunkServer.headers, {
+                    'Content-Type': 'application/offset+octet-stream',
+                    'Upload-Offset': chunk.offset,
+                    'Upload-Length': file.size,
+                    'Upload-Name': file.name,
+                });
 
             var request = (chunk.request = sendRequest(
                 ondata(chunk.data),
@@ -5226,13 +5230,12 @@
                 };
 
             var headers =
-                typeof action.headers === 'function'
-                    ? action.headers(file, metadata) || {}
-                    : Object.assign(
-                          {},
+                typeof action.headers === 'function' ?
+                action.headers(file, metadata) || {} :
+                Object.assign({},
 
-                          action.headers
-                      );
+                    action.headers
+                );
 
             var requestParams = Object.assign({}, action, {
                 headers: headers,
@@ -5302,9 +5305,7 @@
         if (typeof action === 'function')
             return function() {
                 for (
-                    var _len = arguments.length, params = new Array(_len), _key = 0;
-                    _key < _len;
-                    _key++
+                    var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++
                 ) {
                     params[_key] = arguments[_key];
                 }
@@ -5496,14 +5497,14 @@
                 function(response) {
                     // we put the response in state so we can access
                     // it outside of this method
-                    state.response = isObject(response)
-                        ? response
-                        : {
-                              type: 'load',
-                              code: 200,
-                              body: '' + response,
-                              headers: {},
-                          };
+                    state.response = isObject(response) ?
+                        response :
+                        {
+                            type: 'load',
+                            code: 200,
+                            body: '' + response,
+                            headers: {},
+                        };
 
                     // update duration
                     state.duration = Date.now() - state.timestamp;
@@ -5517,8 +5518,7 @@
                     // we are really done
                     // if perceived progress is 1 ( wait for perceived progress to complete )
                     // or if server does not support progress ( null )
-                    if (
-                        !allowMinimumUploadDuration ||
+                    if (!allowMinimumUploadDuration ||
                         (allowMinimumUploadDuration && state.perceivedProgress === 1)
                     ) {
                         completeFn();
@@ -5533,13 +5533,13 @@
                     // update others about this error
                     api.fire(
                         'error',
-                        isObject(error)
-                            ? error
-                            : {
-                                  type: 'error',
-                                  code: 0,
-                                  body: '' + error,
-                              }
+                        isObject(error) ?
+                        error :
+                        {
+                            type: 'error',
+                            code: 0,
+                            body: '' + error,
+                        }
                     );
                 },
 
@@ -5596,21 +5596,23 @@
             state.response = null;
         };
 
-        var getProgress = allowMinimumUploadDuration
-            ? function() {
-                  return state.progress ? Math.min(state.progress, state.perceivedProgress) : null;
-              }
-            : function() {
-                  return state.progress || null;
-              };
+        var getProgress = allowMinimumUploadDuration ?
 
-        var getDuration = allowMinimumUploadDuration
-            ? function() {
-                  return Math.min(state.duration, state.perceivedDuration);
-              }
-            : function() {
-                  return state.duration;
-              };
+            function() {
+                return state.progress ? Math.min(state.progress, state.perceivedProgress) : null;
+            } :
+            function() {
+                return state.progress || null;
+            };
+
+        var getDuration = allowMinimumUploadDuration ?
+
+            function() {
+                return Math.min(state.duration, state.perceivedDuration);
+            } :
+            function() {
+                return state.duration;
+            };
 
         var api = Object.assign({}, on(), {
             process: process, // start processing file
@@ -5727,9 +5729,7 @@
         var fire = function fire(event) {
             if (state.released || state.frozen) return;
             for (
-                var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
-                _key < _len;
-                _key++
+                var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++
             ) {
                 params[_key - 1] = arguments[_key];
             }
@@ -6008,9 +6008,9 @@
                 // a completed upload will have a serverFileReference, a failed chunked upload where
                 // getting a serverId succeeded but >=0 chunks have been uploaded will have transferId set
                 var serverTransferId =
-                    state.serverFileReference !== null
-                        ? state.serverFileReference
-                        : state.transferId;
+                    state.serverFileReference !== null ?
+                    state.serverFileReference :
+                    state.transferId;
 
                 // cannot revert without a server id for this process
                 if (serverTransferId === null) {
@@ -6075,8 +6075,7 @@
             return deepCloneObject(key ? metadata[key] : metadata);
         };
 
-        var api = Object.assign(
-            {
+        var api = Object.assign({
                 id: {
                     get: function get() {
                         return id;
@@ -6158,8 +6157,7 @@
                 revert: revert,
             },
 
-            on(),
-            {
+            on(), {
                 freeze: function freeze() {
                     return (state.frozen = true);
                 },
@@ -6287,9 +6285,7 @@
 
     var optionalPromise = function optionalPromise(fn) {
         for (
-            var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
-            _key < _len;
-            _key++
+            var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++
         ) {
             params[_key - 1] = arguments[_key];
         }
@@ -6376,11 +6372,9 @@
 
                 activeItems.forEach(function(item) {
                     // if item not is in new value, remove
-                    if (
-                        !files.find(function(file) {
+                    if (!files.find(function(file) {
                             return file.source === item.source || file.source === item.file;
-                        })
-                    ) {
+                        })) {
                         dispatch('REMOVE_ITEM', { query: item, remove: false });
                     }
                 });
@@ -6436,8 +6430,7 @@
                             if (!shouldPrepareOutput) return;
 
                             dispatch(
-                                'REQUEST_PREPARE_OUTPUT',
-                                {
+                                'REQUEST_PREPARE_OUTPUT', {
                                     query: id,
                                     item: item,
                                     success: function success(file) {
@@ -6471,12 +6464,12 @@
 
                     var revert = function revert(doUpload) {
                         item.revert(
-                            createRevertFunction(
-                                state.options.server.url,
-                                state.options.server.revert
-                            ),
-                            query('GET_FORCE_REVERT')
-                        )
+                                createRevertFunction(
+                                    state.options.server.url,
+                                    state.options.server.revert
+                                ),
+                                query('GET_FORCE_REVERT')
+                            )
                             .then(doUpload ? upload : function() {})
                             .catch(function() {});
                     };
@@ -6538,9 +6531,9 @@
 
                 var ignoredFiles = query('GET_IGNORED_FILES');
                 var isValidFile = function isValidFile(source) {
-                    return isFile(source)
-                        ? !ignoredFiles.includes(source.name.toLowerCase())
-                        : !isEmpty(source);
+                    return isFile(source) ?
+                        !ignoredFiles.includes(source.name.toLowerCase()) :
+                        !isEmpty(source);
                 };
                 var validItems = items.filter(isValidFile);
 
@@ -6659,11 +6652,11 @@
 
                 // where did the file originate
                 var origin =
-                    options.type === 'local'
-                        ? FileOrigin.LOCAL
-                        : options.type === 'limbo'
-                        ? FileOrigin.LIMBO
-                        : FileOrigin.INPUT;
+                    options.type === 'local' ?
+                    FileOrigin.LOCAL :
+                    options.type === 'limbo' ?
+                    FileOrigin.LIMBO :
+                    FileOrigin.INPUT;
 
                 // create a new blank item
                 var item = createItem(
@@ -6820,8 +6813,7 @@
                             if (shouldPrepareOutput) {
                                 // wait for idle state and then run PREPARE_OUTPUT
                                 dispatch(
-                                    'REQUEST_PREPARE_OUTPUT',
-                                    {
+                                    'REQUEST_PREPARE_OUTPUT', {
                                         query: id,
                                         item: item,
                                         success: function success(file) {
@@ -6929,17 +6921,18 @@
 
                     // this creates a function that loads the file based on the type of file (string, base64, blob, file) and location of file (local, remote, limbo)
                     createFileLoader(
-                        origin === FileOrigin.INPUT
-                            ? // input, if is remote, see if should use custom fetch, else use default fetchBlob
-                              isString(source) && isExternalURL(source)
-                                ? fetch
-                                    ? createFetchFunction(url, fetch)
-                                    : fetchBlob // remote url
-                                : fetchBlob // try to fetch url
-                            : // limbo or local
-                            origin === FileOrigin.LIMBO
-                            ? createFetchFunction(url, restore) // limbo
-                            : createFetchFunction(url, load) // local
+                        origin === FileOrigin.INPUT ? // input, if is remote, see if should use custom fetch, else use default fetchBlob
+                        isString(source) && isExternalURL(source) ?
+                        fetch ?
+                        createFetchFunction(url, fetch) :
+                        fetchBlob // remote url
+                        :
+                        fetchBlob // try to fetch url
+                        : // limbo or local
+                        origin === FileOrigin.LIMBO ?
+                        createFetchFunction(url, restore) // limbo
+                        :
+                        createFetchFunction(url, load) // local
                     ),
 
                     // called when the file is loaded so it can be piped through the filters
@@ -7041,8 +7034,7 @@
 
             REQUEST_ITEM_PREPARE: getItemByQueryFromState(state, function(item, _success, failure) {
                 dispatch(
-                    'REQUEST_PREPARE_OUTPUT',
-                    {
+                    'REQUEST_PREPARE_OUTPUT', {
                         query: item.id,
                         item: item,
                         success: function success(file) {
@@ -7091,12 +7083,12 @@
                         item.status === ItemStatus.PROCESSING_REVERT_ERROR
                     ) {
                         item.revert(
-                            createRevertFunction(
-                                state.options.server.url,
-                                state.options.server.revert
-                            ),
-                            query('GET_FORCE_REVERT')
-                        )
+                                createRevertFunction(
+                                    state.options.server.url,
+                                    state.options.server.revert
+                                ),
+                                query('GET_FORCE_REVERT')
+                            )
                             .then(process)
                             .catch(function() {}); // don't continue with processing if something went wrong
                     } else if (item.status === ItemStatus.PROCESSING) {
@@ -7158,8 +7150,7 @@
 
                     // process queued item
                     dispatch(
-                        'PROCESS_ITEM',
-                        { query: id, success: success, failure: failure },
+                        'PROCESS_ITEM', { query: id, success: success, failure: failure },
                         true
                     );
                 };
@@ -7205,8 +7196,7 @@
                         createProcessorFunction(
                             options.server.url,
                             options.server.process,
-                            options.name,
-                            {
+                            options.name, {
                                 chunkTransferId: item.transferId,
                                 chunkServer: options.server.patch,
                                 chunkUploads: options.chunkUploads,
@@ -7381,9 +7371,9 @@
 
             REVERT_ITEM_PROCESSING: getItemByQueryFromState(state, function(item) {
                 item.revert(
-                    createRevertFunction(state.options.server.url, state.options.server.revert),
-                    query('GET_FORCE_REVERT')
-                )
+                        createRevertFunction(state.options.server.url, state.options.server.revert),
+                        query('GET_FORCE_REVERT')
+                    )
                     .then(function() {
                         var shouldRemove = state.options.instantUpload || isMockItem(item);
                         if (shouldRemove) {
@@ -7761,9 +7751,9 @@
         var root = _ref2.root,
             action = _ref2.action;
         var title =
-            action.progress === null
-                ? root.query('GET_LABEL_FILE_LOADING')
-                : root.query('GET_LABEL_FILE_LOADING') + ' ' + toPercentage(action.progress) + '%';
+            action.progress === null ?
+            root.query('GET_LABEL_FILE_LOADING') :
+            root.query('GET_LABEL_FILE_LOADING') + ' ' + toPercentage(action.progress) + '%';
 
         text(root.ref.main, title);
         text(root.ref.sub, root.query('GET_LABEL_TAP_TO_CANCEL'));
@@ -7773,12 +7763,12 @@
         var root = _ref3.root,
             action = _ref3.action;
         var title =
-            action.progress === null
-                ? root.query('GET_LABEL_FILE_PROCESSING')
-                : root.query('GET_LABEL_FILE_PROCESSING') +
-                  ' ' +
-                  toPercentage(action.progress) +
-                  '%';
+            action.progress === null ?
+            root.query('GET_LABEL_FILE_PROCESSING') :
+            root.query('GET_LABEL_FILE_PROCESSING') +
+            ' ' +
+            toPercentage(action.progress) +
+            '%';
 
         text(root.ref.main, title);
         text(root.ref.sub, root.query('GET_LABEL_TAP_TO_CANCEL'));
@@ -8264,9 +8254,9 @@
                 // loop over all styles for this control
                 forin(defaultStyles, function(key, defaultValue) {
                     var value =
-                        stylesToApply[name] && typeof stylesToApply[name][key] !== 'undefined'
-                            ? stylesToApply[name][key]
-                            : defaultValue;
+                        stylesToApply[name] && typeof stylesToApply[name][key] !== 'undefined' ?
+                        stylesToApply[name][key] :
+                        defaultValue;
                     root.ref.activeStyles.push({ control: control, key: key, value: value });
                 });
             });
@@ -8386,8 +8376,7 @@
     var create$6 = function create(_ref) {
         var root = _ref.root,
             props = _ref.props;
-        [
-            {
+        [{
                 name: 'top',
             },
 
@@ -8652,8 +8641,7 @@
         },
     });
 
-    var write$4 = createRoute(
-        {
+    var write$4 = createRoute({
             DID_GRAB_ITEM: function DID_GRAB_ITEM(_ref3) {
                 var root = _ref3.root,
                     props = _ref3.props;
@@ -9158,9 +9146,9 @@
             });
 
         // get index
-        var dragIndex = dragCoordinates
-            ? getItemIndexByPosition(root, children, dragCoordinates)
-            : null;
+        var dragIndex = dragCoordinates ?
+            getItemIndexByPosition(root, children, dragCoordinates) :
+            null;
 
         // add index is used to reserve the dropped/added item index till the actual item is rendered
         var addIndex = root.ref.addIndex || null;
@@ -9316,8 +9304,7 @@
         if (!root.query('GET_ITEM_INSERT_LOCATION_FREEDOM')) return;
         props.dragCoordinates = {
             left: action.position.scopeLeft - root.ref.list.rect.element.left,
-            top:
-                action.position.scopeTop -
+            top: action.position.scopeTop -
                 (root.rect.outer.top + root.rect.element.marginTop + root.rect.element.scrollTop),
         };
     };
@@ -9475,8 +9462,7 @@
         if (!root.query('GET_ALLOW_SYNC_ACCEPT_ATTRIBUTE')) return;
         attrToggle(
             root.element,
-            'accept',
-            !!action.value,
+            'accept', !!action.value,
             action.value ? action.value.join(',') : ''
         );
     };
@@ -9519,8 +9505,7 @@
             action = _ref7.action;
         attrToggle(
             root.element,
-            'capture',
-            !!action.value,
+            'capture', !!action.value,
             action.value === true ? '' : action.value
         );
     };
@@ -9958,10 +9943,10 @@
                     return isFileSystemItem(item);
                 })
 
-                // map each item to promise
-                .map(function(item) {
-                    return getFilesFromItem(item);
-                });
+            // map each item to promise
+            .map(function(item) {
+                return getFilesFromItem(item);
+            });
 
             // if is empty, see if we can extract some info from the files property as a fallback
             if (!promisedFiles.length) {
@@ -9983,14 +9968,14 @@
                     // done (filter out empty files)!
                     resolve(
                         files
-                            .filter(function(file) {
-                                return file;
-                            })
-                            .map(function(file) {
-                                if (!file._relativePath)
-                                    file._relativePath = file.webkitRelativePath;
-                                return file;
-                            })
+                        .filter(function(file) {
+                            return file;
+                        })
+                        .map(function(file) {
+                            if (!file._relativePath)
+                                file._relativePath = file.webkitRelativePath;
+                            return file;
+                        })
                     );
                 })
                 .catch(console.error);
@@ -10409,11 +10394,12 @@
             requiresDropOnElement = options.requiresDropOnElement,
             _options$filterItems = options.filterItems,
             filterItems =
-                _options$filterItems === void 0
-                    ? function(items) {
-                          return items;
-                      }
-                    : _options$filterItems;
+            _options$filterItems === void 0 ?
+
+            function(items) {
+                return items;
+            } :
+            _options$filterItems;
 
         // create a dnd client
         var client = createDragNDropClient(
@@ -10591,14 +10577,14 @@
         assist(
             root,
             label +
-                ' ' +
-                filename +
-                ', ' +
-                total +
-                ' ' +
-                (total === 1
-                    ? root.query('GET_LABEL_FILE_COUNT_SINGULAR')
-                    : root.query('GET_LABEL_FILE_COUNT_PLURAL'))
+            ' ' +
+            filename +
+            ', ' +
+            total +
+            ' ' +
+            (total === 1 ?
+                root.query('GET_LABEL_FILE_COUNT_SINGULAR') :
+                root.query('GET_LABEL_FILE_COUNT_PLURAL'))
         );
 
         // clear group after set amount of time so the status is not read twice
@@ -10713,9 +10699,7 @@
 
         return function() {
             for (
-                var _len = arguments.length, args = new Array(_len), _key = 0;
-                _key < _len;
-                _key++
+                var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++
             ) {
                 args[_key] = arguments[_key];
             }
@@ -11048,9 +11032,9 @@
             var isCappedHeight = visualHeight >= bounds.cappedHeight;
             var panelHeight = Math.min(bounds.cappedHeight, visualHeight);
             panel.scalable = true;
-            panel.height = isCappedHeight
-                ? panelHeight
-                : panelHeight - listItemMargin.top - listItemMargin.bottom;
+            panel.height = isCappedHeight ?
+                panelHeight :
+                panelHeight - listItemMargin.top - listItemMargin.bottom;
 
             // available height for list
             var _listAvailableHeight2 =
@@ -11093,15 +11077,15 @@
 
     var calculateListItemMargin = function calculateListItemMargin(root) {
         var item = root.ref.list.childViews[0].childViews[0];
-        return item
-            ? {
-                  top: item.rect.element.marginTop,
-                  bottom: item.rect.element.marginBottom,
-              }
-            : {
-                  top: 0,
-                  bottom: 0,
-              };
+        return item ?
+            {
+                top: item.rect.element.marginTop,
+                bottom: item.rect.element.marginBottom,
+            } :
+            {
+                top: 0,
+                bottom: 0,
+            };
     };
 
     var calculateListHeight = function calculateListHeight(root) {
@@ -11141,10 +11125,10 @@
 
         var newItem = typeof dragIndex !== 'undefined' && dragIndex >= 0 ? 1 : 0;
         var removedItem = children.find(function(child) {
-            return child.markedForRemoval && child.opacity < 0.45;
-        })
-            ? -1
-            : 0;
+                return child.markedForRemoval && child.opacity < 0.45;
+            }) ?
+            -1 :
+            0;
         var verticalItemCount = children.length + newItem + removedItem;
         var itemsPerRow = getItemsPerRow(horizontalSpace, itemWidth);
 
@@ -11211,8 +11195,7 @@
         var itemList = list.childViews[0];
         return getItemIndexByPosition(itemList, children, {
             left: position.scopeLeft - itemList.rect.element.left,
-            top:
-                position.scopeTop -
+            top: position.scopeTop -
                 (list.rect.outer.top + list.rect.element.marginTop + list.rect.element.scrollTop),
         });
     };
@@ -11237,19 +11220,18 @@
 
                     // all items should be validated by all filters as valid
                     var dropValidation = root.query('GET_DROP_VALIDATION');
-                    return dropValidation
-                        ? items.every(function(item) {
-                              return (
-                                  applyFilters('ALLOW_HOPPER_ITEM', item, {
-                                      query: root.query,
-                                  }).every(function(result) {
-                                      return result === true;
-                                  }) && beforeDropFile(item)
-                              );
-                          })
-                        : true;
-                },
-                {
+                    return dropValidation ?
+                        items.every(function(item) {
+                            return (
+                                applyFilters('ALLOW_HOPPER_ITEM', item, {
+                                    query: root.query,
+                                }).every(function(result) {
+                                    return result === true;
+                                }) && beforeDropFile(item)
+                            );
+                        }) :
+                        true;
+                }, {
                     filterItems: function filterItems(items) {
                         var ignoredFiles = root.query('GET_IGNORED_FILES');
                         return items.filter(function(item) {
@@ -11558,10 +11540,10 @@
                 var actions = store
                     .processActionQueue()
 
-                    // filter out set actions (these will automatically trigger DID_SET)
-                    .filter(function(action) {
-                        return !/^SET_/.test(action.type);
-                    });
+                // filter out set actions (these will automatically trigger DID_SET)
+                .filter(function(action) {
+                    return !/^SET_/.test(action.type);
+                });
 
                 // if was idling and no actions stop here
                 if (isResting && !actions.length) return;
@@ -11802,9 +11784,7 @@
 
         var addFiles = function addFiles() {
             for (
-                var _len = arguments.length, args = new Array(_len), _key = 0;
-                _key < _len;
-                _key++
+                var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++
             ) {
                 args[_key] = arguments[_key];
             }
@@ -11857,9 +11837,7 @@
 
         var prepareFiles = function prepareFiles() {
             for (
-                var _len2 = arguments.length, args = new Array(_len2), _key2 = 0;
-                _key2 < _len2;
-                _key2++
+                var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++
             ) {
                 args[_key2] = arguments[_key2];
             }
@@ -11870,17 +11848,14 @@
 
         var processFiles = function processFiles() {
             for (
-                var _len3 = arguments.length, args = new Array(_len3), _key3 = 0;
-                _key3 < _len3;
-                _key3++
+                var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++
             ) {
                 args[_key3] = arguments[_key3];
             }
             var queries = Array.isArray(args[0]) ? args[0] : args;
             if (!queries.length) {
                 var files = getFiles().filter(function(item) {
-                    return (
-                        !(item.status === ItemStatus.IDLE && item.origin === FileOrigin.LOCAL) &&
+                    return (!(item.status === ItemStatus.IDLE && item.origin === FileOrigin.LOCAL) &&
                         item.status !== ItemStatus.PROCESSING &&
                         item.status !== ItemStatus.PROCESSING_COMPLETE &&
                         item.status !== ItemStatus.PROCESSING_REVERT_ERROR
@@ -11894,9 +11869,7 @@
 
         var removeFiles = function removeFiles() {
             for (
-                var _len4 = arguments.length, args = new Array(_len4), _key4 = 0;
-                _key4 < _len4;
-                _key4++
+                var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++
             ) {
                 args[_key4] = arguments[_key4];
             }
@@ -11933,17 +11906,13 @@
             });
         };
 
-        var exports = Object.assign(
-            {},
+        var exports = Object.assign({},
 
-            on(),
-            {},
+            on(), {},
 
-            readWriteApi,
-            {},
+            readWriteApi, {},
 
-            createOptionAPI(store, defaultOptions),
-            {
+            createOptionAPI(store, defaultOptions), {
                 /**
                  * Override options defined in options object
                  * @param options
@@ -12155,11 +12124,9 @@
 
         // set app options
         var app = createApp(
-            Object.assign(
-                {},
+            Object.assign({},
 
-                defaultOptions,
-                {},
+                defaultOptions, {},
 
                 customOptions
             )
@@ -12346,9 +12313,9 @@
 
     // if an element is passed, we create the instance at that element, if not, we just create an up object
     var createApp$1 = function createApp() {
-        return isNode(arguments.length <= 0 ? undefined : arguments[0])
-            ? createAppAtElement.apply(void 0, arguments)
-            : createAppObject.apply(void 0, arguments);
+        return isNode(arguments.length <= 0 ? undefined : arguments[0]) ?
+            createAppAtElement.apply(void 0, arguments) :
+            createAppObject.apply(void 0, arguments);
     };
 
     var PRIVATE_METHODS = ['fire', '_read', '_write'];
@@ -12391,8 +12358,7 @@
                     }
                 };
 
-                worker.postMessage(
-                    {
+                worker.postMessage({
                         id: id,
                         message: message,
                     },
@@ -12674,9 +12640,7 @@
         // adds a plugin extension
         exports.registerPlugin = function registerPlugin() {
             for (
-                var _len = arguments.length, plugins = new Array(_len), _key = 0;
-                _key < _len;
-                _key++
+                var _len = arguments.length, plugins = new Array(_len), _key = 0; _key < _len; _key++
             ) {
                 plugins[_key] = arguments[_key];
             }

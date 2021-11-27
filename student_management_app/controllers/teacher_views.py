@@ -326,9 +326,6 @@ def teacher_profile_update(request):
             messages.error(request, "Failed to Update Profile")
             return redirect('teacher_profile')
 
-
-
-
 def student_leave_view(request):
     # find all subject 
     all_subjects_in_teacher = Subjects.objects.filter(teacher_id=request.user.id)
@@ -349,11 +346,6 @@ def student_leave_reject(request, leave_id):
     leave.leave_status = 2
     leave.save()
     return redirect('student_leave_view')
-
-
-
-
-
 
 def teacher_add_result(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)

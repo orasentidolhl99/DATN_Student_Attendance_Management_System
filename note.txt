@@ -1,1 +1,7 @@
 python manage.py migrate --run-syncdb
+
+session: niên khóa
+
+var result = '<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">Image student detect has been created!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+                                $("#commmonname").html(result)
+<div id="commmonname"></div>

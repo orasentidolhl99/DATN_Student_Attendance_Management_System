@@ -13,6 +13,9 @@ Add Result
       <hr>
       <br>
 
+      <form class="forms-sample" action="{% url 'teacher_add_result_save' %}" method="post">
+        {% csrf_token %}
+        
         {% comment %} Display Messages {% endcomment %}
         {% if messages %}
         <div class="form-group">
@@ -56,7 +59,7 @@ Add Result
             </select>
         </div>
 
-        <button type="button" class="btn btn-gradient-primary mr-2 ">Fetch Student</button>
+        <button type="button" class="btn btn-gradient-primary mr-2" id="fetch_student">Fetch Student</button>
         
         <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
         <script>

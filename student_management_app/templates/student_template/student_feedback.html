@@ -35,7 +35,7 @@ Feedback Message
         </div>
         {% endif %}
 
-        <form class="forms-sample" action="{% url 'student_apply_leave_save' %}" method="post">
+        <form class="forms-sample" action="{% url 'student_feedback_save' %}" method="post">
             {% csrf_token %}
 
             <div class="form-group">

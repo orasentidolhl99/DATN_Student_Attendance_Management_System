@@ -96,6 +96,21 @@
           className: "btn btn-primary"
         }
       })
+    } else if (type === 'logout'){
+      swal({
+        title: 'Logout?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK',
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }).then((result) => { 
+        if (result.value===true) { 
+          $('#logoutform').submit() // this submits the form 
+        } 
+      })
     }
   }
   

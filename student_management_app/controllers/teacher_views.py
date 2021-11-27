@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
+from datetime import datetime
 
 
 
@@ -67,29 +68,6 @@ def teacher_home(request):
     }
     return render(request, "teacher_template/teacher_home_template.html", context)
 
-
-def student_leave_view(request):
-    leaves = LeaveReportStudent.objects.all()
-    context = {
-        "leaves": leaves
-    }
-    return render(request, 'teacher_template/student_leave_view.html', context)
-
-def student_leave_approve(request, leave_id):
-    leave = LeaveReportStudent.objects.get(id=leave_id)
-    leave.leave_status = 1
-    leave.save()
-    return redirect('student_leave_view')
-
-
-def student_leave_reject(request, leave_id):
-    leave = LeaveReportStudent.objects.get(id=leave_id)
-    leave.leave_status = 2
-    leave.save()
-    return redirect('student_leave_view')
-
-
-
 def teacher_take_attendance(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     session_years = SessionYearModel.objects.all()
@@ -99,71 +77,6 @@ def teacher_take_attendance(request):
     }
     return render(request, "teacher_template/take_attendance_template.html", context)
 
-
-def teacher_apply_leave(request):
-    teacher_obj = Teachers.objects.get(admin=request.user.id)
-    subjects = Subjects.objects.filter(teacher_id=request.user.id)
-    leave_data = LeaveReportTeacher.objects.filter(teacher_id=teacher_obj)
-    context = {
-        "subjects": subjects,
-        "leave_data": leave_data
-    }
-    return render(request, "teacher_template/teacher_apply_leave_template.html", context)
-
-
-def teacher_apply_leave_save(request):
-    if request.method != "POST":
-        messages.error(request, "Invalid Method")
-        return redirect('teacher_apply_leave')
-    else:
-        leave_date = request.POST.get('leave_date')
-        leave_message = request.POST.get('leave_message')
-        leave_subject = request.POST.get('leave_subject')
-        
-        teacher_obj = Teachers.objects.get(admin=request.user.id)
-        subject_obj = Subjects.objects.get(id=leave_subject)
-        try:
-            leave_report = LeaveReportTeacher(teacher_id=teacher_obj,
-                                              subject_id=subject_obj,
-                                              leave_date=leave_date,
-                                              leave_message=leave_message,
-                                              leave_status=0)
-            leave_report.save()
-            messages.success(request, "Applied for Leave.")
-            return redirect('teacher_apply_leave')
-        except:
-            messages.error(request, "Failed to Apply Leave")
-            return redirect('teacher_apply_leave')
-
-
-def teacher_feedback(request):
-    teacher_obj = Teachers.objects.get(admin=request.user.id)
-    feedback_data = FeedBackTeacher.objects.filter(teacher_id=teacher_obj)
-    context = {
-        "feedback_data":feedback_data
-    }
-    return render(request, "teacher_template/teacher_feedback_template.html", context)
-
-
-def teacher_feedback_save(request):
-    if request.method != "POST":
-        messages.error(request, "Invalid Method.")
-        return redirect('teacher_feedback')
-    else:
-        feedback = request.POST.get('feedback_message')
-        teacher_obj = Teachers.objects.get(admin=request.user.id)
-
-        try:
-            add_feedback = FeedBackTeachers(teacher_id=teacher_obj, feedback=feedback, feedback_reply="")
-            add_feedback.save()
-            messages.success(request, "Feedback Sent.")
-            return redirect('teacher_feedback')
-        except:
-            messages.error(request, "Failed to Send Feedback.")
-            return redirect('teacher_feedback')
-
-
-# WE don't need csrf_token when using Ajax
 @csrf_exempt
 def get_students(request):
     # Getting Values from Ajax POST 'Fetch Student'
@@ -186,9 +99,6 @@ def get_students(request):
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
-
-
-
 
 @csrf_exempt
 def save_attendance_data(request):
@@ -219,9 +129,6 @@ def save_attendance_data(request):
         return HttpResponse("OK")
     except:
         return HttpResponse("Error")
-
-
-
 
 def teacher_update_attendance(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
@@ -258,7 +165,6 @@ def get_attendance_dates(request):
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
 
-
 @csrf_exempt
 def get_attendance_student(request):
     # Getting Values from Ajax POST 'Fetch Student'
@@ -274,7 +180,6 @@ def get_attendance_student(request):
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
-
 
 @csrf_exempt
 def update_attendance_data(request):
@@ -299,6 +204,64 @@ def update_attendance_data(request):
     except:
         return HttpResponse("Error")
 
+def teacher_apply_leave(request):
+    teacher_obj = Teachers.objects.get(admin=request.user.id)
+    subjects = Subjects.objects.filter(teacher_id=request.user.id)
+    leave_data = LeaveReportTeacher.objects.filter(teacher_id=teacher_obj)
+    context = {
+        "subjects": subjects,
+        "leave_data": leave_data
+    }
+    return render(request, "teacher_template/teacher_apply_leave_template.html", context)
+
+def teacher_apply_leave_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method")
+        return redirect('teacher_apply_leave')
+    else:
+        leave_date = request.POST.get('leave_date')
+        leave_message = request.POST.get('leave_message')
+        leave_subject = request.POST.get('leave_subject')
+        
+        teacher_obj = Teachers.objects.get(admin=request.user.id)
+        subject_obj = Subjects.objects.get(id=leave_subject)
+        try:
+            leave_report = LeaveReportTeacher(teacher_id=teacher_obj,
+                                              subject_id=subject_obj,
+                                              leave_date=leave_date,
+                                              leave_message=leave_message,
+                                              leave_status=0)
+            leave_report.save()
+            messages.success(request, "Applied for Leave.")
+            return redirect('teacher_apply_leave')
+        except:
+            messages.error(request, "Failed to Apply Leave")
+            return redirect('teacher_apply_leave')
+
+def teacher_feedback(request):
+    teacher_obj = Teachers.objects.get(admin=request.user.id)
+    feedback_data = FeedBackTeacher.objects.filter(teacher_id=teacher_obj)
+    context = {
+        "feedback_data":feedback_data
+    }
+    return render(request, "teacher_template/teacher_feedback_template.html", context)
+
+def teacher_feedback_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method.")
+        return redirect('teacher_feedback')
+    else:
+        feedback = request.POST.get('feedback_message')
+        teacher_obj = Teachers.objects.get(admin=request.user.id)
+
+        try:
+            add_feedback = FeedBackTeachers(teacher_id=teacher_obj, feedback=feedback, feedback_reply="")
+            add_feedback.save()
+            messages.success(request, "Feedback Sent.")
+            return redirect('teacher_feedback')
+        except:
+            messages.error(request, "Failed to Send Feedback.")
+            return redirect('teacher_feedback')
 
 def teacher_profile(request):
     user = CustomUser.objects.get(id=request.user.id)
@@ -310,6 +273,30 @@ def teacher_profile(request):
     }
     return render(request, 'teacher_template/teacher_profile.html', context)
 
+# def teacher_profile_save(request):
+    if request.method!="POST":
+        return HttpResponseRedirect(reverse("teacher_profile"))
+    else:
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        address = request.POST.get("address")
+        password = request.POST.get("password")
+        try:
+            customuser = CustomUser.objects.get(id = request.user.id)
+            customuser.first_name = first_name
+            customuser.last_name = last_name
+            if password!= None and password!= "":
+                customuser.set_password(password)
+            customuser.save()
+
+            teacher=Teachers.objects.get(admin=customuser.id)
+            teacher.address=address
+            teacher.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("teacher_profile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("teacher_profile"))
 
 def teacher_profile_update(request):
     if request.method != "POST":
@@ -338,6 +325,31 @@ def teacher_profile_update(request):
         except:
             messages.error(request, "Failed to Update Profile")
             return redirect('teacher_profile')
+
+
+
+
+def student_leave_view(request):
+    leaves = LeaveReportStudent.objects.all()
+    context = {
+        "leaves": leaves
+    }
+    return render(request, 'teacher_template/student_leave_view.html', context)
+
+def student_leave_approve(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 1
+    leave.save()
+    return redirect('student_leave_view')
+
+def student_leave_reject(request, leave_id):
+    leave = LeaveReportStudent.objects.get(id=leave_id)
+    leave.leave_status = 2
+    leave.save()
+    return redirect('student_leave_view')
+
+
+
 
 
 
@@ -373,12 +385,28 @@ def teacher_add_result_save(request):
                 result.subject_exam_marks = exam_marks
                 result.save()
                 messages.success(request, "Result Updated Successfully!")
-                return redirect('teacher_add_result')
+                # return redirect('teacher_add_result')
+                return HttpResponseRedirect(reverse("teacher_add_result"))
             else:
                 result = StudentResult(student_id=student_obj, subject_id=subject_obj, subject_exam_marks=exam_marks, subject_assignment_marks=assignment_marks)
                 result.save()
                 messages.success(request, "Result Added Successfully!")
-                return redirect('teacher_add_result')
+                # return redirect('teacher_add_result')
+                return HttpResponseRedirect(reverse("teacher_add_result"))
         except:
             messages.error(request, "Failed to Add Result!")
-            return redirect('teacher_add_result')
+            # return redirect('teacher_add_result')
+            return HttpResponseRedirect(reverse("teacher_add_result"))
+
+@csrf_exempt
+def fetch_result_student(request):
+    subject_id=request.POST.get('subject_id')
+    student_id=request.POST.get('student_id')
+    student_obj=Students.objects.get(admin=student_id)
+    result=StudentResult.objects.filter(student_id=student_obj.id,subject_id=subject_id).exists()
+    if result:
+        result=StudentResult.objects.get(student_id=student_obj.id,subject_id=subject_id)
+        result_data={"exam_marks":result.subject_exam_marks,"assign_marks":result.subject_assignment_marks}
+        return HttpResponse(json.dumps(result_data))
+    else:
+        return HttpResponse("False")

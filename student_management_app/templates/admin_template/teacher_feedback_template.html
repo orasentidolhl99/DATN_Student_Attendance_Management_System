@@ -52,7 +52,7 @@ Teacher Feedback
     </div>
     {% comment %} Modal to Reply Feedback {% endcomment %}
       <!-- Modal -->
-        <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -72,67 +72,75 @@ Teacher Feedback
             </div>
             </div>
         </div>
-        </div>
+        </div> -->
+
+        <div class="modal fade" id="reply_modal" role="dialog">
+            <div class="modal-dialog">
+        
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Reply</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+        
+                </div>
+                <div class="modal-body">
+                  <p>Reply To : <span id="reply_name"></span></p>
+                    <input type="hidden" id="reply_id" name="reply_id">
+                    <textarea class="form-control" rows="5" id="reply_message"></textarea>
+                    <button id="reply_btn" class="btn btn-info btn-block">Reply</button>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+        
+            </div>
+          </div>
 {% endblock content %}
 
 {% comment %} Custom JS to Identify the Reply and Post Reply {% endcomment %}
 
-  {% block custom_js %}
-    <script>
-        $(document).ready(function(){
-            $(".reply_open_modal").click(function(){
-                // Getting Value from Table
-                var id = $(this).parents("tr").children("td:eq(0)").text(); //Getting Selected Row ID (Frist Column)
-                var name = $(this).parents("tr").children("td:eq(2)").text(); //Getting Selected Name (3rd Column)
-                
-                // Adding the Value from Table to Modal form
-                $("#reply_id").val(id);
-                $("#reply_name").text(name);
-            });
+{% block custom_js %}
+<script>
+    $(document).ready(function(){
+        $(".reply_open_modal").click(function(){
+            // Getting Value from Table
+            var id = $(this).parents("tr").children("td:eq(0)").text(); //Getting Selected Row ID (Frist Column)
+            var name = $(this).parents("tr").children("td:eq(2)").text(); //Getting Selected Name (3rd Column)
+            
+            // Adding the Value from Table to Modal form
+            $("#reply_id").val(id);
+            $("#reply_name").text(name);
+        });
 
-            $(document).on("click", "#reply_button", function(){
-                //Disabling the Button while data is being saved in Server
-                $(this).attr("disabled", "disabled")
-                $(this).text("Sending Reply...")
+        $(document).on("click","#reply_btn",function(){
+            $(this).attr("disabled","disabled")
+            $(this).text("Sending Reply...")
 
-                //console.log("SAVE")
-                
+            var id=$("#reply_id").val();
+            var message=$("#reply_message").val()
 
-                var id=$("#reply_id").val();
-                var reply=$("#reply_message").val();
-                //console.log(student_data);
-
-                // Saving Attendance Data into Database
-
-                $.ajax({
-                    url:"{% url 'teacher_feedback_message_reply' %}",
+            $.ajax({
+                    url:"{% url 'student_feedback_message_reply' %}",
                     type:'POST',
-                    data:{id:id, reply:reply},
+                    data:{id:id,message:message},
                 })
-
-                
                 .done(function(response){
-                    
-                    if(response=="True")
-                    {
-                        alert("Reply Sent!")
+
+                    if(response=="True"){
+                        alert("Reply Sent")
                     }
-                    else
-                    {
-                        alert("Failed to Send Reply!")
+                    else{
+                        alert("Error in Sending Reply")
                     }
                     location.reload()
-                    
-                    //console.log(response)
                 })
-
                 .fail(function(){
-                    alert("Error in Sending Feedback Reply.")
+                    alert("Error in Sending Reply")
                 })
-
-            })
-
-        })
-    </script>
-  {% endblock custom_js %}
+           });
+    })
+</script>
+{% endblock custom_js %}
 

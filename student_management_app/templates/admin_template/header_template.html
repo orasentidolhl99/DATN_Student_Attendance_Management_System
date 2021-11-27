@@ -21,11 +21,31 @@
       </a>
     </li>
     <li class="nav-item nav-profile dropdown">
-        <a class="mdi mdi-logout mr-2 text-primary" data-widget="control_sidebar" data-slide="true" href="/logout_user">Signout</a> 
-    </li>
+      <a class="mdi mdi-logout mr-2 text-primary"  data-widget="control_sidebar" data-slide="true" href="/logout_user">Signout</a> 
+    </li>   
 
   </ul>
   <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
     <span class="mdi mdi-menu"></span>
   </button>
 </div>
+
+{% block custom_js %}
+  <script>
+    function logout_user(){
+      $.ajax({
+        url: '/logout_user/',
+        method: "GET",
+        data : "logout_user",
+        success: function () {
+          console.log("logged out");
+          return true
+        },
+        error: function() {
+          console.log("nope, it didn't work");
+          return false
+        }
+      });
+    }
+  </script>
+{% endblock custom_js %}

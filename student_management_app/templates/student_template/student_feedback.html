@@ -74,16 +74,26 @@ Feedback Message
                     <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Feedback Message</th>
-                            <th>Feedback Reply</th>
+                            <th>Feedback  Date</th>
+                            <th>Feedback  Message</th>
+                            <th>Feedback  Reply</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for row in feedback_data %}
                         <tr>
                             <td>{{ row.id }}</td>
+                            <td>{{ row.created_at }}</td>
                             <td>{{ row.feedback }}</td>
                             <td>{{ row.feedback_reply }}</td>
+                            <td>
+                                {% if row.feedback_reply == "" %}
+                                    <span class="alert alert-warning">Sending</span>
+                                {% else %}  
+                                    <span class="alert alert-success">Replied</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

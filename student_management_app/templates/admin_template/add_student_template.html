@@ -15,7 +15,7 @@ Add Student
       {% url 'add_student_save' as action_path %}
       {% include 'admin_template/form_template.html' with messages=messages form=form action_path=action_path button_text="Add Student" %}
     </div>
-  </div>
+</div>
 
 
 {% endblock content %}
@@ -40,7 +40,7 @@ Add Student
 
                         if(response == "True"){
                             $(".email_error").remove();
-                            $("<span class='email_error' style='color: red; padding: 5px; font-weight: bold;'> Email Not Available. </span>").insertAfter("#id_email")
+                            $("<span class='email_error' style='color: red; padding: 5px; font-weight: 500;'> Email Not Available. </span>").insertAfter("#id_email")
                         }
                         else{
                             $(".email_error").remove();

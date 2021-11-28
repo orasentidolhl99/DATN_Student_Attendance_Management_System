@@ -4,8 +4,10 @@ from django.contrib import messages
 from django.core.files.storage import FileSystemStorage #To upload Profile Picture
 from django.urls import reverse
 import datetime
+from django.views.decorators.csrf import csrf_exempt
 
-from student_management_app.models import CustomUser, Teachers, Courses, Subjects, Students, Attendance, AttendanceReport, LeaveReportStudent, FeedBackStudent, StudentResult, StudentSubjectLink
+from student_management_app.models import Students, Courses, Subjects, CustomUser, Attendance, AttendanceReport, \
+    LeaveReportStudent, FeedBackStudent, NotificationStudent, StudentResult, SessionYearModel, StudentSubjectLink
 
 def student_home(request):
     return render(request, "student_template/student_home_template.html")
@@ -154,20 +156,18 @@ def student_feedback_save(request):
 
 
 def student_profile(request):
-    user = CustomUser.objects.get(id=request.user.id)
-    student = Students.objects.get(admin=user)
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
 
     context={
         "user": user,
         "student": student
     }
-    return render(request, 'student_template/student_profile.html', context)
-
+    return render(request, "student_template/student_profile.html", context)
 
 def student_profile_update(request):
     if request.method != "POST":
-        messages.error(request, "Invalid Method!")
-        return redirect('student_profile')
+        return HttpResponseRedirect(reverse("student_profile"))
     else:
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -182,15 +182,26 @@ def student_profile_update(request):
                 customuser.set_password(password)
             customuser.save()
 
-            student = Students.objects.get(admin=customuser.id)
+            student = Students.objects.get(admin=customuser)
             student.address = address
             student.save()
             
-            messages.success(request, "Profile Updated Successfully")
-            return redirect('student_profile')
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("student_profile"))
         except:
             messages.error(request, "Failed to Update Profile")
-            return redirect('student_profile')
+            return HttpResponseRedirect(reverse("student_profile"))
+
+@csrf_exempt
+def student_fcm_token_update(request):
+    token=request.POST.get("token")
+    try:
+        student=Students.objects.get(admin=request.user.id)
+        student.fcm_token=token
+        student.save()
+        return HttpResponse("True")
+    except:
+        return HttpResponse("False")
 
 
 def student_view_result(request):

@@ -110,4 +110,5 @@ urlpatterns = [
     path('student_profile/', student_views.student_profile, name="student_profile"),
     path('student_profile_update/', student_views.student_profile_update, name="student_profile_update"),
     path('student_view_result/', student_views.student_view_result, name="student_view_result"),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('student_fcm_token_update', student_views.student_fcm_token_update, name="student_fcm_token_update"),
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

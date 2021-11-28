@@ -55,7 +55,7 @@ View Update Attendance
             </select>
         </div>
 
-        <button type="button" class="btn btn-gradient-primary mr-2 ">Fetch Student</button>
+        <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_attendance">Fetch Student</button>
         
         <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
         <script>
@@ -115,71 +115,58 @@ View Update Attendance
 {% endblock content %}
 
 {% block custom_js %}
-
 <script>
     $(document).ready(function(){
-        
 
-        //Fetching Attendance Date
+
 
         $("#fetch_attendance").click(function(){
-                var subject = $("#subject").val()
-                var session_year_id = $("#session_year_id").val()
-                //console.log(subject)
-                //console.log(session_year_id)
+               var subject=$("#subject").val();
+               var session_year=$("#session_year_id").val();
 
-                $.ajax({
+            $.ajax({
                     url:"{% url 'get_attendance_dates' %}",
                     type:'POST',
-                    data:{subject:subject, session_year_id:session_year_id},
+                    data:{subject:subject,session_year_id:session_year},
                 })
-
-                
                 .done(function(response){
-                    var json_data = JSON.parse(response);
+                    var json_data=JSON.parse(response);
                     if(json_data.length>0)
                     {
-                        var html_data = "";
-                        for (key in json_data)
+                        var html_data="";
+                        for(key in json_data)
                         {
-                            html_data+="<option value='"+ json_data[key]["id"] +"'>"+ json_data[key]["attendance_date"] +"</option>"
+                            html_data+="<option value="+json_data[key]["id"]+">"+json_data[key]["attendance_date"]+"</option>";
                         }
                         $("#error_attendance").html("");
                         $("#error_attendance").hide();
                         $("#attendance_block").show();
                         $("#fetch_student_block").show();
                         $("#attendance_date").html(html_data);
-                        //console.log(response)
-                        //alert("Something")
-                    }
-                    else
-                    {
-                        $("#error_attendance").html("No Attendance Data Found.");
+                     }
+                     else
+                     {
+                        $("#error_attendance").html("No Attendance Data Found");
                         $("#error_attendance").show();
                         $("#attendance_block").hide();
                         $("#fetch_student_block").hide();
-                        $("#attendance_date")="" //Empty the Date Dropdown also
-                    }
-                    
+                        $("#attendance_date").html("");
+                     }
                 })
-
                 .fail(function(){
-                    alert("Error in getting Attendance Dates.")
+                    alert("Error in Fetching Attendance")
                     $("#error_attendance").html("");
-                    $("#fetch_student_block").hide();
                     $("#attendance_block").hide();
+                    $("#fetch_student_block").hide();
+
                 });
 
-                
+
         })
 
-        // Now Working on Fetch Student after attendance date selected
+
         $("#fetch_student").click(function(){
 
-            // Displaying Students Based on Teacher, Course and Session Enrolled
-
-            //var subject=$("#subject").val()
-            //var session_year=$("#session_year").val()
             var attendance_date=$("#attendance_date").val()
 
             $.ajax({
@@ -187,110 +174,79 @@ View Update Attendance
                 type:'POST',
                 data:{attendance_date:attendance_date},
             })
-
-            
             .done(function(response){
                 var json_data=JSON.parse(response);
-                console.log(json_data)
-                //Displaying Attendance Date Input and Students Attendance
-                var div_data="<div class='form-group'><label>Student Attendance: </label></div>"
-                div_data+="<div class='form-group'><div class='row'>"
-
+                var div_data="<div class='form-group'><label>Student Attendance : </label></div><div class='form-group'><div class='row'>";
                 for(key in json_data)
                 {
                     div_data+="<div class='col-lg-3'><div class='form-check'><input type='checkbox' ";
-
                     if(json_data[key]['status'])
                     {
                         div_data+="checked='checked'";
                     }
-                    else
-                    {
+                    else{
                         div_data+="";
                     }
-                    div_data+="name='student_data[]' value='"+ json_data[key]['id'] +"' />  <label class='form-check-label'>"+ json_data[key]['name']+" </label> ";
-                    
-                    // Displaying Present and Absent
+                    div_data+="name='student_data[]' value='"+json_data[key]['id']+"'><label class='form-check-label'>"+json_data[key]['name']+"</label> ";
 
-                    if(json_data[key]['status'])
-                    {
-                        div_data+="<b>[ Present ]</b>";
-                    }
-                    else
-                    {
-                        div_data+="<b>[ Absent ]</b>";
-                    }
-                    //Displaying Present and Absent Ends Here
-                    
 
-                    div_data+="</div></div> ";
+                     if(json_data[key]['status'])
+                    {
+                        div_data+="<b> [ Present ]</b>";
+                    }
+                    else{
+                        div_data+="<b> [ Absent ]</b>";
+                    }
+
+                    div_data+="</div></div>";
                 }
                 div_data+="</div></div>";
                 div_data+="<div class='form-group'>";
-                div_data+="<button id='save_attendance' class='btn btn-success' type='button'>Save Attendance Data</button>";
+                div_data+="<button id='save_attendance' class='btn btn-success btn-block' type='button'>Save Attendance Data</button>";
                 div_data+="</div>";
+
                 $("#student_data").html(div_data);
 
             })
             .fail(function(){
-                alert("Error in Fetching Students.")
+                alert("Error in Fetching Student")
             })
 
+         })
 
+         $(document).on("click","#save_attendance",function(){
 
-            // Save Attendance Data to Database
-            $(document).on("click", "#save_attendance", function(){
-                
-                //Disabling the Button while data is being saved in Server
-                $(this).attr("disabled", "disabled")
+                $(this).attr("disabled","disabled")
                 $(this).text("Saving Attendance Data...")
-
-                //console.log("SAVE")
-                var student_data=$("input[name='student_data[]'").map(function(){ 
+                var student_data=$("input[name='student_data[]']").map(function(){
                         if($(this).is(":checked")){
-                            return {"id":$(this).val(), "status":1}; // Getting ID and Value of Students
+                            return {"id":$(this).val(),"status":1};
                         }
-                        else
-                        {
-                            return {"id":$(this).val(), "status":0}; // Getting ID and Value of Students
+                        else{
+                            return {"id":$(this).val(),"status":0};
                         }
-                    }).get()
-
+                 }).get()
                 var attendance_date=$("#attendance_date").val();
-                
-                
-                student_data = JSON.stringify(student_data)
-                //console.log(student_data);
-
-                // Saving Attendance Data into Database
+                student_data=JSON.stringify(student_data)
 
                 $.ajax({
-                    url:"{% url 'update_attendance_data' %}",
-                    type:'POST',
-                    data:{student_ids:student_data, attendance_date:attendance_date},
-                })
+                        url:"{% url 'update_attendance_data' %}",
+                        type:'POST',
+                        data:{student_ids:student_data,attendance_date:attendance_date},
+                    })
+                    .done(function(response){
 
-                
-                .done(function(response){
-                    
-                    if(response=="OK")
-                    {
-                        alert("Attendance Saved!")
-                    }
-                    else
-                    {
-                        alert("Failed to Save Attendance!")
-                    }
-                    location.reload()
-                    
-                    //console.log(response)
-                })
-
-                .fail(function(){
-                    alert("Error in Saving Students Attendance Data.")
-                })
-
-            })
+                        if(response=="OK"){
+                            alert("Attendance Save")
+                        }
+                        else{
+                            alert("Error in Saving Data")
+                        }
+                        location.reload()
+                    })
+                    .fail(function(){
+                        alert("Error in Saving Student")
+                    })
 
         })
 

@@ -24,85 +24,85 @@ from student_management_app.models import (
 from student_management_app.forms import AddStudentForm, EditStudentForm
 from student_management_system import settings
 
-def admin_home(request):
-    return render(request,"admin_template/content_template.html")
-
-
 # def admin_home(request):
-#     all_student_count = Students.objects.all().count()
-#     subject_count = Subjects.objects.all().count()
-#     course_count = Courses.objects.all().count()
-#     teacher_count = Teachers.objects.all().count()
+#     return render(request,"admin_template/content_template.html")
 
-#     # Total Subjects and students in Each Course
-#     course_all = Courses.objects.all()
-#     course_name_list = []
-#     subject_count_list = []
-#     student_count_list_in_course = []
 
-#     for course in course_all:
-#         subjects = Subjects.objects.filter(course_id=course.id).count()
-#         students = Students.objects.filter(course_id=course.id).count()
-#         course_name_list.append(course.course_name)
-#         subject_count_list.append(subjects)
-#         student_count_list_in_course.append(students)
+def admin_home(request):
+    all_student_count = Students.objects.all().count()
+    subject_count = Subjects.objects.all().count()
+    course_count = Courses.objects.all().count()
+    teacher_count = Teachers.objects.all().count()
+
+    # Total Subjects and students in Each Course
+    course_all = Courses.objects.all()
+    course_name_list = []
+    subject_count_list = []
+    student_count_list_in_course = []
+
+    for course in course_all:
+        subjects = Subjects.objects.filter(course_id=course.id).count()
+        students = Students.objects.filter(course_id=course.id).count()
+        course_name_list.append(course.course_name)
+        subject_count_list.append(subjects)
+        student_count_list_in_course.append(students)
     
-#     subject_all = Subjects.objects.all()
-#     subject_list = []
-#     student_count_list_in_subject = []
-#     for subject in subject_all:
-#         course = Courses.objects.get(id=subject.course_id.id)
-#         student_count = Students.objects.filter(course_id=course.id).count()
-#         subject_list.append(subject.subject_name)
-#         student_count_list_in_subject.append(student_count)
+    subject_all = Subjects.objects.all()
+    subject_list = []
+    student_count_list_in_subject = []
+    for subject in subject_all:
+        course = Courses.objects.get(id=subject.course_id.id)
+        student_count = Students.objects.filter(course_id=course.id).count()
+        subject_list.append(subject.subject_name)
+        student_count_list_in_subject.append(student_count)
     
-#     # For teacher
-#     teacher_attendance_present_list=[]
-#     teacher_attendance_leave_list=[]
-#     teacher_name_list=[]
+    # For teacher
+    teacher_attendance_present_list=[]
+    teacher_attendance_leave_list=[]
+    teacher_name_list=[]
 
-#     teachers = Teachers.objects.all()
-#     for teacher in teachers:
-#         subject_ids = Subjects.objects.filter(teacher_id=teacher.admin.id)
-#         attendance = Attendance.objects.filter(subject_id__in=subject_ids).count()
-#         leaves = LeaveReportTeacher.objects.filter(teacher_id=teacher.id, leave_status=1).count()
-#         teacher_attendance_present_list.append(attendance)
-#         teacher_attendance_leave_list.append(leaves)
-#         teacher_name_list.append(teacher.admin.first_name)
+    teachers = Teachers.objects.all()
+    for teacher in teachers:
+        subject_ids = Subjects.objects.filter(teacher_id=teacher.admin.id)
+        attendance = Attendance.objects.filter(subject_id__in=subject_ids).count()
+        leaves = LeaveReportTeacher.objects.filter(teacher_id=teacher.id, leave_status=1).count()
+        teacher_attendance_present_list.append(attendance)
+        teacher_attendance_leave_list.append(leaves)
+        teacher_name_list.append(teacher.admin.first_name)
 
-#     # For Students
-#     student_attendance_present_list=[]
-#     student_attendance_leave_list=[]
-#     student_name_list=[]
+    # For Students
+    student_attendance_present_list=[]
+    student_attendance_leave_list=[]
+    student_name_list=[]
 
-#     students = Students.objects.all()
-#     for student in students:
-#         attendance = AttendanceReport.objects.filter(student_id=student.id, status=True).count()
-#         absent = AttendanceReport.objects.filter(student_id=student.id, status=False).count()
-#         leaves = LeaveReportStudent.objects.filter(student_id=student.id, leave_status=1).count()
-#         student_attendance_present_list.append(attendance)
-#         student_attendance_leave_list.append(leaves+absent)
-#         student_name_list.append(student.admin.first_name)
+    students = Students.objects.all()
+    for student in students:
+        attendance = AttendanceReport.objects.filter(student_id=student.id, status=True).count()
+        absent = AttendanceReport.objects.filter(student_id=student.id, status=False).count()
+        leaves = LeaveReportStudent.objects.filter(student_id=student.id, leave_status=1).count()
+        student_attendance_present_list.append(attendance)
+        student_attendance_leave_list.append(leaves+absent)
+        student_name_list.append(student.admin.first_name)
 
 
-#     context={
-#         "all_student_count": all_student_count,
-#         "subject_count": subject_count,
-#         "course_count": course_count,
-#         "teacher_count": teacher_count,
-#         "course_name_list": course_name_list,
-#         "subject_count_list": subject_count_list,
-#         "student_count_list_in_course": student_count_list_in_course,
-#         "subject_list": subject_list,
-#         "student_count_list_in_subject": student_count_list_in_subject,
-#         "teacher_attendance_present_list": teacher_attendance_present_list,
-#         "teacher_attendance_leave_list": teacher_attendance_leave_list,
-#         "teacher_name_list": teacher_name_list,
-#         "student_attendance_present_list": student_attendance_present_list,
-#         "student_attendance_leave_list": student_attendance_leave_list,
-#         "student_name_list": student_name_list,
-#     }
-#     return render(request, "admin_template/base_template.html", context)
+    context={
+        "all_student_count": all_student_count,
+        "subject_count": subject_count,
+        "course_count": course_count,
+        "teacher_count": teacher_count,
+        "course_name_list": course_name_list,
+        "subject_count_list": subject_count_list,
+        "student_count_list_in_course": student_count_list_in_course,
+        "subject_list": subject_list,
+        "student_count_list_in_subject": student_count_list_in_subject,
+        "teacher_attendance_present_list": teacher_attendance_present_list,
+        "teacher_attendance_leave_list": teacher_attendance_leave_list,
+        "teacher_name_list": teacher_name_list,
+        "student_attendance_present_list": student_attendance_present_list,
+        "student_attendance_leave_list": student_attendance_leave_list,
+        "student_name_list": student_name_list,
+    }
+    return render(request,"admin_template/content_template.html", context)
 
 
 def add_teacher(request):
@@ -624,7 +624,7 @@ def edit_student_save(request):
                 messages.success(request, "Student Updated Successfully!")
                 return redirect('/edit_student/'+student_id)
             except:
-                messages.success(request, "Failed to Uupdate Student.")
+                messages.success(request, "Failed to Update Student.")
                 return redirect('/edit_student/'+student_id)
         else:
             return redirect('/edit_student/'+student_id)

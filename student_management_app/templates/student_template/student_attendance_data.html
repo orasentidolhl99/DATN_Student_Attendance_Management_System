@@ -39,29 +39,33 @@ View Attendance Data
 <div class="card">
     <div class="card-body">
         <h4 class="card-title"><code style="color:crimson;"></code> Attendance Data for <code style="color: red; font-weight: bold;">{{ subject_obj.subject_name }}</code></h4>
-
+        <hr>
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Attendance Data</h4>
                     <!-- <p class="card-description"> Attendance Data <code>.table-striped</code> -->
                     </p>
-                    {% if attendance_reports %}
-                    {% for attendance_report in attendance_reports %}
-                        {% if attendance_report.status == True %}
-                            <div class="col-lg-3 attendance_div_green">
-                                <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>
-                                    <b>[ Status : Present ]</b>
-                            </div>                                    
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% if attendance_reports %}
+                        {% for attendance_report in attendance_reports %}
+                            {% if attendance_report.status == True %}
+                                <div class="col-lg-3 attendance_div_green">
+                                    <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>
+                                        <b>[ Status : Present ]</b>
+                                </div>                                    
+                            {% else %}
+                                <div class="col-lg-3 attendance_div_red">
+                                    <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>                                           
+                                        <b>[ Status : Absent ]</b>                                           
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                         {% else %}
-                            <div class="col-lg-3 attendance_div_red">
-                                <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>                                           
-                                    <b>[ Status : Absent ]</b>                                           
-                            </div>
+                            <div class="alert alert-danger text-center">No Attendance Data Found!</div>
                         {% endif %}
-                    {% endfor %}
-                    {% else %}
-                        <div class="alert alert-danger text-center">No Attendance Data Found!</div>
-                    {% endif %}
+                    </div>
                 </div>
             </div>
     </div>

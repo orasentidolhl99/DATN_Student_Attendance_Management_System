@@ -55,6 +55,8 @@ Take Attendance
             </select>
         </div>
 
+        <button type="button" class="btn btn-gradient-primary mr-2 " id="face_attendance">Face Attendance</button>
+
         <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_student">Fetch Student</button>
         
         <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
@@ -87,6 +89,9 @@ Take Attendance
 
 <script>
     $(document).ready(function(){
+        $("#face_attendance").click(function(){
+            location.href='{% url "take_attendance_detect" %}'
+        })
         $("#fetch_student").click(function(){
 
             // Displaying Students Based on Teacher, Course and Session Enrolled

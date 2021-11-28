@@ -99,6 +99,9 @@ urlpatterns = [
     path('student_leave_approve/<leave_id>/', teacher_views.student_leave_approve, name="student_leave_approve"),
     path('student_leave_reject/<leave_id>/', teacher_views.student_leave_reject, name="student_leave_reject"),
 
+    path('take_attendance_detect', teacher_views.take_attendance_detect, name='take_attendance_detect'),
+    path('facecam_feed', teacher_views.facecam_feed, name='facecam_feed'),
+    
     # URLS for Student
     path('student_home/', student_views.student_home, name="student_home"),
     path('student_view_attendance/', student_views.student_view_attendance, name="student_view_attendance"),

@@ -8,6 +8,8 @@ from django.core import serializers
 import json
 from datetime import datetime
 
+from django.http.response import StreamingHttpResponse
+from ..camera import FaceDetect
 
 
 from student_management_app.models import (
@@ -81,6 +83,22 @@ def teacher_take_attendance(request):
         "session_years": session_years
     }
     return render(request, "teacher_template/take_attendance_template.html", context)
+
+@csrf_exempt
+def take_attendance_detect(request):
+    return render(request, "teacher_template/take_attendance_detect.html")
+
+def gen(camera):
+        while True:
+            frame = camera.get_frame()
+
+            yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+def facecam_feed(request):
+	# take frame video stream from client
+	return StreamingHttpResponse(gen(FaceDetect()),
+					content_type='multipart/x-mixed-replace; boundary=frame')
 
 @csrf_exempt
 def get_students(request):

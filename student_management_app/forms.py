@@ -10,81 +10,84 @@ class DateInput(forms.DateInput):
 
 
 class AddStudentForm(forms.Form):
-    email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control","autocomplete":"off"}))
-    password=forms.CharField(label="Password",max_length=50,widget=forms.PasswordInput(attrs={"class":"form-control"}))
-    first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    username=forms.CharField(label="Username",max_length=50,widget=forms.TextInput(attrs={"class":"form-control","autocomplete":"off"}))
-    address=forms.CharField(label="Address",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    course_list=[]
+    email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class":"form-control","autocomplete":"off"}))
+    password = forms.CharField(label="Password", max_length=50, widget=forms.PasswordInput(attrs={"class":"form-control"}))
+    first_name = forms.CharField(label="First Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    last_name = forms.CharField(label="Last Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    username = forms.CharField(label="Student ID", max_length=50, widget=forms.TextInput(attrs={"class":"form-control","autocomplete":"off"}))
+    address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
 
     #For Displaying Courses
     try:
-        courses=Courses.objects.all()
+        courses = Courses.objects.all()
+        course_list = []
         for course in courses:
-            small_course=(course.id,course.course_name)
-            course_list.append(small_course)
+            single_course = (course.id, course.course_name)
+            course_list.append(single_course)
     except:
-        course_list=[]
-    #course_list=[]
+        course_list = []
 
-    session_list = []
+    #For Displaying Session Years
+
     try:
-        sessions = SessionYearModel.object.all()
-
-        for ses in sessions:
-            small_ses = (ses.id, str(ses.session_start_year)+"   to  "+str(ses.session_end_year))
-            session_list.append(small_ses)
+        session_years = SessionYearModel.objects.all()
+        session_year_list = []
+        for session_year in session_years:
+            single_session_year = (session_year.id, str(session_year.session_start_year)+" to "+str(session_year.session_end_year))
+            session_year_list.append(single_session_year)
     except:
-        session_list=[]
+        session_year_list = []
 
-    gender_choice=(
-        ("Male","Male"),
-        ("Female","Female")
+    gender_list = (
+        ('Male','Male'),
+        ('Female','Female')
     )
 
-    course=forms.ChoiceField(label="Course",choices=course_list,widget=forms.Select(attrs={"class":"form-control"}))
-    sex=forms.ChoiceField(label="Sex",choices=gender_choice,widget=forms.Select(attrs={"class":"form-control"}))
-    session_year_id=forms.ChoiceField(label="Session Year",choices=session_list,widget=forms.Select(attrs={"class":"form-control"}))
-    profile_pic=forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}))
+    course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
+    gender = forms.ChoiceField(label="Gender", choices=gender_list, widget=forms.Select(attrs={"class":"form-control"}))
+    session_year_id = forms.ChoiceField(label="Session Year", choices=session_year_list, widget=forms.Select(attrs={"class":"form-control"}))
+    # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
+    # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
+    profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))
 
 class EditStudentForm(forms.Form):
-    email=forms.EmailField(label="Email",max_length=50,widget=forms.EmailInput(attrs={"class":"form-control"}))
-    first_name=forms.CharField(label="First Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    last_name=forms.CharField(label="Last Name",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    username=forms.CharField(label="Username",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
-    address=forms.CharField(label="Address",max_length=50,widget=forms.TextInput(attrs={"class":"form-control"}))
+    email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class":"form-control"}))
+    first_name = forms.CharField(label="First Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    last_name = forms.CharField(label="Last Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
 
-
-    course_list=[]
+    #For Displaying Courses
+    course_list = []
     try:
         courses = Courses.objects.all()
         for course in courses:
-            small_course=(course.id,course.course_name)
-            course_list.append(small_course)
+            single_course = (course.id, course.course_name)
+            course_list.append(single_course)
     except:
-        course_list=[]
+        course_list = []
 
-    session_list = []
+    #For Displaying Session Years
     try:
-        sessions = SessionYearModel.object.all()
-
-        for ses in sessions:
-            small_ses = (ses.id, str(ses.session_start_year)+"   TO  "+str(ses.session_end_year))
-            session_list.append(small_ses)
+        session_years = SessionYearModel.objects.all()
+        session_year_list = []
+        for session_year in session_years:
+            single_session_year = (session_year.id, str(session_year.session_start_year)+" to "+str(session_year.session_end_year))
+            session_year_list.append(single_session_year)
     except:
-        pass
-        #session_list = []
+        session_year_list = []
 
-    gender_choice=(
-        ("Male","Male"),
-        ("Female","Female")
+    gender_list = (
+        ('Male','Male'),
+        ('Female','Female')
     )
 
-    course=forms.ChoiceField(label="Course",choices=course_list,widget=forms.Select(attrs={"class":"form-control"}))
-    sex=forms.ChoiceField(label="Sex",choices=gender_choice,widget=forms.Select(attrs={"class":"form-control"}))
-    session_year_id=forms.ChoiceField(label="Session Year",choices=session_list,widget=forms.Select(attrs={"class":"form-control"}))
-    profile_pic=forms.FileField(label="Profile Pic",max_length=50,widget=forms.FileInput(attrs={"class":"form-control"}),required=False)
+    course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
+    gender = forms.ChoiceField(label="Gender", choices=gender_list, widget=forms.Select(attrs={"class":"form-control"}))
+    session_year_id = forms.ChoiceField(label="Session Year", choices=session_year_list, widget=forms.Select(attrs={"class":"form-control"}))
+    # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
+    # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
+    profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))
 
 class EditResultForm(forms.Form):
     def __init__(self, *args, **kwargs):

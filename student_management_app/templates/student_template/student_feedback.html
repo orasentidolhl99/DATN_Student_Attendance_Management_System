@@ -10,30 +10,7 @@ Feedback Message
     <div class="card-body">
         <h4 class="card-title">Form Leave a Feedback Message</h4>
 
-        {% comment %} Display Messages {% endcomment %}
-        {% if messages %}
-        <div class="form-group">
-        <div class="col-12">
-            {% for message in messages %}
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% elif message.tags == "success" %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        </div>
-        {% endif %}
+        
 
         <form class="forms-sample" action="{% url 'student_feedback_save' %}" method="post">
             {% csrf_token %}
@@ -41,6 +18,30 @@ Feedback Message
             <div class="form-group">
                 <label>Students fill in the form the reason for wanting to take leave </label>
                 <hr>
+                {% comment %} Display Messages {% endcomment %}
+                {% if messages %}
+                <div class="form-group">
+                <div class="col-12">
+                    {% for message in messages %}
+                    {% if message.tags == "error" %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% elif message.tags == "success" %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                </div>
+                {% endif %}
                 <br>
                 <textarea name="feedback_message" class="form-control" rows="6" placeholder="Feedback Message"></textarea>
             </div>

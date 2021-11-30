@@ -380,14 +380,14 @@ def add_session_save(request):
             return redirect("add_session")
 
 def manage_session(request):
-    session_years = SessionYearModel.objects.all()
+    session_years = SessionYearModel.object.all()
     context = {
         "session_years": session_years
     }
     return render(request, "admin_template/manage_session_template.html", context)
 
 def edit_session(request, session_id):
-    session_year = SessionYearModel.objects.get(id=session_id)
+    session_year = SessionYearModel.object.get(id=session_id)
     context = {
         "session_year": session_year
     }
@@ -404,7 +404,7 @@ def edit_session_save(request):
         session_end_year = request.POST.get('session_end_year')
 
         try:
-            session_year = SessionYearModel.objects.get(id=session_id)
+            session_year = SessionYearModel.object.get(id=session_id)
             session_year.session_start_year = session_start_year
             session_year.session_end_year = session_end_year
             session_year.updated_at = datetime.now()
@@ -418,7 +418,7 @@ def edit_session_save(request):
 
 
 def delete_session(request, session_id):
-    session = SessionYearModel.objects.get(id=session_id)
+    session = SessionYearModel.object.get(id=session_id)
     try:
         session.delete()
         messages.success(request, "Session Deleted Successfully.")
@@ -476,7 +476,7 @@ def add_student_save(request):
                 course_obj = Courses.objects.get(id=course_id)
                 user.students.course_id = course_obj
 
-                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+                session_year_obj = SessionYearModel.object.get(id=session_year_id)
                 user.students.session_year_id = session_year_obj
                 
                 user.students.name = first_name
@@ -608,7 +608,7 @@ def edit_student_save(request):
                 course = Courses.objects.get(id=course_id)
                 student_model.course_id = course
 
-                session_year_obj = SessionYearModel.objects.get(id=session_year_id)
+                session_year_obj = SessionYearModel.object.get(id=session_year_id)
                 student_model.session_year_id = session_year_obj
 
                 student_model.gender = gender
@@ -885,7 +885,7 @@ def teacher_leave_reject(request, leave_id):
 
 def admin_view_attendance(request):
     subjects = Subjects.objects.all()
-    session_years = SessionYearModel.objects.all()
+    session_years = SessionYearModel.object.all()
     context = {
         "subjects": subjects,
         "session_years": session_years
@@ -903,7 +903,7 @@ def admin_get_attendance_dates(request):
     # Getting all data from subject model based on subject_id
     subject_model = Subjects.objects.get(id=subject_id)
 
-    session_model = SessionYearModel.objects.get(id=session_year)
+    session_model = SessionYearModel.object.get(id=session_year)
 
     # students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
     attendance = Attendance.objects.filter(subject_id=subject_model, session_year_id=session_model)
@@ -951,8 +951,19 @@ def admin_profile_update(request):
         return HttpResponseRedirect(reverse("admin_profile"))
     else:
         first_name = request.POST.get('first_name')
+        if first_name == "":
+            messages.error(request, "Please enter first name!")
+            return redirect('admin_profile')
+
         last_name = request.POST.get('last_name')
+        # if last_name == "":
+        #     messages.error(request, "Please enter last name!")
+        #     return redirect('admin_profile')
+
         password = request.POST.get('password')
+        # if password == "":
+        #     messages.error(request, "Please enter password!")
+        #     return redirect('admin_profile')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)

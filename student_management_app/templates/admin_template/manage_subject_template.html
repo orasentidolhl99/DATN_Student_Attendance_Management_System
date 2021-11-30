@@ -9,37 +9,41 @@ Manage Subject
     <a class="btn btn-primary" href="{% url 'add_subject' %}" role="button">+ Add Subject</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
-        {% if messages %}
-        <div class="form-group">
-        <div class="col-12">
-            {% for message in messages %}
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% elif message.tags == "success" %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        </div>
+    {% if messages %}
+    <div class="form-group">
+    <div class="col-12">
+        {% for message in messages %}
+        {% if message.tags == "error" %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        {% elif message.tags == "success" %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
         {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+    {% endif %}
 
     <div class="card">
         <div class="card-body">
+        <div class="search-field d-none d-md-block">
             <h4 class="card-title">Form Manage Subject</h4>
-            <!-- <p class="card-description"> Detailed information sheet about Subjects</p> -->
+            <!-- <p class="card-description"> Detailed information sheet about Teachers </p> -->
             <hr>
             <br>
-            <table class="table table-striped p-0 card-body">
+        </div>
+
+        <div class="card-body table-responsive p-0">
+          <table class="table table-striped table-hover text-nowrap">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -52,25 +56,24 @@ Manage Subject
                 </tr>
             </thead>
             <tbody>
-                {% for subject in subjects %}
+            {% for subject in subjects %}
                 <tr>
-                <td>{{ subject.id }}</td>
-                <td>{{ subject.subject_name }}</td>
-                <td>{{ subject.course_id.course_name }}</td>
-                <td>{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</td>
-                <td>{{ subject.created_at }}</td>
-                <td>{{ subject.updated_at }}</td>
-                <td>
-                    <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
-                    <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
-                    <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
-                </td>
+                    <td>{{ subject.id }}</td>
+                    <td>{{ subject.subject_name }}</td>
+                    <td>{{ subject.course_id.course_name }}</td>
+                    <td>{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</td>
+                    <td>{{ subject.created_at }}</td>
+                    <td>{{ subject.updated_at }}</td>
+                    <td>
+                        <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
+                        <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
+                        <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
-            </table>
+          </table>
         </div>
-    </div>
-
-
+        </div>
+    </div>  
 {% endblock content %}

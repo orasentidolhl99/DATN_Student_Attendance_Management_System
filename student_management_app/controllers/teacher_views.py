@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 from datetime import datetime
+# import unidecode
 
 from django.http.response import StreamingHttpResponse
 from ..camera import FaceDetect
@@ -77,7 +78,7 @@ def teacher_home(request):
 
 def teacher_take_attendance(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
-    session_years = SessionYearModel.objects.all()
+    session_years = SessionYearModel.object.all()
     context = {
         "subjects": subjects,
         "session_years": session_years
@@ -110,7 +111,7 @@ def get_students(request):
     # Getting all data from subject model based on subject_id
     subject_model = Subjects.objects.get(id=subject_id)
 
-    session_model = SessionYearModel.objects.get(id=session_year)
+    session_model = SessionYearModel.object.get(id=session_year)
 
     students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
 
@@ -133,7 +134,7 @@ def save_attendance_data(request):
     session_year_id = request.POST.get("session_year_id")
 
     subject_model = Subjects.objects.get(id=subject_id)
-    session_year_model = SessionYearModel.objects.get(id=session_year_id)
+    session_year_model = SessionYearModel.object.get(id=session_year_id)
 
     json_student = json.loads(student_ids)
     # print(dict_student[0]['id'])
@@ -155,7 +156,7 @@ def save_attendance_data(request):
 
 def teacher_update_attendance(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
-    session_years = SessionYearModel.objects.all()
+    session_years = SessionYearModel.object.all()
     context = {
         "subjects": subjects,
         "session_years": session_years
@@ -174,7 +175,7 @@ def get_attendance_dates(request):
     # Getting all data from subject model based on subject_id
     subject_model = Subjects.objects.get(id=subject_id)
 
-    session_model = SessionYearModel.objects.get(id=session_year)
+    session_model = SessionYearModel.object.get(id=session_year)
 
     # students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
     attendance = Attendance.objects.filter(subject_id=subject_model, session_year_id=session_model)
@@ -242,8 +243,18 @@ def teacher_apply_leave_save(request):
         messages.error(request, "Invalid Method")
         return redirect('teacher_apply_leave')
     else:
+        
         leave_date = request.POST.get('leave_date')
+        if leave_date == "":
+            messages.error(request, "Please choose leave date!")
+            return redirect('teacher_apply_leave') 
+        
+
         leave_message = request.POST.get('leave_message')
+        if leave_message == "":
+            messages.error(request, "Please enter leave message!")
+            return redirect('teacher_apply_leave')
+
         leave_subject = request.POST.get('leave_subject')
         
         teacher_obj = Teachers.objects.get(admin=request.user.id)
@@ -275,6 +286,9 @@ def teacher_feedback_save(request):
         return redirect('teacher_feedback')
     else:
         feedback = request.POST.get('feedback_message')
+        if feedback == "":
+            messages.error(request, "Please enter feedback message!")
+            return redirect('teacher_feedback')
         teacher_obj = Teachers.objects.get(admin=request.user.id)
 
         try:
@@ -301,9 +315,25 @@ def teacher_profile(request):
         return HttpResponseRedirect(reverse("teacher_profile"))
     else:
         first_name = request.POST.get("first_name")
+        if first_name == "":
+            messages.error(request, "Please enter first name!")
+            return redirect('teacher_profile')
+
         last_name = request.POST.get("last_name")
+        if last_name == "":
+            messages.error(request, "Please enter last name!")
+            return redirect('teacher_profile')
+
         address = request.POST.get("address")
+        if address == "":
+            messages.error(request, "Please enter address!")
+            return redirect('teacher_profile')
+
         password = request.POST.get("password")
+        if password == "":
+            messages.error(request, "Please enter password!")
+            return redirect('teacher_profile')
+
         try:
             customuser = CustomUser.objects.get(id = request.user.id)
             customuser.first_name = first_name
@@ -372,7 +402,7 @@ def student_leave_reject(request, leave_id):
 
 def teacher_add_result(request):
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
-    session_years = SessionYearModel.objects.all()
+    session_years = SessionYearModel.object.all()
     context = {
         "subjects": subjects,
         "session_years": session_years,

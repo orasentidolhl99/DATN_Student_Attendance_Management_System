@@ -55,7 +55,7 @@ View Update Attendance
             </select>
         </div>
 
-        <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_attendance">Fetch Student</button>
+        <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_attendance">Fetch Attendance Date</button>
         
         <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
         <script>
@@ -117,9 +117,6 @@ View Update Attendance
 {% block custom_js %}
 <script>
     $(document).ready(function(){
-
-
-
         $("#fetch_attendance").click(function(){
                var subject=$("#subject").val();
                var session_year=$("#session_year_id").val();

@@ -7,7 +7,8 @@
       <a href="{% url 'student_profile' %}" class="nav-link">
         <div class="nav-profile-image ">
           
-          <img src="{% static 'plugins/images/faces/face1.jpg' %}" alt="profile">
+          <!-- <img src="{% static 'plugins/images/faces/face1.jpg' %}" alt="profile"> -->
+          <img src="{{student.profile_pic.url }}"/>
           <span class="login-status online" style="margin-left: 50px;"></span>
           <!--change to offline or busy as needed-->
         </div>
@@ -15,11 +16,11 @@
           <!-- <span class="font-weight-bold mb-2">
             {{ user.first_name }} {{ user.last_name }}
           </span> -->
-          <span class="font-weight-bold mb-2" style="text-align: center;">{{ user.first_name }} {{ user.last_name }}</span>
+          <span class="font-weight-bold mb-2" style="text-align: center;">{{ user.last_name }} {{ user.first_name }}</span>
           <span class="text-secondary text-small" style="text-align: center;">Student</span>
         </div>
         
-        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+        <!-- <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i> -->
       </a>
     </li>
     <li class="nav-item">

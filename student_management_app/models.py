@@ -10,7 +10,7 @@ class SessionYearModel(models.Model):
     id = models.AutoField(primary_key=True)
     session_start_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     session_end_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
-    objects = models.Manager()
+    object = models.Manager()
     
 class CustomUser(AbstractUser):
     user_type_data = ((1, "HOD"), (2, "Teacher"), (3, "Student"))
@@ -71,6 +71,7 @@ class Students(models.Model):
     # session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
+    fcm_token=models.TextField(default="")
     objects = models.Manager()
     
     def __str__(self):
@@ -130,7 +131,7 @@ class LeaveReportTeacher(models.Model):
     subject_id = models.ForeignKey(Subjects, on_delete=models.DO_NOTHING, null=True)
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
-    leave_status = models.BooleanField(default=False)
+    leave_status = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()

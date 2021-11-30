@@ -10,7 +10,15 @@ from student_management_app.models import Students, Courses, Subjects, CustomUse
     LeaveReportStudent, FeedBackStudent, NotificationStudent, StudentResult, SessionYearModel, StudentSubjectLink
 
 def student_home(request):
-    return render(request, "student_template/student_home_template.html")
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
+    context={
+        "user": user,
+        "student": student
+    }
+    return render(request, "student_template/student_home_template.html",context)
 
 # def student_home(request):
 #     student_obj = Students.objects.get(admin=request.user.id)
@@ -46,21 +54,39 @@ def student_home(request):
 
 
 def student_view_attendance(request):
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
     student = Students.objects.get(admin=request.user.id) # Getting Logged in Student Data
     course = student.course_id # Getting Course Enrolled of LoggedIn Student
     # course = Courses.objects.get(id=student.course_id.id) # Getting Course Enrolled of LoggedIn Student
     subjects = Subjects.objects.filter(course_id=course) # Getting the Subjects of Course Enrolled
     context = {
-        "subjects": subjects
+        "subjects": subjects,
+        "user": user,
+        "student": student
     }
     return render(request, "student_template/student_view_attendance.html", context)
 
 
 def student_view_attendance_post(request):
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
     # Getting all the Input Data
     subject_id = request.POST.get('subject')
+
     start_date = request.POST.get('start_date')
+    if start_date == "":
+        messages.error(request, "Please choose start date!")
+        return redirect('student_view_attendance')
+
     end_date = request.POST.get('end_date')
+    if end_date == "":
+        messages.error(request, "Please choose end date!")
+        return redirect('student_view_attendance')
 
     # Parsing the date data into Python object
     start_date_parse = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -85,19 +111,28 @@ def student_view_attendance_post(request):
 
     context = {
         "subject_obj": subject_obj,
-        "attendance_reports": attendance_reports
+        "attendance_reports": attendance_reports,
+        "user": user,
+        "student": student
     }
 
     return render(request, 'student_template/student_attendance_data.html', context)
        
 
 def student_apply_leave(request):
+
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
     student_obj = Students.objects.get(admin=request.user.id)
     subjects = StudentSubjectLink.objects.filter(student_id=student_obj)
     leave_data = LeaveReportStudent.objects.filter(student_id=student_obj)
     context = {
         "subjects": subjects,
-        "leave_data": leave_data
+        "leave_data": leave_data,
+        "user": user,
+        "student": student
     }
     return render(request, 'student_template/student_apply_leave.html', context)
 
@@ -108,7 +143,15 @@ def student_apply_leave_save(request):
         return redirect('student_apply_leave')
     else:
         leave_date = request.POST.get('leave_date')
+        if leave_date == "":
+            messages.error(request, "Please choose leave date!")
+            return redirect('student_apply_leave')
+
         leave_message = request.POST.get('leave_message')
+        if leave_message == "":
+            messages.error(request, "Please enter leave message!")
+            return redirect('student_apply_leave')
+
         leave_subject = request.POST.get('leave_subject')
         
         student_obj = Students.objects.get(admin=request.user.id)
@@ -129,10 +172,17 @@ def student_apply_leave_save(request):
 
 
 def student_feedback(request):
+
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
     student_obj = Students.objects.get(admin=request.user.id)
     feedback_data = FeedBackStudent.objects.filter(student_id=student_obj)
     context = {
-        "feedback_data": feedback_data
+        "feedback_data": feedback_data,
+        "user": user,
+        "student": student
     }
     return render(request, 'student_template/student_feedback.html', context)
 
@@ -143,6 +193,9 @@ def student_feedback_save(request):
         return redirect('student_feedback')
     else:
         feedback = request.POST.get('feedback_message')
+        if feedback == "":
+            messages.error(request, "Please enter feedback message!")
+            return redirect('student_feedback')
         student_obj = Students.objects.get(admin=request.user.id)
 
         try:
@@ -170,9 +223,24 @@ def student_profile_update(request):
         return HttpResponseRedirect(reverse("student_profile"))
     else:
         first_name = request.POST.get('first_name')
+        if first_name == "":
+            messages.error(request, "Please enter first name!")
+            return redirect('student_profile')
+
         last_name = request.POST.get('last_name')
-        password = request.POST.get('password')
+        if last_name == "":
+            messages.error(request, "Please enter last name!")
+            return redirect('student_profile')
+
         address = request.POST.get('address')
+        if address == "":
+            messages.error(request, "Please enter address!")
+            return redirect('student_profile')
+
+        password = request.POST.get('password')
+        if password == "":
+            messages.error(request, "Please enter password!")
+            return redirect('student_profile')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)
@@ -205,10 +273,17 @@ def student_fcm_token_update(request):
 
 
 def student_view_result(request):
+
+    # Show image profile
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
     student = Students.objects.get(admin=request.user.id)
     student_result = StudentResult.objects.filter(student_id=student.id)
     context = {
         "student_result": student_result,
+        "user": user,
+        "student": student
     }
     return render(request, "student_template/student_view_result.html", context)
 

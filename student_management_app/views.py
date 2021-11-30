@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+import requests
 
 from student_management_app.controllers.email_back_end import EmailBackEnd
 from student_management_app.models import CustomUser, Courses, SessionYearModel
@@ -13,8 +14,8 @@ import os
 
 
 # Create your views here.
-def ShowDemoPage(request):
-    return render(request,"demo.html")
+# def ShowDemoPage(request):
+#     return render(request,"demo.html")
 
 def loginPage(request):
     return render(request,"login_page.html")

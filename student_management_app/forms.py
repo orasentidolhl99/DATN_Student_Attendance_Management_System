@@ -71,34 +71,48 @@ class EditStudentForm(forms.Form):
     username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
 
-    #For Displaying Courses
-    course_list = []
-    try:
-        courses = Courses.objects.all()
-        for course in courses:
-            single_course = (course.id, course.course_name)
-            course_list.append(single_course)
-    except:
-        course_list = []
+    course_id = forms.ModelChoiceField(
+        empty_label=None, label="Course",
+        queryset=Courses.objects.all().order_by('id'),
+        to_field_name='id',
+        widget=forms.Select(attrs={"class":"form-control"})
+    )
+    
+    session_year_id = forms.ModelChoiceField(
+        empty_label=None, label="Session Year",
+        queryset=SessionYearModel.objects.all().order_by('id'),
+        to_field_name='id',
+        widget=forms.Select(attrs={"class":"form-control"})
+    )
 
-    #For Displaying Session Years
-    try:
-        session_years = SessionYearModel.objects.all()
-        session_year_list = []
-        for session_year in session_years:
-            single_session_year = (session_year.id, str(session_year.session_start_year)+" to "+str(session_year.session_end_year))
-            session_year_list.append(single_session_year)
-    except:
-        session_year_list = []
+    # #For Displaying Courses
+    # course_list = []
+    # try:
+    #     courses = Courses.objects.all()
+    #     for course in courses:
+    #         single_course = (course.id, course.course_name)
+    #         course_list.append(single_course)
+    # except:
+    #     course_list = []
+
+    # #For Displaying Session Years
+    # try:
+    #     session_years = SessionYearModel.objects.all()
+    #     session_year_list = []
+    #     for session_year in session_years:
+    #         single_session_year = (session_year.id, str(session_year.session_start_year)+" to "+str(session_year.session_end_year))
+    #         session_year_list.append(single_session_year)
+    # except:
+    #     session_year_list = []
 
     gender_list = (
         ('Male','Male'),
         ('Female','Female')
     )
 
-    course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
+    # course_id = forms.ChoiceField(label="Course", choices=course_list, widget=forms.Select(attrs={"class":"form-control"}))
     gender = forms.ChoiceField(label="Gender", choices=gender_list, widget=forms.Select(attrs={"class":"form-control"}))
-    session_year_id = forms.ChoiceField(label="Session Year", choices=session_year_list, widget=forms.Select(attrs={"class":"form-control"}))
+    # session_year_id = forms.ChoiceField(label="Session Year", choices=session_year_list, widget=forms.Select(attrs={"class":"form-control"}))
     # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
     # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
     profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))

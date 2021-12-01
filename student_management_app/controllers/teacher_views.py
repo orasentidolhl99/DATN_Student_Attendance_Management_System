@@ -21,6 +21,8 @@ from student_management_app.models import (
 )
 
 def teacher_home(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
     # Fetching All Students under teacher
 
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
@@ -72,22 +74,38 @@ def teacher_home(request):
         "attendance_list": attendance_list,
         "student_list": student_list,
         "attendance_present_list": student_list_attendance_present,
-        "attendance_absent_list": student_list_attendance_absent
+        "attendance_absent_list": student_list_attendance_absent,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/teacher_home_template.html", context)
 
 def teacher_take_attendance(request):
+
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     session_years = SessionYearModel.objects.all()
     context = {
         "subjects": subjects,
-        "session_years": session_years
+        "session_years": session_years,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/take_attendance_template.html", context)
 
 @csrf_exempt
 def take_attendance_detect(request):
-    return render(request, "teacher_template/take_attendance_detect.html")
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
+    context = {
+        "user": user,
+        "teacher": teacher
+    }
+
+    return render(request, "teacher_template/take_attendance_detect.html",context)
 
 def gen(camera):
         while True:
@@ -155,11 +173,16 @@ def save_attendance_data(request):
         return HttpResponse("Error")
 
 def teacher_update_attendance(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     session_years = SessionYearModel.objects.all()
     context = {
         "subjects": subjects,
-        "session_years": session_years
+        "session_years": session_years,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/update_attendance_template.html", context)
 
@@ -229,12 +252,18 @@ def update_attendance_data(request):
         return HttpResponse("Error")
 
 def teacher_apply_leave(request):
+
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     teacher_obj = Teachers.objects.get(admin=request.user.id)
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     leave_data = LeaveReportTeacher.objects.filter(teacher_id=teacher_obj)
     context = {
         "subjects": subjects,
-        "leave_data": leave_data
+        "leave_data": leave_data,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/teacher_apply_leave_template.html", context)
 
@@ -273,10 +302,16 @@ def teacher_apply_leave_save(request):
             return redirect('teacher_apply_leave')
 
 def teacher_feedback(request):
+
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     teacher_obj = Teachers.objects.get(admin=request.user.id)
     feedback_data = FeedBackTeacher.objects.filter(teacher_id=teacher_obj)
     context = {
-        "feedback_data":feedback_data
+        "feedback_data":feedback_data,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/teacher_feedback_template.html", context)
 
@@ -303,6 +338,7 @@ def teacher_feedback_save(request):
 def teacher_profile(request):
     user = CustomUser.objects.get(id=request.user.id)
     teacher = Teachers.objects.get(admin=user)
+    
 
     context={
         "user": user,
@@ -311,45 +347,45 @@ def teacher_profile(request):
     return render(request, 'teacher_template/teacher_profile.html', context)
 
 # def teacher_profile_save(request):
-    if request.method!="POST":
-        return HttpResponseRedirect(reverse("teacher_profile"))
-    else:
-        first_name = request.POST.get("first_name")
-        if first_name == "":
-            messages.error(request, "Please enter first name!")
-            return redirect('teacher_profile')
+    # if request.method!="POST":
+    #     return HttpResponseRedirect(reverse("teacher_profile"))
+    # else:
+    #     first_name = request.POST.get("first_name")
+    #     if first_name == "":
+    #         messages.error(request, "Please enter first name!")
+    #         return redirect('teacher_profile')
 
-        last_name = request.POST.get("last_name")
-        if last_name == "":
-            messages.error(request, "Please enter last name!")
-            return redirect('teacher_profile')
+    #     last_name = request.POST.get("last_name")
+    #     if last_name == "":
+    #         messages.error(request, "Please enter last name!")
+    #         return redirect('teacher_profile')
 
-        address = request.POST.get("address")
-        if address == "":
-            messages.error(request, "Please enter address!")
-            return redirect('teacher_profile')
+    #     address = request.POST.get("address")
+    #     if address == "":
+    #         messages.error(request, "Please enter address!")
+    #         return redirect('teacher_profile')
 
-        password = request.POST.get("password")
-        if password == "":
-            messages.error(request, "Please enter password!")
-            return redirect('teacher_profile')
+    #     password = request.POST.get("password")
+    #     if password == "":
+    #         messages.error(request, "Please enter password!")
+    #         return redirect('teacher_profile')
 
-        try:
-            customuser = CustomUser.objects.get(id = request.user.id)
-            customuser.first_name = first_name
-            customuser.last_name = last_name
-            if password!= None and password!= "":
-                customuser.set_password(password)
-            customuser.save()
+    #     try:
+    #         customuser = CustomUser.objects.get(id = request.user.id)
+    #         customuser.first_name = first_name
+    #         customuser.last_name = last_name
+    #         if password!= None and password!= "":
+    #             customuser.set_password(password)
+    #         customuser.save()
 
-            teacher=Teachers.objects.get(admin=customuser.id)
-            teacher.address=address
-            teacher.save()
-            messages.success(request, "Successfully Updated Profile")
-            return HttpResponseRedirect(reverse("teacher_profile"))
-        except:
-            messages.error(request, "Failed to Update Profile")
-            return HttpResponseRedirect(reverse("teacher_profile"))
+    #         teacher=Teachers.objects.get(admin=customuser.id)
+    #         teacher.address=address
+    #         teacher.save()
+    #         messages.success(request, "Successfully Updated Profile")
+    #         return HttpResponseRedirect(reverse("teacher_profile"))
+    #     except:
+    #         messages.error(request, "Failed to Update Profile")
+    #         return HttpResponseRedirect(reverse("teacher_profile"))
 
 def teacher_profile_update(request):
     if request.method != "POST":
@@ -380,11 +416,17 @@ def teacher_profile_update(request):
             return redirect('teacher_profile')
 
 def student_leave_view(request):
+
+    user = CustomUser.objects.get(id=request.user.id)
+    teacher = Teachers.objects.get(admin=user)
+
     # find all subject 
     all_subjects_in_teacher = Subjects.objects.filter(teacher_id=request.user.id)
     leaves = LeaveReportStudent.objects.filter(subject_id__in=all_subjects_in_teacher)
     context = {
-        "leaves": leaves
+        "leaves": leaves,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, 'teacher_template/student_leave_view.html', context)
 
@@ -401,11 +443,17 @@ def student_leave_reject(request, leave_id):
     return redirect('student_leave_view')
 
 def teacher_add_result(request):
+
+    user = CustomUser.objects.get(id=request.user.id)
+    teacher = Teachers.objects.get(admin=user)
+
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     session_years = SessionYearModel.objects.all()
     context = {
         "subjects": subjects,
         "session_years": session_years,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/add_result_template.html", context)
 

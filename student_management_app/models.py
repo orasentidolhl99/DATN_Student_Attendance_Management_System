@@ -6,18 +6,20 @@ from student_management_system import settings
 import os
 # Create your models here.
 
-def upload_profile_pic(instance, filename):
-    return f'profile_pic/{filename}'
+    
+class CustomUser(AbstractUser):
+    user_type_data = ((1, "HOD"), (2, "Teacher"), (3, "Student"))
+    user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
+
 class SessionYearModel(models.Model):
     id = models.AutoField(primary_key=True)
     session_start_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     session_end_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
     objects = models.Manager()
     
-class CustomUser(AbstractUser):
-    user_type_data = ((1, "HOD"), (2, "Teacher"), (3, "Student"))
-    user_type = models.CharField(default=1, choices=user_type_data, max_length=10)
-
+    def __str__(self):
+        return str(self.session_start_year)+" to "+str(self.session_end_year)
+    
 class AdminHOD(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -27,7 +29,9 @@ class AdminHOD(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
-    
+
+def upload_profile_pic(instance, filename):
+    return f'profile_pic/{filename}'
 
 class Teachers(models.Model):
     id = models.AutoField(primary_key=True)
@@ -47,7 +51,10 @@ class Courses(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
-
+    
+    def __str__(self):
+        return self.course_name
+    
 class Subjects(models.Model):
     id = models.AutoField(primary_key=True)
     subject_name = models.CharField(max_length=255)
@@ -56,7 +63,6 @@ class Subjects(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
-
 
 
 class Students(models.Model):

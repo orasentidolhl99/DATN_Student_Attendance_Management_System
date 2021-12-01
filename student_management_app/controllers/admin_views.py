@@ -469,10 +469,13 @@ def add_student_save(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             address = form.cleaned_data['address']
-            session_year_id = form.cleaned_data['session_year_id']
-            course_id = form.cleaned_data['course_id']
+            # session_year_id = form.cleaned_data['session_year_id']
+            # course_id = form.cleaned_data['course_id']
             gender = form.cleaned_data['gender']
-
+            
+            course_id = form.cleaned_data['course_id'].id
+            session_year_id = form.cleaned_data['session_year_id'].id
+            
             # Getting Profile Pic first
             # First Check whether the file is selected or not
             # Upload only if file is selected
@@ -482,7 +485,7 @@ def add_student_save(request):
                 # filename = fs.save(profile_pic.name, profile_pic)
                 # profile_pic_url = fs.url('profile_pic/' + filename)
             else:
-                profile_pic_url = None
+                profile_pic = None
 
             try:
                 user = CustomUser.objects.create_user(username=username,

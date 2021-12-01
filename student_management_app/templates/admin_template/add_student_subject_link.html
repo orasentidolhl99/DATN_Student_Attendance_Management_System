@@ -43,7 +43,7 @@ Add Student Subject
             <label> Students </label>
             <select class="form-control" name="student_id">
                 {% for student in students %}
-                    <option value="{{ student.id }}">{{ student.admin.username }} {{ student.admin.first_name }} {{student.admin.last_name}}</option>
+                    <option value="{{ student.id }}">{{ student.admin.username }} {{student.admin.last_name}} {{ student.admin.first_name }}</option>
                 {% endfor%}
             </select>
         </div>

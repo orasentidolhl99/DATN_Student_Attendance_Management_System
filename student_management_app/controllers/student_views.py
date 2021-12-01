@@ -238,9 +238,9 @@ def student_profile_update(request):
             return redirect('student_profile')
 
         password = request.POST.get('password')
-        if password == "":
-            messages.error(request, "Please enter password!")
-            return redirect('student_profile')
+        # if password == "":
+        #     messages.error(request, "Please enter password!")
+        #     return redirect('student_profile')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)

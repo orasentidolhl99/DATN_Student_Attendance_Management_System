@@ -6,6 +6,8 @@ from student_management_system import settings
 import os
 # Create your models here.
 
+def upload_profile_pic(instance, filename):
+    return f'profile_pic/{filename}'
 class SessionYearModel(models.Model):
     id = models.AutoField(primary_key=True)
     session_start_year = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
@@ -25,6 +27,7 @@ class AdminHOD(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
+    
 
 class Teachers(models.Model):
     id = models.AutoField(primary_key=True)
@@ -33,6 +36,7 @@ class Teachers(models.Model):
     password = models.CharField(max_length=255)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     address = models.TextField()
+    profile_pic=models.FileField(upload_to = upload_profile_pic)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -53,8 +57,7 @@ class Subjects(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
 
-def upload_profile_pic(instance, filename):
-    return f'profile_pic/{filename}'
+
 
 class Students(models.Model):
     id=models.AutoField(primary_key=True)
@@ -71,7 +74,6 @@ class Students(models.Model):
     # session_end_year=models.DateField()
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
-    # fcm_token=models.TextField(default="")
     objects = models.Manager()
     
     def __str__(self):

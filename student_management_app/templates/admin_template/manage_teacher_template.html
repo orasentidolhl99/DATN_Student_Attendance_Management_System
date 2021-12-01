@@ -60,6 +60,7 @@ Manage Teacher
                     <th> User Name </th>
                     <th> Email </th>
                     <th> Address </th>
+                    <th> Profile </th>
                     <th> Last Login </th>
                     <th> Date Joined </th>
                     <th> Action </th>
@@ -74,6 +75,7 @@ Manage Teacher
                         <td> {{ teacher.admin.username }}</td>
                         <td> {{ teacher.admin.email }}</td>
                         <td> {{ teacher.address }}</td>
+                        <td> <img src="{{ teacher.profile_pic.url }}" style="height:50px; width:50px;" /> </td>
                         <!-- <td>
                             <textarea cols="20" rows="2" style="border: none; outline: none; color: #343a40;" readonly>{{ teacher.address }}</textarea>
                              -->

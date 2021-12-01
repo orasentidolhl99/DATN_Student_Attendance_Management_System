@@ -119,6 +119,14 @@ def add_teacher_save(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         address = request.POST.get('address')
+
+        if len(request.FILES) != 0:
+            profile_pic = request.FILES['profile_pic']
+            # fs = FileSystemStorage(location='media/profile_pic/')
+            # filename = fs.save(profile_pic.name, profile_pic)
+            # profile_pic_url = fs.url('profile_pic/' + filename)
+        else:
+            profile_pic = None
         try:
             user = CustomUser.objects.create_user(username=username,
                                                   password=password,
@@ -130,6 +138,7 @@ def add_teacher_save(request):
             user.teachers.name = first_name
             user.teachers.email = email
             user.teachers.password = password
+            user.teachers.profile_pic = profile_pic
             user.save()
             messages.success(request, "Teacher Added Successfully!")
             return redirect('add_teacher')
@@ -170,6 +179,14 @@ def edit_teacher_save(request):
         last_name = request.POST.get('last_name')
         address = request.POST.get('address')
 
+        if len(request.FILES) != 0:
+            profile_pic = request.FILES['profile_pic']
+            # fs = FileSystemStorage(location='media/profile_pic/')
+            # filename = fs.save(profile_pic.name, profile_pic)
+            # profile_pic_url = fs.url('profile_pic/' + filename)
+        else:
+            profile_pic = None
+
         try:
             # INSERTING into Customuser Model
             user = CustomUser.objects.get(id=teacher_id)
@@ -183,6 +200,9 @@ def edit_teacher_save(request):
             teacher_model = Teachers.objects.get(admin=teacher_id)
             teacher_model.address = address
             teacher_model.updated_at = datetime.now()
+
+            if profile_pic != None:
+                teacher_model.profile_pic = profile_pic
             teacher_model.save()
 
             messages.success(request, "Teacher Updated Successfully.")
@@ -581,11 +601,11 @@ def edit_student_save(request):
             # Upload only if file is selected
             if len(request.FILES) != 0:
                 profile_pic = request.FILES['profile_pic']
-                fs = FileSystemStorage()
-                filename = fs.save(profile_pic.name, profile_pic)
-                profile_pic_url = fs.url(filename)
+                # fs = FileSystemStorage(location='media/profile_pic/')
+                # filename = fs.save(profile_pic.name, profile_pic)
+                # profile_pic_url = fs.url('profile_pic/' + filename)
             else:
-                profile_pic_url = None
+                profile_pic = None
 
             try:
                 # First Update into Custom User Model
@@ -612,8 +632,8 @@ def edit_student_save(request):
                 student_model.session_year_id = session_year_obj
 
                 student_model.gender = gender
-                if profile_pic_url != None:
-                    student_model.profile_pic = profile_pic_url
+                if profile_pic != None:
+                    student_model.profile_pic = profile_pic
                     
                 student_model.updated_at = datetime.now()
                 

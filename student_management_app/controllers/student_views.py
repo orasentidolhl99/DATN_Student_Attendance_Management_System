@@ -220,6 +220,7 @@ def student_profile(request):
 
 def student_profile_update(request):
     if request.method != "POST":
+        messages.error(request, "Invalid Method!")
         return HttpResponseRedirect(reverse("student_profile"))
     else:
         first_name = request.POST.get('first_name')
@@ -243,22 +244,26 @@ def student_profile_update(request):
         #     return redirect('student_profile')
 
         try:
-            customuser = CustomUser.objects.get(id=request.user.id)
-            customuser.first_name = first_name
-            customuser.last_name = last_name
-            if password != None and password != "":
-                customuser.set_password(password)
-            customuser.save()
+            custom_user = CustomUser.objects.get(id = request.user.id)
+            custom_user.first_name = first_name
+            custom_user.last_name = last_name
+            if password is not None and password != "":
+                custom_user.set_password(password)
+            custom_user.save()
 
-            student = Students.objects.get(admin=customuser)
+            student = Students.objects.get(admin=custom_user)
             student.address = address
             student.save()
             
-            messages.success(request, "Successfully Updated Profile")
-            return HttpResponseRedirect(reverse("student_profile"))
+            if password == "":
+                messages.success(request, "Profile Updated Successfully")
+                return redirect('student_profile')
+            else:
+                messages.success(request, "Password has been changed, sign in again!")
+                return redirect('logout_user')
         except:
             messages.error(request, "Failed to Update Profile")
-            return HttpResponseRedirect(reverse("student_profile"))
+            return redirect('student_profile')
 
 
 def student_view_result(request):

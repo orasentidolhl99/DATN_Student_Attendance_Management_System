@@ -339,7 +339,6 @@ def teacher_profile(request):
     user = CustomUser.objects.get(id=request.user.id)
     teacher = Teachers.objects.get(admin=user)
     
-
     context={
         "user": user,
         "teacher": teacher
@@ -393,24 +392,42 @@ def teacher_profile_update(request):
         return redirect('teacher_profile')
     else:
         first_name = request.POST.get('first_name')
+        if first_name == "":
+            messages.error(request, "Please enter first name!")
+            return redirect('teacher_profile')
+        
         last_name = request.POST.get('last_name')
-        password = request.POST.get('password')
+        if last_name == "":
+            messages.error(request, "Please enter last name!")
+            return redirect('teacher_profile')
+        
         address = request.POST.get('address')
+        if address == "":
+            messages.error(request, "Please enter address!")
+            return redirect('teacher_profile')
+        
+        password = request.POST.get('password')
+        # if password == "":
+        #     messages.error(request, "Please enter password!")
+        #     return redirect('teacher_profile')
 
         try:
             customuser = CustomUser.objects.get(id=request.user.id)
             customuser.first_name = first_name
             customuser.last_name = last_name
-            if password != None and password != "":
+            if password is not None and password != "":
                 customuser.set_password(password)
             customuser.save()
 
             teacher = Teachers.objects.get(admin=customuser.id)
             teacher.address = address
             teacher.save()
-
-            messages.success(request, "Profile Updated Successfully")
-            return redirect('teacher_profile')
+            if password == "":
+                messages.success(request, "Profile Updated Successfully")
+                return redirect('teacher_profile')
+            else:
+                messages.success(request, "Password has been changed, sign in again!")
+                return redirect('logout_user')
         except:
             messages.error(request, "Failed to Update Profile")
             return redirect('teacher_profile')

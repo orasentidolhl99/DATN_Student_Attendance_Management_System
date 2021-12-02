@@ -55,9 +55,10 @@ Manage Teacher
                 <thead>
                 <tr>
                     <th> ID </th>
-                    <th> First Name </th>
-                    <th> Last Name </th>
                     <th> User Name </th>
+                    <th> Last Name </th> 
+                    <th> First Name </th>
+                                      
                     <th> Email </th>
                     <th> Address </th>
                     <th> Profile </th>
@@ -70,9 +71,9 @@ Manage Teacher
                 {% for teacher in teachers %}
                     <tr>
                         <td> {{ teacher.admin.id }}</td>
-                        <td> {{ teacher.admin.first_name }}</td>
-                        <td> {{ teacher.admin.last_name }}</td>
                         <td> {{ teacher.admin.username }}</td>
+                        <td> {{ teacher.admin.last_name }}</td>  
+                        <td> {{ teacher.admin.first_name }}</td>                     
                         <td> {{ teacher.admin.email }}</td>
                         <td> {{ teacher.address }}</td>
                         <td> <img src="{{ teacher.profile_pic.url }}" style="height:50px; width:50px;" /> </td>
@@ -80,8 +81,8 @@ Manage Teacher
                             <textarea cols="20" rows="2" style="border: none; outline: none; color: #343a40;" readonly>{{ teacher.address }}</textarea>
                              -->
                         <!-- </td>  -->
-                        <td> {{ teacher.admin.last_login|date:'Y-m-d, H:i:s' }}</td>
-                        <td> {{ teacher.admin.date_joined|date:'Y-m-d, H:i:s' }}</td>
+                        <td> {{ teacher.admin.last_login|date:'D,d/m/Y - H:i:s' }}</td>
+                        <td> {{ teacher.admin.date_joined|date:'D,d/m/Y - H:i:s' }}</td>
                         <td>
                             <a href="{% url 'edit_teacher' teacher.admin.id %}" class="btn btn-success">Edit</a> 
                             <a href="{% url 'delete_teacher' teacher.admin.id %}" class="btn btn-danger">Delete</a>

@@ -47,8 +47,8 @@ Manage Subject
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Subject Name</th>
                     <th>Course</th>
+                    <th>Subject Name</th>
                     <th>Teacher</th>
                     <th>Created At</th>
                     <th>Updated At</th>
@@ -59,11 +59,11 @@ Manage Subject
             {% for subject in subjects %}
                 <tr>
                     <td>{{ subject.id }}</td>
-                    <td>{{ subject.subject_name }}</td>
                     <td>{{ subject.course_id.course_name }}</td>
+                    <td>{{ subject.subject_name }}</td>
                     <td>{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</td>
-                    <td>{{ subject.created_at }}</td>
-                    <td>{{ subject.updated_at }}</td>
+                    <td>{{ subject.created_at|date:'D,d/m/Y - H:i:s' }}</td>
+                    <td>{{ subject.updated_at|date:'D,d/m/Y - H:i:s' }}</td>
                     <td>
                         <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
                         <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 

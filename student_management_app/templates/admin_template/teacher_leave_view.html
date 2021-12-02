@@ -34,11 +34,11 @@ Leave Apply by Teachers
                         <tr>
                             <td>{{ leave.id }}</td>
                             {% comment %} <td>{{ leave.teacher_id.admin.id }}</td> {% endcomment %}
-                            <td>{{ leave.teacher_id.admin.first_name }} {{ feedback.teacher_id.admin.last_name }}</td> 
+                            <td>{{ leave.teacher_id.admin.last_name }} {{ leave.teacher_id.admin.first_name }}</td> 
                             <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
                             <td>{{ leave.leave_message }}</td>
-                            <td>{{ leave.created_at }}</td>
+                            <td>{{ leave.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                             <td>
                                 {% if leave.leave_status == 0 %}
                                     <a href="{% url 'teacher_leave_approve' leave_id=leave.id %}" class="btn btn-success">Approve</a>

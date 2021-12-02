@@ -19,9 +19,9 @@ Leave Apply by Students
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Subject Name</th>
                         <th>Student ID</th>
                         <th>Student Name</th>
+                        <th>Subject Name</th>
                         <th>Leave Date</th>
                         <th>Leave Message</th>
                         <th>Applied On</th>
@@ -32,12 +32,12 @@ Leave Apply by Students
                     <tbody>
                         <tr>
                             <td>{{ leave.id }}</td>
-                            <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.student_id.admin.username }}</td>
-                            <td>{{ leave.student_id.admin.first_name }} {{ feedback.student_id.admin.last_name }}</td> 
+                            <td>{{ leave.student_id.admin.last_name }} {{ leave.student_id.admin.first_name }}</td> 
+                            <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
                             <td>{{ leave.leave_message }}</td>
-                            <td>{{ leave.created_at }}</td>
+                            <td>{{ leave.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                             <td>
                                 {% if leave.leave_status == 0 %}
                                     <a href="{% url 'student_leave_approve' leave_id=leave.id %}" class="btn btn-success">Approve</a>

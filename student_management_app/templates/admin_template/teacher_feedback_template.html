@@ -31,10 +31,10 @@ Teacher Feedback
                     <tbody>
                     <tr>
                         <td>{{ feedback.id }}</td>
-                        <td>{{ feedback.teacher_id.admin.id }}</td>
-                        <td>{{ feedback.teacher_id.admin.first_name }} {{ feedback.teacher_id.admin.last_name }}</td> 
+                        <td>{{ feedback.teacher_id.admin.username }}</td>
+                        <td>{{ feedback.teacher_id.admin.last_name }} {{ feedback.teacher_id.admin.first_name }}</td> 
                         <td>{{ feedback.feedback }}</td>
-                        <td>{{ feedback.created_at }}</td>
+                        <td>{{ feedback.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                         <td>
                             {% if feedback.feedback_reply == "" %}
                                 <button class="btn btn-success reply_open_modal" data-toggle="modal" data-target="#replyModal">Reply</button>

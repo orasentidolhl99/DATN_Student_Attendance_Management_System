@@ -74,7 +74,7 @@ Feedback Message
                 <table class = "table table-striped table-hover text-nowrap ">
                     <thead>
                         <tr>
-                            <th>#ID</th>
+                            <th>ID</th>
                             <th>Feedback  Date</th>
                             <th>Feedback  Message</th>
                             <th>Feedback  Reply</th>
@@ -85,7 +85,7 @@ Feedback Message
                         {% for row in feedback_data %}
                         <tr>
                             <td>{{ row.id }}</td>
-                            <td>{{ row.created_at }}</td>
+                            <td>{{ row.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                             <td>{{ row.feedback }}</td>
                             <td>{{ row.feedback_reply }}</td>
                             <td>

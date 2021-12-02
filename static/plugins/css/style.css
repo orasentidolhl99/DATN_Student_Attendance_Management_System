@@ -18409,7 +18409,7 @@ div.tagsinput {
 /* === Landing screens === */
 /* Auth */
 .auth .login-half-bg {
-  background: url("../../images/auth/login-bg.jpg");
+  background: url("../../../static/plugins/images/auth/login-bg.jpg");
   background-size: cover; }
 
 .auth .register-half-bg {

@@ -6,6 +6,13 @@ import cv2
 import os
 from django.conf import settings
 
+def init_data():
+	print("[INFO] init face detector...")
+	embeddings = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\embeddings.pickle"])
+	data = pickle.loads(open(embeddings, "rb").read())
+	data['embeddings'].clear()
+	data['names'].clear()
+
 def embeddings():
 	# load our serialized face detector from disk
 	print("[INFO] loading face detector...")

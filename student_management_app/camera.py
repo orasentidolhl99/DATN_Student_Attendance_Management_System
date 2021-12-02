@@ -28,6 +28,7 @@ user_list = [ f.name for f in os.scandir(dataset) if f.is_dir() ]
 
 class FaceDetect(object):
 	def __init__(self):
+		extract_embeddings.init_data()
 		extract_embeddings.embeddings()
 		train_model.model_train()
 		# initialize the video stream, then allow the camera sensor to warm up

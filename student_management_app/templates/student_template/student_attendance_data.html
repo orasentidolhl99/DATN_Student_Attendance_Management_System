@@ -45,14 +45,14 @@ View Attendance Data
                     <h4 class="card-title">Attendance Data</h4>
                     <!-- <p class="card-description"> Attendance Data <code>.table-striped</code> -->
                     </p>
-                </div>
-                <div class="card-body">
+                <!-- </div>
+                <div class="card-body"> -->
                     <div class="row">
                         {% if attendance_reports %}
                         {% for attendance_report in attendance_reports %}
                             {% if attendance_report.status == True %}
                                 <div class="col-lg-3 attendance_div_green">
-                                    <b>Date : {{ attendance_report.attendance_id.attendance_date }}</b> <br/>
+                                    <b>Date : {{ attendance_report.attendance_id.attendance_date|date:'D,d/m/Y - H:i:s' }}</b> <br/>
                                         <b>[ Status : Present ]</b>
                                 </div>                                    
                             {% else %}
@@ -66,6 +66,41 @@ View Attendance Data
                             <div class="alert alert-danger text-center">No Attendance Data Found!</div>
                         {% endif %}
                     </div>
+
+                    <table class="table table-striped p-0 card-body">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Subject Name</th>
+                                <th>Teacher Name</th>
+                                <th>Date Attendance</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- {% for attendance_id in attendance_ids %}
+                                <tr>
+                                    <td>{{ attendance_id.id }}</td>
+                                    <td>{{ attendance_id.student_id.admin.username }}</td>
+                                    <td>{{ attendance_id.student_id.admin.last_name }} {{ student_subject.student_id.admin.first_name }}</td>
+                                    <td>{{ attendance_id.created_at }}</td>
+                                    <td>{{ attendance_id.updated_at }}</td>
+                                    <td>
+                                        {% if row.attendance_id == "" %}
+                                            <span class="alert alert-warning">Sending</span>
+                                        {% else %}  
+                                            <span class="alert alert-success">Replied</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% comment %} <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a>  {% endcomment %}
+                                        <a href="{% url 'delete_student_subject_link' student_subject.id %}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %} -->
+                        </tbody>
+                        </table>
                 </div>
             </div>
     </div>

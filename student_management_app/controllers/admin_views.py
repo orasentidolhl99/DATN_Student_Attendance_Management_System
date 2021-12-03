@@ -29,7 +29,7 @@ from student_management_system import settings
 
 
 def admin_home(request):
-    all_student_count = Students.objects.all().count()
+    student_count1 = Students.objects.all().count()
     subject_count = Subjects.objects.all().count()
     course_count = Courses.objects.all().count()
     teacher_count = Teachers.objects.all().count()
@@ -70,23 +70,8 @@ def admin_home(request):
         teacher_attendance_leave_list.append(leaves)
         teacher_name_list.append(teacher.admin.first_name)
 
-    # For Students
-    student_attendance_present_list=[]
-    student_attendance_leave_list=[]
-    student_name_list=[]
-
-    students = Students.objects.all()
-    for student in students:
-        attendance = AttendanceReport.objects.filter(student_id=student.id, status=True).count()
-        absent = AttendanceReport.objects.filter(student_id=student.id, status=False).count()
-        leaves = LeaveReportStudent.objects.filter(student_id=student.id, leave_status=1).count()
-        student_attendance_present_list.append(attendance)
-        student_attendance_leave_list.append(leaves+absent)
-        student_name_list.append(student.admin.first_name)
-
-
     context={
-        "all_student_count": all_student_count,
+        "student_count": student_count1,
         "subject_count": subject_count,
         "course_count": course_count,
         "teacher_count": teacher_count,
@@ -98,9 +83,6 @@ def admin_home(request):
         "teacher_attendance_present_list": teacher_attendance_present_list,
         "teacher_attendance_leave_list": teacher_attendance_leave_list,
         "teacher_name_list": teacher_name_list,
-        "student_attendance_present_list": student_attendance_present_list,
-        "student_attendance_leave_list": student_attendance_leave_list,
-        "student_name_list": student_name_list,
     }
     return render(request,"admin_template/content_template.html", context)
 

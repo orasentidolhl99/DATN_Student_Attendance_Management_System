@@ -65,6 +65,20 @@ def teacher_home(request):
         student_list_attendance_present.append(attendance_present_count)
         student_list_attendance_absent.append(attendance_absent_count)
 
+    # For Students
+    student_attendance_present_list=[]
+    student_attendance_leave_list=[]
+    student_name_list=[]
+
+    students = Students.objects.all()
+    for student in students:
+        attendance = AttendanceReport.objects.filter(student_id=student.id, status=True).count()
+        absent = AttendanceReport.objects.filter(student_id=student.id, status=False).count()
+        leaves = LeaveReportStudent.objects.filter(student_id=student.id, leave_status=1).count()
+        student_attendance_present_list.append(attendance)
+        student_attendance_leave_list.append(leaves+absent)
+        student_name_list.append(student.admin.first_name)
+
     context={
         "students_count": students_count,
         "attendance_count": attendance_count,
@@ -75,6 +89,11 @@ def teacher_home(request):
         "student_list": student_list,
         "attendance_present_list": student_list_attendance_present,
         "attendance_absent_list": student_list_attendance_absent,
+
+        "student_attendance_present_list": student_attendance_present_list,
+        "student_attendance_leave_list": student_attendance_leave_list,
+        "student_name_list": student_name_list,
+        
         "user": user,
         "teacher": teacher
     }

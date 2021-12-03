@@ -14,7 +14,7 @@ Home Student
           <h4 class="font-weight-bold mb-3">Total Attendance <i class="mdi mdi-chart-line mdi-24px float-right"></i>
           </h4>
           <!-- <h2 class="mb-5">15,000</h2> -->
-          <h4 class="mb-5">{{ total_attendance }}</h4>
+          <h1 class="font-weight-bold mb-3">{{ total_attendance }}</h1>
           <!-- <h6 class="card-text">Increased by 60%</h6> -->
           <a href="{% url 'student_view_attendance' %}" class="small-box-footer text-white small-box-footer">More information <i class="mdi mdi-arrow-right-bold-circle text-white"></i></a>
         </div>
@@ -26,7 +26,7 @@ Home Student
           <img src="{% static 'plugins/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
           <h4 class="font-weight-bold mb-3"> Present <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
           </h4>
-          <h4 class="mb-5">{{ attendance_present }}</h4>
+          <h1 class="font-weight-bold mb-3">{{ attendance_present }}</h1>
           <a href="{% url 'student_view_attendance' %}" class="small-box-footer text-white">More information <i class="mdi mdi-arrow-right-bold-circle text-white"></i></a>
         </div>
       </div>
@@ -37,7 +37,7 @@ Home Student
           <img src="{% static 'plugins/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
           <h4 class="font-weight-bold mb-3">Absent <i class="mdi mdi-diamond mdi-24px float-right"></i>
           </h4>
-          <h4 class="mb-5">{{ attendance_absent }}</h4>
+          <h1 class="font-weight-bold mb-3">{{ attendance_absent }}</h1>
           <a href="{% url 'student_view_attendance' %}" class="small-box-footer text-white">More information <i class="mdi mdi-arrow-right-bold-circle text-white"></i></a>
         </div>
       </div>
@@ -48,7 +48,7 @@ Home Student
             <img src="{% static 'plugins/images/dashboard/circle.svg' %}" class="card-img-absolute" alt="circle-image" />
             <h4 class="font-weight-bold mb-3">Total Subjects <i class="mdi mdi-diamond mdi-24px float-right"></i>
             </h4>
-            <h4 class="mb-5">{{ total_subjects }}</h4>
+            <h1 class="font-weight-bold mb-3">{{ total_subjects }}</h1>
             <a href="#" class="small-box-footer text-white">&nbsp;</a>
             <!-- <a href="{% url 'manage_subject' %}" class="small-box-footer text-white">More info <i class="mdi mdi-arrow-right-bold-circle text-white"></i></a> -->
             </div>
@@ -58,6 +58,7 @@ Home Student
         <div class="card">
             <div class="card-body">
             <h4 class="card-title">Attendance Chart</h4>
+            <hr>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>
@@ -71,6 +72,7 @@ Home Student
         <div class="card">
             <div class="card-body card-success">
             <h4 class="card-title">Attendance Statistics</h4>
+            <hr>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                 </button>

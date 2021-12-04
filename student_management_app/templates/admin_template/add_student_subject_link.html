@@ -38,17 +38,18 @@ Add Student Subject
         </div>
         </div>
         {% endif %}
-        {{ subjects.course_id.course_name }} - {{ subjects.subject_name }}
+        <code style="color:crimson;"> <b>{{ subjects.course_id.course_name }} - {{ subjects.subject_name }} </b></code>
         <div class="form-group">
-            <label> Students </label>
+            <hr>
+            <label> Students: </label>
             <select class="form-control" name="student_id">
                 {% for student in students %}
-                    <option value="{{ student.id }}">{{ student.admin.username }} {{student.admin.last_name}} {{ student.admin.first_name }}</option>
+                    <option value="{{ student.id }}">{{ student.admin.username }} - {{student.admin.last_name}} {{ student.admin.first_name }}</option>
                 {% endfor%}
             </select>
         </div>
         <button type="submit" class="btn btn-gradient-primary mr-2 ">Add Student Subject</button>
-        <button class="btn btn-light">Cancel</button>
+        <!-- <button class="btn btn-light">Cancel</button> -->
       </form>
     </div>
 </div>

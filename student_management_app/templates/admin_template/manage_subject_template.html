@@ -6,7 +6,7 @@ Manage Subject
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_subject' %}" role="button">+ Add Subject</a> <br/>&nbsp;
+    <a class="btn btn-gradient-primary btn-rounded btn-fw" href="{% url 'add_subject' %}" role="button">+ Add Subject</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
     {% if messages %}
@@ -43,7 +43,7 @@ Manage Subject
         </div>
 
         <div class="card-body table-responsive p-0">
-          <table id="order-listing" class="table table-striped table-hover text-nowrap">
+          <table id="order-listing" class="table table-striped table-hover text-nowrap" style="border:1px solid #ccc;">
             <thead>
                 <tr>
                     <th style="font-weight:bold;">ID</th>
@@ -58,16 +58,29 @@ Manage Subject
             <tbody>
             {% for subject in subjects %}
                 <tr>
-                    <td>{{ subject.id }}</td>
+                    <td style="bottom:1px solid #ccc;">{{ subject.id }}</td>
                     <td>{{ subject.course_id.course_name }}</td>
                     <td>{{ subject.subject_name }}</td>
                     <td>{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</td>
                     <td>{{ subject.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                     <td>{{ subject.updated_at|date:'D,d/m/Y - H:i:s' }}</td>
                     <td>
-                        <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
+                        <!-- <a href="{% url 'manage_student_subject_link' subject.id %}" class="btn btn-info">View Students</a> 
                         <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a> 
-                        <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'delete_subject' subject.id %}" class="btn btn-danger">Delete</a> -->
+
+                        <a class="btn btn-outline-info btn-icon-text" href="{% url 'manage_student_subject_link' subject.id %}"> 
+                            <!-- <i class="mdi mdi-printer btn-icon-append"></i> -->
+                            View Students
+                        </a>
+                        <a class="btn btn-outline-success btn-icon-text" href="{% url 'edit_subject' subject.id %}">
+                            <!-- <i class="mdi mdi-alert btn-icon-prepend"></i>  -->
+                            Edit 
+                        </a>
+                        <a class="btn btn-outline-danger btn-icon-text" href="{% url 'delete_subject' subject.id %}">
+                            <!-- <i class="mdi mdi-upload btn-icon-prepend"></i>  -->
+                            Delete 
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

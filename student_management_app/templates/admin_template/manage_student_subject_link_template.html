@@ -6,7 +6,7 @@ Manage Student to Subject
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_student_subject_link' subject.id %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
+    <a class="btn btn-gradient-primary btn-rounded btn-fw" href="{% url 'add_student_subject_link' subject.id %}" role="button">+ Add Student to Subject</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -42,7 +42,7 @@ Manage Student to Subject
             </p>
             <hr>
             <br>
-            <table id="order-listing" class="table table-striped p-0 card-body">
+            <table id="order-listing" class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
             <thead>
                 <tr>
                     <th style="font-weight:bold;">ID</th>
@@ -63,7 +63,15 @@ Manage Student to Subject
                         <td>{{ student_subject.updated_at }}</td>
                         <td>
                             {% comment %} <a href="{% url 'edit_subject' subject.id %}" class="btn btn-success">Edit</a>  {% endcomment %}
-                            <a href="{% url 'delete_student_subject_link' student_subject.id %}" class="btn btn-danger">Delete</a>
+                            <!-- <a href="{% url 'delete_student_subject_link' student_subject.id %}" class="btn btn-danger">Delete</a> -->
+                            {% comment %} <a class="btn btn-outline-success btn-icon-text" href="{% url 'edit_subject' subject.id %}">
+                                <!-- <i class="mdi mdi-alert btn-icon-prepend"></i>  -->
+                                Edit 
+                            </a> {% endcomment %}
+                            <a class="btn btn-outline-danger btn-icon-text" href="{% url 'delete_student_subject_link' student_subject.id %}">
+                                <!-- <i class="mdi mdi-upload btn-icon-prepend"></i>  -->
+                                Delete 
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

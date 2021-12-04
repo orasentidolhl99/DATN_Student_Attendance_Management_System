@@ -6,7 +6,7 @@ Manage Session
 
 
 {% block content %}
-    <a class="btn btn-primary" href="{% url 'add_session' %}" role="button">+ Add Session</a> <br/>&nbsp;
+    <a class="btn btn-gradient-primary btn-rounded btn-fw" href="{% url 'add_session' %}" role="button">+ Add Session</a> <br/>&nbsp;
 
     {% comment %} Display Messages {% endcomment %}
         {% if messages %}
@@ -39,7 +39,7 @@ Manage Session
             <!-- <p class="card-description"> Detailed information sheet about Sessions</p> -->
             <hr>
             <br>
-            <table id="order-listing" class="table table-striped p-0 card-body">
+            <table id="order-listing" class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
             <thead>
                 <tr>
                     <th style="font-weight:bold;"> ID </th>
@@ -56,8 +56,16 @@ Manage Session
                     <td> {{ session_year.session_end_year }}</td>
                     
                     <td>
-                        <a href="{% url 'edit_session' session_year.id %}" class="btn btn-success">Edit</a>
-                        <a href="{% url 'delete_session' session_year.id %}" class="btn btn-danger">Delete</a>
+                        <!-- <a href="{% url 'edit_session' session_year.id %}" class="btn btn-success">Edit</a>
+                        <a href="{% url 'delete_session' session_year.id %}" class="btn btn-danger">Delete</a> -->
+                        <a class="btn btn-outline-success btn-icon-text" href="{% url 'edit_session' session_year.id %}">
+                            <!-- <i class="mdi mdi-alert btn-icon-prepend"></i>  -->
+                            Edit 
+                        </a>
+                        <a class="btn btn-outline-danger btn-icon-text" href="{% url 'delete_session' session_year.id %}">
+                            <!-- <i class="mdi mdi-upload btn-icon-prepend"></i>  -->
+                            Delete 
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

@@ -34,7 +34,7 @@
       <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
         <span class="menu-title">Manage System</span>
         <i class="menu-arrow"></i>
-        <i class="mdi mdi-medical-bag menu-icon"></i>
+        <i class="mdi mdi-desktop-mac-dashboard menu-icon"></i>
       </a>
       <div class="collapse" id="general-pages">
         <ul class="nav flex-column sub-menu">
@@ -131,14 +131,14 @@
       {% url 'teacher_feedback_message' as teacher_feedback_message %}
       <a class="nav-link {% if request.path == teacher_feedback_message %} active {% endif %}" href="{{ teacher_feedback_message }}">
         <span class="menu-title">Teacher Feedback</span>
-        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+        <i class="mdi mdi-elevator menu-icon"></i>
       </a>
     </li>
     <li class="nav-item">
       {% url 'student_feedback_message' as student_feedback_message %}
       <a class="nav-link {% if request.path == student_feedback_message %} active {% endif %}" href="{{ student_feedback_message }}">
         <span class="menu-title">Student Feedback</span>
-        <i class="mdi mdi-chart-bar menu-icon"></i>
+        <i class="mdi mdi-elevator menu-icon"></i>
       </a>
     </li>
 
@@ -146,7 +146,7 @@
       {% url 'teacher_leave_view' as teacher_leave_view %}
       <a class="nav-link {% if request.path == teacher_leave_view %} active {% endif %}" href="{{ teacher_leave_view }}">
         <span class="menu-title">Teacher Leave</span>
-        <i class="mdi mdi-table-large menu-icon"></i>
+        <i class="mdi mdi-rotate-right-variant menu-icon"></i>
       </a>
     </li>
 

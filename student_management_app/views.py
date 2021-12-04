@@ -60,3 +60,6 @@ def logout_user(request):
 
 def delete(request):
     pass 
+
+def profile_teams(request):
+    return render(request, "profile_teams.html")

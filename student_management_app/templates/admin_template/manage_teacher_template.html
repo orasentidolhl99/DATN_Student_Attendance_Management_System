@@ -61,7 +61,7 @@ Manage Teacher
                                       
                     <th style="font-weight:bold;"> Email </th>
                     <th style="font-weight:bold;"> Address </th>
-                    <th style="font-weight:bold;"> Profile </th>
+                    <th style="font-weight:bold; max-width: 20px;"> Profile </th>
                     <th style="font-weight:bold;"> Last Login </th>
                     <th style="font-weight:bold;"> Date Joined </th>
                     <th style="font-weight:bold;"> Action </th>
@@ -74,15 +74,31 @@ Manage Teacher
                         <td> {{ teacher.admin.username }}</td>
                         <td> {{ teacher.admin.last_name }}</td>  
                         <td> {{ teacher.admin.first_name }}</td>                     
-                        <td> {{ teacher.admin.email }}</td>
-                        <td> {{ teacher.address }}</td>
-                        <td> <img src="{{ teacher.profile_pic.url }}" style="height:30px; width:30px;" /> </td>
+                        <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Email" data-content="{{ teacher.admin.email }}"> {{ teacher.admin.email }}</a>
+                        </td>
+                        <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Address" data-content="{{ teacher.address }}"> {{ teacher.address }}</a>
+                        </td>
+                        <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ teacher.address }}</td> -->
+                        <td><img src="{{ teacher.profile_pic.url }}" style="height:20px; width:20px;" /></td>
+                        <!-- <td> 
+                            
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" data-html="true" title="Image" data-content="<image src='{{ teacher.profile_pic.url }}' height:20px; width:20px;/>" data-placement="bottom" style="height:20px; width:20px;" >
+                                <img src="{{ teacher.profile_pic.url }}" style="height:20px; width:20px;" />
+                            </a>
+                            
+                        </td> -->
                         <!-- <td>
                             <textarea cols="20" rows="2" style="border: none; outline: none; color: #343a40;" readonly>{{ teacher.address }}</textarea>
                              -->
                         <!-- </td>  -->
-                        <td> {{ teacher.admin.last_login|date:'D,d/m/Y - H:i:s' }}</td>
-                        <td> {{ teacher.admin.date_joined|date:'D,d/m/Y - H:i:s' }}</td>
+                        <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Last Login" data-content="{{ teacher.admin.last_login|date:'D,d/m/Y - H:i:s' }}"> {{ teacher.admin.last_login|date:'D,d/m/Y - H:i:s' }}</a>
+                        </td>
+                        <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Date Joined" data-content="{{ teacher.admin.date_joined|date:'D,d/m/Y - H:i:s' }}"> {{ teacher.admin.date_joined|date:'D,d/m/Y - H:i:s' }}</a>
+                        </td>
                         <td>
                             <a class="btn btn-outline-success btn-icon-text" href="{% url 'edit_teacher' teacher.admin.id %}">
                                 <!-- <i class="mdi mdi-alert btn-icon-prepend"></i>  -->

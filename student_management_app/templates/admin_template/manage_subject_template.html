@@ -59,9 +59,15 @@ Manage Subject
             {% for subject in subjects %}
                 <tr>
                     <td style="bottom:1px solid #ccc;">{{ subject.id }}</td>
-                    <td>{{ subject.course_id.course_name }}</td>
-                    <td>{{ subject.subject_name }}</td>
-                    <td>{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</td>
+                    <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Course" data-content="Course name: {{ subject.course_id.course_name }}"> {{ subject.course_id.course_name }}</a>
+                    </td>
+                    <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Subject Name" data-content="{{ subject.subject_name }}"> {{ subject.subject_name }}</a>
+                    </td>
+                    <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Teacher" data-content="{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}"> {{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</a>
+                    </td>
                     <td>{{ subject.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                     <td>{{ subject.updated_at|date:'D,d/m/Y - H:i:s' }}</td>
                     <td>

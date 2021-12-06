@@ -88,8 +88,14 @@ Feedback Message
                         <tr>
                             <td>{{ row.id }}</td>
                             <td>{{ row.created_at|date:'D,d/m/Y - H:i:s' }}</td>
-                            <td>{{ row.feedback }}</td>
-                            <td>{{ row.feedback_reply }}</td>
+                            <!-- <td>{{ row.feedback }}</td> -->
+                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                                <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Feedback Message" data-content="{{ row.feedback }}"> {{ row.feedback  }}</a>
+                            </td>
+                            <!-- <td>{{ row.feedback_reply }}</td> -->
+                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                                <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Feedback Reply" data-content="{{ row.feedback_reply }}"> {{ row.feedback_reply  }}</a>
+                            </td>
                             <td>
                                 {% if row.feedback_reply == "" %}
                                     <span class="alert alert-warning">Sending</span>

@@ -33,13 +33,16 @@ Teacher Feedback
                         <td>{{ feedback.id }}</td>
                         <td>{{ feedback.teacher_id.admin.username }}</td>
                         <td>{{ feedback.teacher_id.admin.last_name }} {{ feedback.teacher_id.admin.first_name }}</td> 
-                        <td>{{ feedback.feedback }}</td>
-                        <td>{{ feedback.created_at|date:'D,d/m/Y - H:i:s' }}</td>
-                        <td>
+                        <!-- <td>{{ feedback.feedback }}</td> -->
+                        <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Message" data-content="{{ feedback.feedback }}"> {{ feedback.feedback }}</a>
+                        </td>
+                        <td style="max-width: 20px;">{{ feedback.created_at|date:'D,d/m/Y - H:i:s' }}</td>
+                        <td style="max-width: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             {% if feedback.feedback_reply == "" %}
                                 <button class="btn btn-success reply_open_modal" data-toggle="modal" data-target="#replyModal">Reply</button>
                             {% else %}
-                                {{ feedback.feedback_reply }}
+                                <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Reply" data-content="{{ feedback.feedback_reply }}"> {{ feedback.feedback_reply }}</a>  
                             {% endif %}
                             
                         </td>

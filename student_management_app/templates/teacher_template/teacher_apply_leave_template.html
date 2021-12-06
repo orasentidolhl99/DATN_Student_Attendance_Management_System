@@ -99,7 +99,10 @@ Leave Report and Apply for Leave
                             <td>{{ leave.id }}</td>
                             <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
-                            <td>{{ leave.leave_message }}</td>
+                            <!-- <td>{{ leave.leave_message }}</td> -->
+                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                                <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Leave Message" data-content="{{ leave.leave_message  }}"> {{ leave.leave_message  }}</a>
+                            </td>
                             <td>
                                 {% if leave.leave_status == 1 %}
                                     <span class="alert alert-success">Approved</span>

@@ -5,12 +5,12 @@ from django.conf import settings
 
 def model_train():
 	# load the face embeddings
-	print("[INFO] loading face embeddings...")
+	# print("[INFO] loading face embeddings...")
 	embeddings = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\embeddings.pickle"])
 	data = pickle.loads(open(embeddings, "rb").read())
 
 	# encode the labels
-	print("[INFO] encoding labels...")
+	# print("[INFO] encoding labels...")
 	le = LabelEncoder()
 	labels = le.fit_transform(data["names"])
 
@@ -18,6 +18,7 @@ def model_train():
 	# then produce the actual face recognition
 	print("[INFO] training model...")
 	recognizer = SVC(C=1.0, kernel="linear", probability=True)
+	print(labels)
 	recognizer.fit(data["embeddings"], labels)
 
 	# write the actual face recognition model to disk

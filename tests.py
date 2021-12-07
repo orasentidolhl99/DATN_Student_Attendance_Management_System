@@ -7,12 +7,13 @@ le = "./facial_models/output/le.pickle"
 recognizers = "./facial_models/output/recognizer.pickle"
 embeddings = "./facial_models/output/embeddings.pickle"
 
-data = pickle.loads(open(embeddings, "rb").read())
+data = pickle.loads(open(le, "rb").read())
 
 # data['embeddings'].clear()
 # data['names'].clear()
 
-print(len(data['embeddings']), len(data['names']))
+# print(len(data['embeddings']), data['names'])
+print(data)
 
 # for item in data['embeddings']:
 #     print(item)

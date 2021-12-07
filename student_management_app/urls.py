@@ -102,6 +102,7 @@ urlpatterns = [
 
     path('take_attendance_detect', teacher_views.take_attendance_detect, name='take_attendance_detect'),
     path('facecam_feed', teacher_views.facecam_feed, name='facecam_feed'),
+    path('attendance_result_stream', teacher_views.attendance_result_stream, name='attendance_result_stream'),
     
     # URLS for Student
     path('student_home/', student_views.student_home, name="student_home"),

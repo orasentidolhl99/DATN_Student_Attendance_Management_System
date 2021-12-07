@@ -123,7 +123,6 @@ def take_attendance_detect(request):
         "user": user,
         "teacher": teacher
     }
-
     return render(request, "teacher_template/take_attendance_detect.html",context)
 
 def gen(camera):
@@ -137,6 +136,9 @@ def facecam_feed(request):
 	# take frame video stream from client
 	return StreamingHttpResponse(gen(FaceDetect()),
 					content_type='multipart/x-mixed-replace; boundary=frame')
+
+def attendance_result_stream(request):
+    return render(request, "teacher_template/attendance_result_stream.html")
 
 @csrf_exempt
 def get_students(request):

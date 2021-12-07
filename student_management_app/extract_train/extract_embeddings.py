@@ -15,13 +15,13 @@ def init_data():
 
 def embeddings():
 	# load our serialized face detector from disk
-	print("[INFO] loading face detector...")
+	# print("[INFO] loading face detector...")
 	protoPath = os.path.sep.join([settings.BASE_DIR, "facial_models\\face_detection_model\\deploy.prototxt"])
 	modelPath = os.path.sep.join([settings.BASE_DIR,"facial_models\\face_detection_model\\res10_300x300_ssd_iter_140000.caffemodel"])
 	detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
 
 	# load our serialized face embedding model from disk
-	print("[INFO] loading face recognizer...")
+	# print("[INFO] loading face recognizer...")
 	embedder = cv2.dnn.readNetFromTorch(os.path.join(settings.BASE_DIR,'facial_models\\face_detection_model\\openface_nn4.small2.v1.t7'))
 
 	# grab the paths to the input images in our dataset

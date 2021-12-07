@@ -15,28 +15,46 @@ tz_hcm = datetime.timezone(datetime.timedelta(hours=7))
 # load our serialized face detector model from disk
 protoPath = os.path.sep.join([settings.BASE_DIR, "facial_models\\face_detection_model\\deploy.prototxt"])
 modelPath = os.path.sep.join([settings.BASE_DIR,"facial_models\\face_detection_model\\res10_300x300_ssd_iter_140000.caffemodel"])
-detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
+# # detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
+
 # load our serialized face embedding model from disk
-embedder = cv2.dnn.readNetFromTorch(os.path.join(settings.BASE_DIR,'facial_models\\face_detection_model/openface_nn4.small2.v1.t7'))
+embedderPath = os.path.join(settings.BASE_DIR,'facial_models\\face_detection_model/openface_nn4.small2.v1.t7')
+# # embedder = cv2.dnn.readNetFromTorch(embedderPath)
+
 # load the actual face recognition model along with the label encoder
-recognizer = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\recognizer.pickle"])
-recognizer = pickle.loads(open(recognizer, "rb").read())
-le = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\le.pickle"])
-le = pickle.loads(open(le, "rb").read())
-dataset = os.path.sep.join([settings.BASE_DIR, "media\\datasets"])
-user_list = [ f.name for f in os.scandir(dataset) if f.is_dir() ]
+recognizerPath = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\recognizer.pickle"])
+# # recognizer = pickle.loads(open(recognizer, "rb").read())
+
+lePath = os.path.sep.join([settings.BASE_DIR, "facial_models\\output\\le.pickle"])
+# # le = pickle.loads(open(le, "rb").read())
+
+datasetPath = os.path.sep.join([settings.BASE_DIR, "media\\datasets"])
+user_list = [ f.name for f in os.scandir(datasetPath) if f.is_dir() ]
 
 class FaceDetect(object):
 	def __init__(self):
+		# initialize data train in file, for initialize variable
 		extract_embeddings.init_data()
 		extract_embeddings.embeddings()
 		train_model.model_train()
+  
+		print('--------- t met qua r, chay auto load dum t cai -------------')
+		# initialize variable, then detect face for attendence
+		self.detector = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
+		self.embedder = cv2.dnn.readNetFromTorch(embedderPath)
+		self.recognizer = pickle.loads(open(recognizerPath, "rb").read())
+		self.le = pickle.loads(open(lePath, "rb").read())
+
 		# initialize the video stream, then allow the camera sensor to warm up
 		self.vs = VideoStream(src=0).start()
 		# start the FPS throughput estimator
 		self.fps = FPS().start()
 
 	def __del__(self):
+		self.vs.stop()
+		self.fps.stop()
+  
+		self.vs.stream.release()
 		cv2.destroyAllWindows()
 
 	def get_frame(self):
@@ -61,8 +79,8 @@ class FaceDetect(object):
 
 		# apply OpenCV's deep learning-based face detector to localize
 		# faces in the input image
-		detector.setInput(imageBlob)
-		detections = detector.forward()
+		self.detector.setInput(imageBlob)
+		detections = self.detector.forward()
 
 
 		# loop over the detections
@@ -91,21 +109,21 @@ class FaceDetect(object):
 				# quantification of the face
 				faceBlob = cv2.dnn.blobFromImage(face, 1.0 / 255,
 					(96, 96), (0, 0, 0), swapRB=True, crop=False)
-				embedder.setInput(faceBlob)
-				vec = embedder.forward()
+				self.embedder.setInput(faceBlob)
+				vec = self.embedder.forward()
 
 				# perform classification to recognize the face
-				preds = recognizer.predict_proba(vec)[0]
+				preds = self.recognizer.predict_proba(vec)[0]
 				j = np.argmax(preds)
 				proba = preds[j]
-				name = le.classes_[j]
+				name = self.le.classes_[j]
 
 
 				# perform classification to recognize the face
-				preds = recognizer.predict_proba(vec)[0]
+				preds = self.recognizer.predict_proba(vec)[0]
 				j = np.argmax(preds)
 				proba = preds[j]
-				detect_face_find = le.classes_[j]
+				detect_face_find = self.le.classes_[j]
 
 				if detect_face_find != 'Unknown':
 					detect_face_find = detect_face_find.split('_', 1)

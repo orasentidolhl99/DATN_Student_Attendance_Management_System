@@ -38,15 +38,16 @@ Manage Student to Subject
         <div class="card-body">
             <h4 class="card-title">Manage Students in Subjects</h4>
             <!-- <p class="card-description"> Detailed information sheet about  -->
-                <code style="color:crimson;"> <b> {{ subject.subject_name }} - {{ subject.teacher_id.first_name }} {{subject.teacher_id.last_name}} </b> </code>
+                <code style="color:crimson;"> <b> {{ subject.subject_name }} - {{subject.teacher_id.last_name}} {{ subject.teacher_id.first_name }} </b> </code>
             </p>
             <hr>
             <br>
-            <table id="order-listing" class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
+            <table class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
+                <!-- id="order-listing" -->
             <thead>
                 <tr>
                     <th style="font-weight:bold;">ID</th>
-                    <th style="font-weight:bold;">Username</th>
+                    <th style="font-weight:bold;">Student ID</th>
                     <th style="font-weight:bold;">Student Name</th>
                     <th style="font-weight:bold;">Created At</th>
                     <th style="font-weight:bold;">Updated At</th>

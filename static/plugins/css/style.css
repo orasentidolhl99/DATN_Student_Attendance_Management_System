@@ -3292,7 +3292,7 @@ pre {
   .table th, .jsgrid .jsgrid-table th,
   .table td,
   .jsgrid .jsgrid-table td {
-    padding: 0.9375rem;
+    padding: 0.5rem;
     vertical-align: top;
     border-top: 1px solid #ebedf2; }
   .table thead th, .jsgrid .jsgrid-table thead th {

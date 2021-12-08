@@ -15,7 +15,7 @@ class AddStudentForm(forms.Form):
     first_name = forms.CharField(label="First Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     last_name = forms.CharField(label="Last Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     username = forms.CharField(label="Student ID", max_length=50, widget=forms.TextInput(attrs={"class":"form-control","autocomplete":"off"}))
-    address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    address = forms.CharField(label="Address", max_length=255, widget=forms.TextInput(attrs={"class":"form-control"}))
     
     course_id = forms.ModelChoiceField(
         empty_label=None, label="Course",
@@ -68,8 +68,8 @@ class EditStudentForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class":"form-control"}))
     first_name = forms.CharField(label="First Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     last_name = forms.CharField(label="Last Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
-    username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
-    address = forms.CharField(label="Address", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    username = forms.CharField(label="Student ID", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
+    address = forms.CharField(label="Address", max_length=255, widget=forms.TextInput(attrs={"class":"form-control"}))
 
     course_id = forms.ModelChoiceField(
         empty_label=None, label="Course",

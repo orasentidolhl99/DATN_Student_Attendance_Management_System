@@ -169,6 +169,7 @@ def edit_teacher_save(request):
         else:
             profile_pic = None
 
+        password = request.POST.get('password')
         try:
             # INSERTING into Customuser Model
             user = CustomUser.objects.get(id=teacher_id)
@@ -176,6 +177,8 @@ def edit_teacher_save(request):
             user.last_name = last_name
             user.email = email
             user.username = username
+            if password is not None and password != "":
+                user.set_password(password)
             user.save()
             
             # INSERTING into teacher Model
@@ -592,8 +595,12 @@ def edit_student_save(request):
                 # fs = FileSystemStorage(location='media/profile_pic/')
                 # filename = fs.save(profile_pic.name, profile_pic)
                 # profile_pic_url = fs.url('profile_pic/' + filename)
+            
             else:
                 profile_pic = None
+
+            password = form.cleaned_data['password']
+            print(password)
 
             try:
                 # First Update into Custom User Model
@@ -602,6 +609,8 @@ def edit_student_save(request):
                 user.last_name = last_name
                 user.email = email
                 user.username = username
+                if password is not None and password != "":
+                    user.set_password(password)
                 user.save()
 
                 # Then Update Students Table

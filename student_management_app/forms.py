@@ -66,10 +66,12 @@ class AddStudentForm(forms.Form):
 
 class EditStudentForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=50, widget=forms.EmailInput(attrs={"class":"form-control"}))
+    password = forms.CharField(label="Password", max_length=255, widget=forms.PasswordInput(attrs={"class":"form-control"}))
     first_name = forms.CharField(label="First Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     last_name = forms.CharField(label="Last Name", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     username = forms.CharField(label="Student ID", max_length=50, widget=forms.TextInput(attrs={"class":"form-control"}))
     address = forms.CharField(label="Address", max_length=255, widget=forms.TextInput(attrs={"class":"form-control"}))
+    
 
     course_id = forms.ModelChoiceField(
         empty_label=None, label="Course",
@@ -116,7 +118,7 @@ class EditStudentForm(forms.Form):
     # session_start_year = forms.DateField(label="Session Start", widget=DateInput(attrs={"class":"form-control"}))
     # session_end_year = forms.DateField(label="Session End", widget=DateInput(attrs={"class":"form-control"}))
     profile_pic = forms.FileField(label="Profile Pic", required=False, widget=forms.FileInput(attrs={"class":"form-control"}))
-
+    
 class EditResultForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.teacher_id=kwargs.pop("teacher_id")

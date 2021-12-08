@@ -10,8 +10,10 @@ from datetime import datetime
 # import unidecode
 
 from django.http.response import StreamingHttpResponse
-from ..camera import FaceDetect
 
+# common settings
+from ..camera import FaceDetect
+from ..utils import datetime_counter
 
 from student_management_app.models import (
     CustomUser, Teachers, Courses, Subjects,
@@ -125,20 +127,53 @@ def take_attendance_detect(request):
     }
     return render(request, "teacher_template/take_attendance_detect.html",context)
 
-def gen(camera):
-        while True:
-            frame = camera.get_frame()
+dict_check = dict()
 
-            yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+def gen(camera):
+    while True:
+        frame, student_info = camera.get_frame()
+
+        if student_info:
+            list_unique_ids = dict_check.keys()
+
+            if int(student_info['student_code']) not in list_unique_ids:
+                dict_check[int(student_info['student_code'])] = []
+            else:
+                dict_check[int(student_info['student_code'])].append(student_info['check_time'])
+                
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 def facecam_feed(request):
-	# take frame video stream from client
-	return StreamingHttpResponse(gen(FaceDetect()),
-					content_type='multipart/x-mixed-replace; boundary=frame')
+    # init data detect
+    dict_check.clear()
+    # take frame video stream from client
+    return StreamingHttpResponse(gen(FaceDetect()),
+                    content_type='multipart/x-mixed-replace; boundary=frame')
 
 def attendance_result_stream(request):
-    return render(request, "teacher_template/attendance_result_stream.html")
+    list_obj = datetime_counter(dict_check)
+    print(list_obj)
+    list_result = []
+
+    for obj_student in list_obj:
+        if int(obj_student['counter']) > 3:
+            time_in_class = datetime.strptime(obj_student['datetime'], "%m-%d-%Y, %H:%M:%S")
+        else:
+            time_in_class = None
+            
+        list_result.append(
+            [
+                str(obj_student['student_id']),
+                time_in_class,
+                "Absent" if time_in_class is None else "Present"
+            ]
+        )
+    print(list_result)
+    context = {
+        'result_stream': list_result
+    }
+    return render(request, "teacher_template/attendance_result_stream.html", context=context)
 
 @csrf_exempt
 def get_students(request):

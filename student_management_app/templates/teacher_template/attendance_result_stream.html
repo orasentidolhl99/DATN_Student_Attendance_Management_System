@@ -11,32 +11,43 @@ View Result
         {% comment %} Display Messages {% endcomment %}
         {% if messages %}
         <div class="form-group">
-        <div class="col-12">
-            {% for message in messages %}
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% elif message.tags == "success" %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% endif %}
-            {% endfor %}
-        </div>
+            <div class="col-12">
+                {% for message in messages %}
+                    {% if message.tags == "error" %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    {% elif message.tags == "success" %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         {% endif %}
         
         <h4 class="card-title">View Result Attendance</h4>
-            
-            Result nek
-            
+        <table>
+            <tr>
+                <th>Student ID</th>
+                <th>Time in class</th>
+                <th>Status</th>
+            </tr>
+            {% for student_detail in result_stream %}
+                <tr>
+                    {% for student in student_detail %}
+                        <td>{{ student }}</td>
+                    {% endfor %}
+                </tr>    
+            {% endfor %}
+        </table>
     </div>
 </div>
 

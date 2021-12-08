@@ -116,13 +116,6 @@ class FaceDetect(object):
 				preds = self.recognizer.predict_proba(vec)[0]
 				j = np.argmax(preds)
 				proba = preds[j]
-				name = self.le.classes_[j]
-
-
-				# perform classification to recognize the face
-				preds = self.recognizer.predict_proba(vec)[0]
-				j = np.argmax(preds)
-				proba = preds[j]
 				detect_face_find = self.le.classes_[j]
 
 				if detect_face_find != 'Unknown':
@@ -141,5 +134,6 @@ class FaceDetect(object):
 		# update the FPS counter
 		self.fps.update()
 		ret, jpeg = cv2.imencode('.jpg', frame)
-		return jpeg.tobytes()
+  
+		return jpeg.tobytes(), result
 		

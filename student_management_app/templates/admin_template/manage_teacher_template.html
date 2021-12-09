@@ -4,6 +4,9 @@
 Manage Teacher
 {% endblock page_title %}
 
+{% block custom_js %}
+    
+{% endblock custom_js %}
 
 {% block content %}
     <a class="btn btn-primary" href="{% url 'add_teacher' %}" role="button">+ Add Teacher</a> <br/>&nbsp;
@@ -84,10 +87,17 @@ Manage Teacher
                                 {{ teacher.admin.email }}
                             </a>
                         </td> -->
-                        <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Address" data-content="{{ teacher.address }}"> 
+                        <td>
+                            <!-- <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Address" data-content="{{ teacher.address }}"> 
                                 {{ teacher.address }}
-                            </a>
+                            </a> -->
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ teacher.address }}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        {{ teacher.address }}
+                                    </a>
+                                </p>
+                            </div>
                         </td>
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> {{ teacher.address }}</td> -->
                         <td><img src="{{ teacher.profile_pic.url }}" style="height:36px; width:36px;" /></td>

@@ -64,10 +64,20 @@ Manage Subject
                     <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Course" data-content="Course name: {{ subject.course_id.course_name }}"> {{ subject.course_id.course_name }}</a>
                     </td> -->
-                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <!-- <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Subject Name" data-content="{{ subject.subject_name }}"> 
                             {{ subject.subject_name }}
                         </a>
+                    </td> -->
+                    <td>
+                            
+                        <div class="card-body">
+                            <p class="card-text">
+                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ subject.subject_name }}" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                    {{ subject.subject_name }}
+                                </a>
+                            </p>
+                        </div>
                     </td>
                     <td> {{ subject.teacher_id.last_name }} {{ subject.teacher_id.first_name }}</td>
                     <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

@@ -10,13 +10,13 @@ Student Feedback
     <div class="card">
         <div class="card-body">
         <div class="search-field d-none d-md-block">
-            <h4 class="card-title">Student Feedback</h4>
+            <!-- <h4 class="card-title">Student Feedback</h4> -->
             <!-- <p class="card-description"> Detailed information sheet about Students feedback</p> -->
-            <hr>
-            <br>
+            <!-- <hr> -->
+            <!-- <br> -->
         </div>
         <div class="card-body table-responsive p-0">
-            <table class="table table-striped table-hover text-nowrap " style="border:1px solid #ccc;">
+            <table id="order-listing" class="table table-striped table-hover text-nowrap " style="border:1px solid #ccc;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -36,15 +36,29 @@ Student Feedback
                             <td>{{ feedback.student_id.admin.last_name }} {{ feedback.student_id.admin.first_name }}</td>
                             <td>{{ feedback.student_id.session_year_id.session_start_year }} - {{ feedback.student_id.session_year_id.session_end_year }}</td>
                             <!-- <td>{{ feedback.feedback }}</td> -->
-                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                                 <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Message" data-content="{{ feedback.feedback }}"> {{ feedback.feedback }}</a>
+                            </td> -->
+                            <td>
+                                <!-- <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Address" data-content="{{ teacher.address }}"> 
+                                    {{ teacher.address }}
+                                </a> -->
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ feedback.feedback }}" style="max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                            {{ feedback.feedback }}
+                                        </a>
+                                    </p>
+                                </div>
                             </td>
                             <td>{{ feedback.created_at|date:'D,d/m/Y - H:i:s' }}</td>
-                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <td> 
                                 {% if feedback.feedback_reply == "" %}
                                     <button class="btn btn-success reply_open_modal" data-toggle="modal" data-target="#replyModal">Reply</button>
                                 {% else %}
-                                    <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Reply" data-content="{{ feedback.feedback_reply }}"> {{ feedback.feedback_reply }}</a>
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ feedback.feedback_reply }}" style="max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" > 
+                                        {{ feedback.feedback_reply }}
+                                    </a>
                                 {% endif %}
                                 
                             </td>

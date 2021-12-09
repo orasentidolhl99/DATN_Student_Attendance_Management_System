@@ -15,7 +15,7 @@ Leave Apply by Students
             <hr>
         </div>
         <div class="card-body table-responsive p-0">
-            <table class="table table-striped table-hover text-nowrap " style="border:1px solid #ccc;">
+            <table id="order-listing" class="table table-striped table-hover text-nowrap " style="border:1px solid #ccc;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -37,8 +37,18 @@ Leave Apply by Students
                             <td>{{ leave.subject_id.subject_name }}</td>
                             <td>{{ leave.leave_date }}</td>
                             <!-- <td>{{ leave.leave_message }}</td> -->
-                            <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                            <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                                 <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Leave Message" data-content="{{ leave.leave_message }}"> {{ leave.leave_message }}</a>
+                            </td> -->
+                            <td>
+                            
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ leave.leave_message }}" style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                            {{ leave.leave_message }}
+                                        </a>
+                                    </p>
+                                </div>
                             </td>
                             <td>{{ leave.created_at|date:'D,d/m/Y - H:i:s' }}</td>
                             <td>

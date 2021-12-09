@@ -72,8 +72,18 @@ Manage Student
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                             <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Email" data-content="{{ student.admin.email }}"> {{ student.admin.email }}</a>
                         </td>                                        -->
-                        <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
+                        <!-- <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                             <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Address" data-content="{{ student.address }}"> {{ student.address }}</a>
+                        </td> -->
+                        <td>
+                            
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ student.address }}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        {{ student.address }}
+                                    </a>
+                                </p>
+                            </div>
                         </td>
                         <td>{{ student.gender }}</td>
                         <td> <img src="{{ student.profile_pic.url }}" style="height:36px; width:36px;" /> </td>

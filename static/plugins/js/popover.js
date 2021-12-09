@@ -27,12 +27,8 @@
 
     };
 
-    $('[data-toggle="popover"]').popover()
-    
-    $('.btn').popover();
+    $('[data-toggle="popover"]').popover();
 
-    $('.btn').on('click', function (e) {
-        $('.btn').not(this).popover('hide');
-    });
+    
   });
 })(jQuery);

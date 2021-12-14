@@ -8,6 +8,9 @@ from django.core import serializers
 import json
 from datetime import datetime
 import os
+from ..extract_train import extract_embeddings
+from ..extract_train import train_model
+
 from student_management_app.utils import (
     remove_accent, ten_image_students
 )
@@ -529,6 +532,10 @@ def add_image_detect_save(request):
                 username=student_id,
                 images=request.FILES.get(f'images{file_num}')
             )
+        # initialize data train in file, for initialize variable
+        extract_embeddings.init_data()
+        extract_embeddings.embeddings()
+        train_model.model_train()
     return redirect('add_student')
         
 

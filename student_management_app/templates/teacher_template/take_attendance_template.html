@@ -40,7 +40,7 @@ Take Attendance
 
         <div class="form-group">
             <label >Subject</label>
-            <select class="form-control" name="subject" id="subject">
+            <select title="my_options" class="form-control" name="subject" id="subject">
                 {% for subject in subjects %}
                     <option value="{{ subject.id }}">{{ subject.subject_name }}</option>
                 {% endfor %}
@@ -90,7 +90,8 @@ Take Attendance
 <script>
     $(document).ready(function(){
         $("#face_attendance").click(function(){
-            location.href='{% url "take_attendance_detect" %}'
+            var subject=$("#subject").val()
+            location.href='{% url "take_attendance_detect" %}?subject_id=subject_data'.replace('subject_data', subject)
         })
         $("#fetch_student").click(function(){
             var subject=$("#subject").val()

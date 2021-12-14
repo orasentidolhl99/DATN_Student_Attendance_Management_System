@@ -19,7 +19,8 @@ from student_management_app.models import (
     CustomUser, Teachers, Courses, Subjects,
     Students, SessionYearModel, Attendance, 
     AttendanceReport, LeaveReportTeacher,
-    FeedBackTeacher, StudentResult, LeaveReportStudent
+    FeedBackTeacher, StudentResult,
+    LeaveReportStudent, StudentSubjectLink
 )
 
 def teacher_home(request):
@@ -118,10 +119,14 @@ def teacher_take_attendance(request):
 
 @csrf_exempt
 def take_attendance_detect(request):
+    subject_id = request.GET.get('subject_id')
+    subject_model = Subjects.objects.get(id=subject_id)
+    
     user = CustomUser.objects.get(id = request.user.id)
     teacher = Teachers.objects.get(admin = user)
 
     context = {
+        "subjects":subject_model,
         "user": user,
         "teacher": teacher
     }
@@ -152,28 +157,126 @@ def facecam_feed(request):
                     content_type='multipart/x-mixed-replace; boundary=frame')
 
 def attendance_result_stream(request):
-    list_obj = datetime_counter(dict_check)
-    print(list_obj)
-    list_result = []
+    subject_id = request.GET.get('subject_id')
+    
+    # subject = Subjects.objects.get(id=subject_id)
+    # student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
+    
+    # for student in student_subject_link:
+    #     print(student.student_id.admin.username)
+    
+    subjects = Subjects.objects.get(id=subject_id)
+    students = Students.objects.filter(course_id=subjects.course_id)
 
-    for obj_student in list_obj:
-        if int(obj_student['counter']) > 3:
-            time_in_class = datetime.strptime(obj_student['datetime'], "%m-%d-%Y, %H:%M:%S")
-        else:
-            time_in_class = None
+    student_subject_link = [
+        {
+            "student_id": str(student.student_id.admin.username),
+            "full_name": f"{student.student_id.admin.last_name} { student.student_id.admin.first_name }",
+            "time_in_class": "",
+            "status":""
+        } for student in StudentSubjectLink.objects\
+            .filter(subject_id=subjects)
+    ]
+    
+    # print(student_subject_link)
+    
+    list_obj = datetime_counter(dict_check)
+    # print(list_obj)
+        
+    list_result = []
+    
+    for item in student_subject_link:
+        if item["student_id"] in list_obj.keys():
+            if  int(list_obj[item["student_id"]]['counter']) > 3:
+                time_in_class = datetime.strptime(list_obj[item["student_id"]]['datetime'], "%m-%d-%Y, %H:%M:%S")
+                
+                print("+++++++++++++" + item["student_id"])
+                # print(list_obj[item["student_id"]])
+                
+                list_result.append(
+                    {
+                        "student_id": item["student_id"],
+                        "full_name": item["full_name"],
+                        "time_in_class": time_in_class,
+                        "status": "checked"
+                    }
+                )
+                
+            else:
+                time_in_class = ""
             
-        list_result.append(
-            [
-                str(obj_student['student_id']),
-                time_in_class,
-                "Absent" if time_in_class is None else "Present"
-            ]
-        )
-    print(list_result)
+                print("-------------" + item["student_id"])
+                # print(list_obj[item["student_id"]])
+                
+                list_result.append(
+                    {
+                        "student_id": item["student_id"],
+                        "full_name": item["full_name"],
+                        "time_in_class": time_in_class,
+                        "status": ""
+                    }
+                )
+                
+        else:
+            time_in_class = ""
+            
+            print("-------------" + item["student_id"])
+            # print(list_obj[item["student_id"]])
+            
+            list_result.append(
+                {
+                    "student_id": item["student_id"],
+                    "full_name": item["full_name"],
+                    "time_in_class": time_in_class,
+                    "status": ""
+                }
+            )
+            
+    # list_result = []
+
+    # for obj_student in list_obj:
+    #     if int(obj_student['counter']) > 3:
+    #         time_in_class = datetime.strptime(obj_student['datetime'], "%m-%d-%Y, %H:%M:%S")
+    #     else:
+    #         time_in_class = None
+        
+    #     list_result.append(
+    #         {
+    #             "student_id": str(obj_student['student_id']),
+    #             "time_in_class": time_in_class,
+    #             "status": "Absent" if time_in_class is None else "checked"
+    #         }
+    #     )
+    # print(list_ids_student_subject)
     context = {
+        'students': list_obj,
         'result_stream': list_result
     }
     return render(request, "teacher_template/attendance_result_stream.html", context=context)
+
+
+def save_detect_attendance_data(request):
+    if request.method == 'POST':
+        student_ids = request.POST.getlist('status')
+        for student in student_ids:
+            print(">>>>>" + student)
+            
+        # try:
+        #     # First Attendance Data is Saved on Attendance Model
+        #     attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
+        #     attendance.save()
+
+        #     for stud in json_student:
+        #         # Attendance of Individual Student saved on AttendanceReport Model
+        #         student = Students.objects.get(admin=stud['id'])
+        #         attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud['status'])
+        #         attendance_report.save()
+        #     return HttpResponse("OK")
+        # except:
+        #     return HttpResponse("Error")
+        
+    return redirect('teacher_home')
+
 
 @csrf_exempt
 def get_students(request):
@@ -197,6 +300,7 @@ def get_students(request):
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)
+
 
 @csrf_exempt
 def save_attendance_data(request):

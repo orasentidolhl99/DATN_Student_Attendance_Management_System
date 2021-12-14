@@ -32,19 +32,57 @@ View Result
             </div>
         </div>
         {% endif %}
-        
+        <div class="card-body">
+
+        <form action={% url 'save_detect_attendance_data' %}  method="POST">
+            {% csrf_token %}
+            <div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 500px; width: 100%;">
+                <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                    <table class="jsgrid-table">
+                        <tr class="jsgrid-header-row">
+                            <th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 50px;">Student ID</th>
+                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 150px;">Full name</th>
+                            <th class="jsgrid-header-cell jsgrid-align-right" style="width: 150px;">Time in class</th>
+                            <th class="jsgrid-header-cell" style="width: 150px;">Status</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="jsgrid-grid-body" style="height: 453px;">
+                    <table class="jsgrid-table">
+                        <tbody>
+                            {% for student_detail in result_stream %}
+                                <tr class="jsgrid-row">
+                                    <td class="jsgrid-cell" style="width: 50px;">{{ student_detail.student_id }}</td>
+                                    <td class="jsgrid-cell" style="width: 100px;">{{ student_detail.full_name }}</td>
+                                    <td class="jsgrid-cell" style="width: 150px;">{{ student_detail.time_in_class }}</td>
+                                    <td class="jsgrid-cell" style="width: 150px;">
+                                        <div class="form-check mt-0">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" name="status" value={{ student_detail.student_id }} class="form-check-input" {{ student_detail.status }}>
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="btn btn-light" type="submit">Save data</button>
+            
+        </form>
+        <a class="btn btn-light" href="{% url 'save_detect_attendance_data' %}" role="button">Save data</a>
+
         <h4 class="card-title">View Result Attendance</h4>
         <table>
             <tr>
                 <th>Student ID</th>
-                <th>Time in class</th>
-                <th>Status</th>
+
             </tr>
-            {% for student_detail in result_stream %}
+            {% for student in students %}
                 <tr>
-                    {% for student in student_detail %}
-                        <td>{{ student }}</td>
-                    {% endfor %}
+                    <td>{{ student.datetime }} </td>
                 </tr>    
             {% endfor %}
         </table>

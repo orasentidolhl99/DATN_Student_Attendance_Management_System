@@ -16,10 +16,10 @@ def ten_image_students(argument):
 
 
 def datetime_counter(dict_check):
-    	return [
-		{	
-			'student_id': str(key),
-			'datetime': min(value) if len(value) > 0 else None,
-			'counter': len(value) if len(value) > 0 else None
-		} for key, value in dict_check.items()
-	]
+    	return {
+            str(key): {
+                'student_id': str(key),
+                'datetime': min(value) if len(value) > 0 else "",
+                'counter': len(value) if len(value) > 0 else 0
+            } for key, value in dict_check.items()
+    }

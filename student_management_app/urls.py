@@ -81,7 +81,7 @@ urlpatterns = [
 
      # URLS for teacher
     path('teacher_home/', teacher_views.teacher_home, name="teacher_home"),
-    path('teacher_take_attendance/', teacher_views.teacher_take_attendance, name="teacher_take_attendance"),
+    path('teacher_take_attendance', teacher_views.teacher_take_attendance, name="teacher_take_attendance"),
     path('get_students/', teacher_views.get_students, name="get_students"),
     path('save_attendance_data/', teacher_views.save_attendance_data, name="save_attendance_data"),
     path('teacher_update_attendance/', teacher_views.teacher_update_attendance, name="teacher_update_attendance"),
@@ -100,9 +100,13 @@ urlpatterns = [
     path('student_leave_approve/<leave_id>/', teacher_views.student_leave_approve, name="student_leave_approve"),
     path('student_leave_reject/<leave_id>/', teacher_views.student_leave_reject, name="student_leave_reject"),
 
+
+    # URLS for Teacher - Detect student
     path('take_attendance_detect', teacher_views.take_attendance_detect, name='take_attendance_detect'),
     path('facecam_feed', teacher_views.facecam_feed, name='facecam_feed'),
     path('attendance_result_stream', teacher_views.attendance_result_stream, name='attendance_result_stream'),
+    path('save_detect_attendance_data', teacher_views.save_detect_attendance_data, name='save_detect_attendance_data'),
+    
     
     # URLS for Student
     path('student_home/', student_views.student_home, name="student_home"),

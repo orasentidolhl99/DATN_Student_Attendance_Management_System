@@ -1,7 +1,7 @@
 {% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
-View
+View Attendance | #{{ subjects.subject_name }}
 {% endblock page_title %}
 
 
@@ -40,7 +40,7 @@ View
             <div class="card-body table-responsive p-0">
                 <img src="{% url 'facecam_feed' %}">
             </div>
-            <a class="btn btn-light" href="{% url 'attendance_result_stream' %}" role="button">Dừng</a>
+            <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}" role="button">Dừng</a>
     </div>
 </div>
 

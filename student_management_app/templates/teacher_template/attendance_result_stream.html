@@ -34,7 +34,7 @@ View Result
         {% endif %}
         <div class="card-body">
 
-        <form action={% url 'save_detect_attendance_data' %}  method="POST">
+        <form action={% url 'save_detect_attendance_data' %}?subject_id={{ subject_id }}&session_year_id={{ session_year_id }}  method="POST">
             {% csrf_token %}
             <div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 500px; width: 100%;">
                 <div class="jsgrid-grid-header jsgrid-header-scrollbar">

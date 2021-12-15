@@ -120,6 +120,8 @@ def teacher_take_attendance(request):
 @csrf_exempt
 def take_attendance_detect(request):
     subject_id = request.GET.get('subject_id')
+    session_year_id = request.GET.get('session_year_id')
+    
     subject_model = Subjects.objects.get(id=subject_id)
     
     user = CustomUser.objects.get(id = request.user.id)
@@ -127,6 +129,7 @@ def take_attendance_detect(request):
 
     context = {
         "subjects":subject_model,
+        "session_year_id": session_year_id,
         "user": user,
         "teacher": teacher
     }
@@ -158,6 +161,7 @@ def facecam_feed(request):
 
 def attendance_result_stream(request):
     subject_id = request.GET.get('subject_id')
+    session_year_id = request.GET.get('session_year_id')
     
     # subject = Subjects.objects.get(id=subject_id)
     # student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
@@ -166,7 +170,7 @@ def attendance_result_stream(request):
     #     print(student.student_id.admin.username)
     
     subjects = Subjects.objects.get(id=subject_id)
-    students = Students.objects.filter(course_id=subjects.course_id)
+    # students = Students.objects.filter(course_id=subjects.course_id)
 
     student_subject_link = [
         {
@@ -249,31 +253,72 @@ def attendance_result_stream(request):
     #     )
     # print(list_ids_student_subject)
     context = {
-        'students': list_obj,
-        'result_stream': list_result
+        "subject_id": subject_id,
+        "session_year_id": session_year_id,
+        "students": list_obj,
+        "result_stream": list_result
     }
     return render(request, "teacher_template/attendance_result_stream.html", context=context)
 
 
 def save_detect_attendance_data(request):
     if request.method == 'POST':
+        subject_id = request.GET.get('subject_id')
+        session_year_id = request.GET.get('session_year_id')
+        
+        subject_model = Subjects.objects.get(id=subject_id)
+        print(subject_model.subject_name)
+        session_year_model = SessionYearModel.objects.get(id=session_year_id)
+        print(session_year_model.session_start_year)
+        
+        attendance_date = datetime.now()
+        print(attendance_date)
+        
         student_ids = request.POST.getlist('status')
         for student in student_ids:
             print(">>>>>" + student)
-            
-        # try:
-        #     # First Attendance Data is Saved on Attendance Model
-        #     attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
-        #     attendance.save()
+        
+        student_subject_link = [
+            {
+                "student_id": str(student.student_id.admin.username),
+                "status": ""
+            } for student in StudentSubjectLink.objects\
+                .filter(subject_id=subject_model)
+        ]                       
+        
+        list_result = []
+        for item in student_subject_link:
+            if item["student_id"] in student_ids:
+                print("+++++++++++++" + item["student_id"])
+                list_result.append(
+                    {
+                        "student_id": str(item["student_id"]),
+                        "status": 1
+                    }
+                )
+            else:
+                print("-------------" + item["student_id"])
+                list_result.append(
+                    {
+                        "student_id": str(item["student_id"]),
+                        "status": 0
+                    }
+                )
+        print(list_result)
+        try:
+            # First Attendance Data is Saved on Attendance Model
+            attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
+            attendance.save()
 
-        #     for stud in json_student:
-        #         # Attendance of Individual Student saved on AttendanceReport Model
-        #         student = Students.objects.get(admin=stud['id'])
-        #         attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud['status'])
-        #         attendance_report.save()
-        #     return HttpResponse("OK")
-        # except:
-        #     return HttpResponse("Error")
+            for stud in list_result:
+                # Attendance of Individual Student saved on AttendanceReport Model
+                user = CustomUser.objects.get(username = stud["student_id"])
+                student = Students.objects.get(admin=user)
+                attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud["status"])
+                attendance_report.save()
+            return HttpResponse("OK")
+        except:
+            return HttpResponse("Error")
         
     return redirect('teacher_home')
 

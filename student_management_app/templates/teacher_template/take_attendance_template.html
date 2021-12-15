@@ -91,7 +91,8 @@ Take Attendance
     $(document).ready(function(){
         $("#face_attendance").click(function(){
             var subject=$("#subject").val()
-            location.href='{% url "take_attendance_detect" %}?subject_id=subject_data'.replace('subject_data', subject)
+            var session_year=$("#session_year").val()
+            location.href='{% url "take_attendance_detect" %}?subject_id=subject_data&session_year_id=session_year_data'.replace('subject_data', subject).replace('session_year_data', session_year)
         })
         $("#fetch_student").click(function(){
             var subject=$("#subject").val()

@@ -7,9 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import json
 from datetime import datetime
+from django.views.decorators import gzip
 # import unidecode
 
 from django.http.response import StreamingHttpResponse
+from django.http import HttpResponseServerError
 
 # common settings
 from ..camera import FaceDetect
@@ -152,26 +154,23 @@ def gen(camera):
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+@gzip.gzip_page
 def facecam_feed(request):
     # init data detect
     dict_check.clear()
-    # take frame video stream from client
-    return StreamingHttpResponse(gen(FaceDetect()),
-                    content_type='multipart/x-mixed-replace; boundary=frame')
+    try:
+        # take frame video stream from client
+        return StreamingHttpResponse(gen(FaceDetect()),
+                        content_type='multipart/x-mixed-replace; boundary=frame')
+    except:
+        # Return an "Internal Server Error" 500 response code.
+        return HttpResponseServerError()
 
 def attendance_result_stream(request):
     subject_id = request.GET.get('subject_id')
     session_year_id = request.GET.get('session_year_id')
     
-    # subject = Subjects.objects.get(id=subject_id)
-    # student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
-    
-    # for student in student_subject_link:
-    #     print(student.student_id.admin.username)
-    
     subjects = Subjects.objects.get(id=subject_id)
-    # students = Students.objects.filter(course_id=subjects.course_id)
-
     student_subject_link = [
         {
             "student_id": str(student.student_id.admin.username),
@@ -181,12 +180,8 @@ def attendance_result_stream(request):
         } for student in StudentSubjectLink.objects\
             .filter(subject_id=subjects)
     ]
-    
-    # print(student_subject_link)
-    
+
     list_obj = datetime_counter(dict_check)
-    # print(list_obj)
-        
     list_result = []
     
     for item in student_subject_link:
@@ -195,8 +190,6 @@ def attendance_result_stream(request):
                 time_in_class = datetime.strptime(list_obj[item["student_id"]]['datetime'], "%m-%d-%Y, %H:%M:%S")
                 
                 print("+++++++++++++" + item["student_id"])
-                # print(list_obj[item["student_id"]])
-                
                 list_result.append(
                     {
                         "student_id": item["student_id"],
@@ -205,13 +198,9 @@ def attendance_result_stream(request):
                         "status": "checked"
                     }
                 )
-                
             else:
                 time_in_class = ""
-            
                 print("-------------" + item["student_id"])
-                # print(list_obj[item["student_id"]])
-                
                 list_result.append(
                     {
                         "student_id": item["student_id"],
@@ -222,11 +211,8 @@ def attendance_result_stream(request):
                 )
                 
         else:
-            time_in_class = ""
-            
+            time_in_class = ""          
             print("-------------" + item["student_id"])
-            # print(list_obj[item["student_id"]])
-            
             list_result.append(
                 {
                     "student_id": item["student_id"],
@@ -235,23 +221,6 @@ def attendance_result_stream(request):
                     "status": ""
                 }
             )
-            
-    # list_result = []
-
-    # for obj_student in list_obj:
-    #     if int(obj_student['counter']) > 3:
-    #         time_in_class = datetime.strptime(obj_student['datetime'], "%m-%d-%Y, %H:%M:%S")
-    #     else:
-    #         time_in_class = None
-        
-    #     list_result.append(
-    #         {
-    #             "student_id": str(obj_student['student_id']),
-    #             "time_in_class": time_in_class,
-    #             "status": "Absent" if time_in_class is None else "checked"
-    #         }
-    #     )
-    # print(list_ids_student_subject)
     context = {
         "subject_id": subject_id,
         "session_year_id": session_year_id,
@@ -316,11 +285,9 @@ def save_detect_attendance_data(request):
                 student = Students.objects.get(admin=user)
                 attendance_report = AttendanceReport(student_id=student, attendance_id=attendance, status=stud["status"])
                 attendance_report.save()
-            return HttpResponse("OK")
+            return redirect('teacher_home')
         except:
-            return HttpResponse("Error")
-        
-    return redirect('teacher_home')
+            return redirect('teacher_home')
 
 
 @csrf_exempt

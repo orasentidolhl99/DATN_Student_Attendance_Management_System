@@ -72,20 +72,6 @@ View Result
             <button class="btn btn-light" type="submit">Save data</button>
             
         </form>
-        <a class="btn btn-light" href="{% url 'save_detect_attendance_data' %}" role="button">Save data</a>
-
-        <h4 class="card-title">View Result Attendance</h4>
-        <table>
-            <tr>
-                <th>Student ID</th>
-
-            </tr>
-            {% for student in students %}
-                <tr>
-                    <td>{{ student.datetime }} </td>
-                </tr>    
-            {% endfor %}
-        </table>
     </div>
 </div>
 

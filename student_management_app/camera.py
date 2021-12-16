@@ -46,16 +46,19 @@ class FaceDetect(object):
 		self.le = pickle.loads(open(lePath, "rb").read())
 
 		# initialize the video stream, then allow the camera sensor to warm up
-		self.vs = VideoStream(src=0).start()
+		self.vs = VideoStream(src=0)
+		self.vs.start()
 		# start the FPS throughput estimator
-		self.fps = FPS().start()
+		self.fps = FPS()
+		self.fps.start()
 
 	def __del__(self):
-		self.vs.stop()
+		
+		# self.vs.stop()
 		self.fps.stop()
-  
-		self.vs.stream.release()
+		self.vs.stream.stream.release()
 		cv2.destroyAllWindows()
+		print("----------- destroyAllWindows")
 
 	def get_frame(self):
 		# grab the frame from the threaded video stream

@@ -339,6 +339,7 @@ def get_students(request):
     for student in student_subject_link:
         data_small={
             "id": student.student_id.admin.id,
+            "studentId": student.student_id.admin.username,
             "name": student.student_id.admin.last_name +" "+ student.student_id.admin.first_name
         }
         list_data.append(data_small)

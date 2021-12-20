@@ -55,10 +55,12 @@ Take Attendance
             </select>
         </div>
 
+        <button type="button" class="btn btn-gradient-primary mr-2 " id="create_attendance">Create Attendance</button>
+
         <button type="button" class="btn btn-gradient-primary mr-2 " id="face_attendance">Face Attendance</button>
 
-        <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_student">Fetch Student</button>
-        
+        <button type="button" class="btn btn-gradient-primary mr-2 " id="fetch_attendance">Fetch Attendance</button>
+
         <!-- <input class="btn btn-light" type="reset" value="Cancel" onclick="return cancel()" />
         <script>
             function cancel() {
@@ -91,12 +93,17 @@ Take Attendance
 
 <script>
     $(document).ready(function(){
+        $("#create_attendance").click(function(){
+            var subject=$("#subject").val()
+            var session_year=$("#session_year").val()
+            location.href='{% url "teacher_create_attendance" %}?subject_id=subject_data&session_year_id=session_year_data'.replace('subject_data', subject).replace('session_year_data', session_year)
+        })
         $("#face_attendance").click(function(){
             var subject=$("#subject").val()
             var session_year=$("#session_year").val()
             location.href='{% url "take_attendance_detect" %}?subject_id=subject_data&session_year_id=session_year_data'.replace('subject_data', subject).replace('session_year_data', session_year)
         })
-        $("#fetch_student").click(function(){
+        $("#fetch_attendance").click(function(){
             var subject=$("#subject").val()
             var session_year=$("#session_year").val()
 

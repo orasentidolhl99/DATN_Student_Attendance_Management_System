@@ -22,7 +22,8 @@ from student_management_app.models import (
     Students, SessionYearModel, Attendance, 
     AttendanceReport, LeaveReportTeacher,
     FeedBackTeacher, StudentResult,
-    LeaveReportStudent, StudentSubjectLink
+    LeaveReportStudent, StudentSubjectLink,
+    AttendanceReportCreate
 )
 
 def teacher_home(request):
@@ -123,6 +124,45 @@ def teacher_manage_student_subject_link(request, subject_id):
     }
     return render(request,"teacher_template/teacher_manage_student_subject_link.html", context=context)
 
+def teacher_create_attendance(request):
+    subject_id = request.GET.get('subject_id')
+    session_year_id = request.GET.get('session_year_id')
+    
+    subject_model = Subjects.objects.get(id=subject_id)
+    print(subject_model.subject_name)
+    session_year_model = SessionYearModel.objects.get(id=session_year_id)
+    print(session_year_model.session_start_year)
+    
+    attendance_date = datetime.now()
+    print(attendance_date)
+    
+    list_result = StudentSubjectLink.objects.filter(subject_id=subject_model)
+    
+    try:
+        # First Attendance Data is Saved on Attendance Model
+        attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
+        attendance.save()
+        
+        for stud in list_result:
+            # Attendance of Individual Student saved on AttendanceReport Model
+            attendance_report = AttendanceReport(
+                student_id=stud.student_id,
+                attendance_id=attendance,
+                status=0
+            )
+            attendance_report.save()
+            
+            attendance_report_create = AttendanceReportCreate(
+                attendance_report_id = attendance_report,
+                status_create = 0
+            )
+            attendance_report_create.save()
+            
+        messages.success(request, f"Successfully Create Attendance Report For [{subject_model.subject_name}]")
+        return redirect('teacher_take_attendance')
+    except:
+        messages.error(request, f"Can't Create Attendance Report For [{subject_model.subject_name}]")
+        return redirect('teacher_take_attendance')
 
 def teacher_take_attendance(request):
 

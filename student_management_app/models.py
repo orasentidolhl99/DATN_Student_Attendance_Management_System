@@ -121,6 +121,15 @@ class AttendanceReport(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
+    
+class AttendanceReportCreate(models.Model):
+    # Create Student Attendance
+    id = models.AutoField(primary_key=True)
+    attendance_report_id = models.ForeignKey(AttendanceReport, on_delete=models.DO_NOTHING)
+    status_create = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
 
 class LeaveReportStudent(models.Model):
     id = models.AutoField(primary_key=True)

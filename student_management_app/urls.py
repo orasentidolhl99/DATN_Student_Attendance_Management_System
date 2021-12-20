@@ -99,14 +99,15 @@ urlpatterns = [
     path('student_leave_view/', teacher_views.student_leave_view, name="student_leave_view"),
     path('student_leave_approve/<leave_id>/', teacher_views.student_leave_approve, name="student_leave_approve"),
     path('student_leave_reject/<leave_id>/', teacher_views.student_leave_reject, name="student_leave_reject"),
-
-
-    # URLS for Teacher - Detect student
-    path('take_attendance_detect', teacher_views.take_attendance_detect, name='take_attendance_detect'),
-    path('facecam_feed', teacher_views.facecam_feed, name='facecam_feed'),
-    path('attendance_result_stream', teacher_views.attendance_result_stream, name='attendance_result_stream'),
-    path('save_detect_attendance_data', teacher_views.save_detect_attendance_data, name='save_detect_attendance_data'),
+    path('teacher_manage_subject/', teacher_views.teacher_manage_subject, name="teacher_manage_subject"),
+    path('teacher_manage_student_subject_link/<subject_id>/', teacher_views.teacher_manage_student_subject_link, name="teacher_manage_student_subject_link"),
     
+    # URLS for Teacher - Detect student
+    path('take_attendance_detect/', teacher_views.take_attendance_detect, name='take_attendance_detect'),
+    path('facecam_feed', teacher_views.facecam_feed, name='facecam_feed'),
+    path('attendance_result_stream/', teacher_views.attendance_result_stream, name='attendance_result_stream'),
+    path('save_detect_attendance_data/', teacher_views.save_detect_attendance_data, name='save_detect_attendance_data'),
+    path('test_stop_camera/', teacher_views.test_stop_camera, name='test_stop_camera'),
     
     # URLS for Student
     path('student_home/', student_views.student_home, name="student_home"),

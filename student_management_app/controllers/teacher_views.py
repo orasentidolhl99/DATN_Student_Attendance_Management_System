@@ -41,8 +41,9 @@ def teacher_home(request):
     for course_id in course_id_list:
         if course_id not in final_course:
             final_course.append(course_id)
-    
-    students_count = Students.objects.filter(course_id__in=final_course).count()
+    print(subjects[0])
+    # students_count = Students.objects.filter(course_id__in=final_course).count()
+    students_count = StudentSubjectLink.objects.filter(subject_id__in=subjects).count()
     subject_count = subjects.count()
 
     # Fetch All Attendance Count
@@ -104,6 +105,25 @@ def teacher_home(request):
     }
     return render(request, "teacher_template/teacher_home_template.html", context)
 
+
+def teacher_manage_subject(request):
+    subjects = Subjects.objects.filter(teacher_id=request.user.id)
+    context = {
+        "subjects": subjects
+    }
+    return render(request, 'teacher_template/teacher_manage_subject_template.html', context)
+
+
+def teacher_manage_student_subject_link(request, subject_id):
+    subject = Subjects.objects.get(id=subject_id)
+    student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
+    context = {
+        'subject': subject,
+        'student_subject_link': student_subject_link
+    }
+    return render(request,"teacher_template/teacher_manage_student_subject_link.html", context=context)
+
+
 def teacher_take_attendance(request):
 
     user = CustomUser.objects.get(id = request.user.id)
@@ -138,9 +158,10 @@ def take_attendance_detect(request):
     return render(request, "teacher_template/take_attendance_detect.html",context)
 
 dict_check = dict()
+still_on = True
 
 def gen(camera):
-    while True:
+    while still_on:
         frame, student_info = camera.get_frame()
 
         if student_info:
@@ -165,6 +186,12 @@ def facecam_feed(request):
     except:
         # Return an "Internal Server Error" 500 response code.
         return HttpResponseServerError()
+
+def test_stop_camera(request):
+    global still_on
+    still_on = False
+    print(f"still_on -> {still_on}")
+    return redirect('teacher_home')
 
 def attendance_result_stream(request):
     subject_id = request.GET.get('subject_id')
@@ -300,15 +327,20 @@ def get_students(request):
     # Getting all data from subject model based on subject_id
     subject_model = Subjects.objects.get(id=subject_id)
 
-    session_model = SessionYearModel.objects.get(id=session_year)
+    # session_model = SessionYearModel.objects.get(id=session_year)
 
-    students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
-
+    # students = Students.objects.filter(course_id=subject_model.course_id, session_year_id=session_model)
+    
+    student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject_model)
+    
     # Only Passing Student Id and Student Name Only
     list_data = []
 
-    for student in students:
-        data_small={"id":student.admin.id, "name":student.admin.last_name+" "+student.admin.first_name}
+    for student in student_subject_link:
+        data_small={
+            "id": student.student_id.admin.id,
+            "name": student.student_id.admin.last_name +" "+ student.student_id.admin.first_name
+        }
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)

@@ -1,0 +1,68 @@
+{% extends 'base_main.html'%}
+{% load static %}
+{% block page_title %} 
+View Students in Subject
+{% endblock page_title %}
+
+
+{% block content %}
+    {% comment %} Display Messages {% endcomment %}
+        {% if messages %}
+        <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+            {% if message.tags == "error" %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% elif message.tags == "success" %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+    {% endif %}
+
+
+    <div class="card">
+        <div class="card-body">
+            <center><h4 style="font-weight:bold;" class="card-title">{{ subject.subject_name }} </h4></center><hr>
+            <table id="order-listing" class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
+                <!-- id="order-listing" -->
+            <thead>
+                <tr>
+                    <th style="font-weight:bold;">ID</th>
+                    <th style="font-weight:bold;">Student ID</th>
+                    <th style="font-weight:bold;">Last Name</th>
+                    <th style="font-weight:bold;">First Name</th>
+                    <th style="font-weight:bold;">Created At</th>
+                    <th style="font-weight:bold;">Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student_subject in student_subject_link %}
+                    <tr>
+                        <td>{{ student_subject.id }}</td>
+                        <td>{{ student_subject.student_id.admin.username }}</td>
+                        <td>{{ student_subject.student_id.admin.last_name }}</td>
+                        <td>{{ student_subject.student_id.admin.first_name }}</td>
+                        <td>{{ student_subject.created_at }}</td>
+                        <td>{{ student_subject.updated_at }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock content %}
+

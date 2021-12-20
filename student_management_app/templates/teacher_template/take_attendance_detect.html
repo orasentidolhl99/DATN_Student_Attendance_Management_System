@@ -13,34 +13,35 @@ View Attendance | #{{ subjects.subject_name }}
         <div class="form-group">
         <div class="col-12">
             {% for message in messages %}
-            {% if message.tags == "error" %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% elif message.tags == "success" %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-            {% endif %}
+                {% if message.tags == "error" %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% elif message.tags == "success" %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         </div>
         {% endif %}
         
         <h4 class="card-title">View Attendance</h4>
-            <!-- <p class="card-description"> Detailed information sheet about Teacher feedback -->
-            </p>
-            <hr>
-            <div class="card-body table-responsive p-0">
-                <img src="{% url 'facecam_feed' %}">
-            </div>
-            <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}" role="button">Dừng</a>
+        <!-- <p class="card-description"> Detailed information sheet about Teacher feedback </p>-->
+        
+        <hr>
+        <div class="card-body table-responsive p-0">
+            <center> <img src="{% url 'facecam_feed' %}"> </center>
+        </div>
+        <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}" role="button">Save</a>
+        <a class="btn btn-light" href="{% url 'test_stop_camera' %}" role="button">Stop Camera</a>
     </div>
 </div>
 

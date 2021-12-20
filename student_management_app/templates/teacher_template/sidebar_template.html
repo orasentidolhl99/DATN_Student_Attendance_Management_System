@@ -43,7 +43,7 @@
     <li class="nav-item">
       {% url 'teacher_update_attendance' as teacher_update_attendance %}
       <a class="nav-link {% if request.path == teacher_update_attendance %} active {% endif %}" href="{{ teacher_update_attendance }}">
-        <span class="menu-title">View Update Attendance</span>
+        <span class="menu-title">Update Attendance</span>
         <i class="mdi mdi-chart-bar menu-icon"></i>
         {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
       </a>

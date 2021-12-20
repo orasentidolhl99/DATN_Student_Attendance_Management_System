@@ -53,12 +53,11 @@ class FaceDetect(object):
 		self.fps.start()
 
 	def __del__(self):
-		
 		# self.vs.stop()
 		self.fps.stop()
 		self.vs.stream.stream.release()
 		cv2.destroyAllWindows()
-		print("----------- destroyAllWindows")
+		print("[INFO] destroy all windows...")
 
 	def get_frame(self):
 		# grab the frame from the threaded video stream
@@ -125,7 +124,7 @@ class FaceDetect(object):
 					detect_face_find = detect_face_find.split('_', 1)
 					# draw the bounding box of the face along with the
 					# associated probability
-					text = "{}: {:.2f}%".format(detect_face_find, proba * 100)
+					text = "[INFO] {}: {:.2f}%".format(detect_face_find, proba * 100)
 					y = startY - 10 if startY - 10 > 10 else startY + 10
 		
 					result['student_code'] = detect_face_find[0]

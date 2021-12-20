@@ -13390,7 +13390,7 @@ code {
   border: 0;
   background: #fff; }
   .card .card-body {
-    padding: 0.5rem 0.5rem; }
+    padding: 1.5rem 1.5rem; }
     .card .card-body + .card-body {
       padding-top: 1rem; }
   .card .card-title {

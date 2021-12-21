@@ -42,7 +42,7 @@ def teacher_home(request):
     for course_id in course_id_list:
         if course_id not in final_course:
             final_course.append(course_id)
-    print(subjects[0])
+    # print(subjects[0])
     # students_count = Students.objects.filter(course_id__in=final_course).count()
     students_count = StudentSubjectLink.objects.filter(subject_id__in=subjects).count()
     subject_count = subjects.count()

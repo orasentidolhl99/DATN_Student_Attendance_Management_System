@@ -102,6 +102,9 @@ urlpatterns = [
     path('teacher_manage_subject/', teacher_views.teacher_manage_subject, name="teacher_manage_subject"),
     path('teacher_manage_student_subject_link/<subject_id>/', teacher_views.teacher_manage_student_subject_link, name="teacher_manage_student_subject_link"),
     path('teacher_create_attendance/', teacher_views.teacher_create_attendance, name="teacher_create_attendance"),
+    path('teacher_view_attendance/', teacher_views.teacher_view_attendance, name="teacher_view_attendance"),
+    path('turn_off_attendance/', teacher_views.turn_off_attendance, name="turn_off_attendance"),
+    
     
     # URLS for Teacher - Detect student
     path('take_attendance_detect/', teacher_views.take_attendance_detect, name='take_attendance_detect'),

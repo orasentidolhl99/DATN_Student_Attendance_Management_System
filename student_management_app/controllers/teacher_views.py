@@ -22,8 +22,7 @@ from student_management_app.models import (
     Students, SessionYearModel, Attendance, 
     AttendanceReport, LeaveReportTeacher,
     FeedBackTeacher, StudentResult,
-    LeaveReportStudent, StudentSubjectLink,
-    AttendanceReportCreate
+    LeaveReportStudent, StudentSubjectLink
 )
 
 def teacher_home(request):
@@ -151,15 +150,9 @@ def teacher_create_attendance(request):
             attendance_report = AttendanceReport(
                 student_id=stud.student_id,
                 attendance_id=attendance,
-                status=0
+                status=0, teacher_create = 1
             )
             attendance_report.save()
-            
-            attendance_report_create = AttendanceReportCreate(
-                attendance_report_id = attendance_report,
-                status_create = 0
-            )
-            attendance_report_create.save()
             
         messages.success(request, f"Successfully Create Attendance Report For [{subject_model.subject_name}]")
         return redirect('teacher_take_attendance')
@@ -187,6 +180,12 @@ def turn_off_attendance(request):
     close_attendance = Attendance.objects.get(id=attendance_id)
     close_attendance.teacher_create = 0
     close_attendance.save()
+    
+    attendancer_report_ids = AttendanceReport.objects.filter(attendance_id=close_attendance)
+    for report_ids in attendancer_report_ids:
+        report_ids.teacher_create = 0
+        report_ids.save()
+        
     return redirect('teacher_view_attendance')
 
 def teacher_take_attendance(request):

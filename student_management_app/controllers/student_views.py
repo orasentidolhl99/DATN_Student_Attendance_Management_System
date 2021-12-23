@@ -47,6 +47,39 @@ def student_home(request):
     }
     return render(request, "student_template/student_home_template.html",context)
 
+def student_create_attendance(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+    
+    attendancer_report_ids = AttendanceReport.objects.filter(student_id=student,
+                                                             teacher_create=1)
+    print(attendancer_report_ids)
+    context = {
+        "attendancer_report_ids": attendancer_report_ids
+    }
+    return render(request, "student_template/student_create_attendance.html", context)
+
+def student_create_attendance_detect(request):
+    attendancer_report_id = request.GET.get('attendancer_report_id')
+    subject_id = request.GET.get('subject_id')
+    session_year_id = request.GET.get('session_year_id')
+    
+    attendance_report_model = AttendanceReport.objects.get(id=attendancer_report_id)
+    subject_model = Subjects.objects.get(id=subject_id)
+    
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
+    context = {
+        "attendancer_report": attendance_report_model,
+        "subjects": subject_model,
+        "session_year_id": session_year_id,
+        "user": user,
+        "student": student
+    }
+    
+    return render(request, "student_template/student_create_attendance_detect.html", context)
+
 def student_view_attendance(request):
     # Show image profile
     user = CustomUser.objects.get(id = request.user.id)

@@ -124,4 +124,7 @@ urlpatterns = [
     path('student_profile/', student_views.student_profile, name="student_profile"),
     path('student_profile_update/', student_views.student_profile_update, name="student_profile_update"),
     path('student_view_result/', student_views.student_view_result, name="student_view_result"),
+    path('student_create_attendance/', student_views.student_create_attendance, name="student_create_attendance"),
+    path('student_create_attendance_detect/', student_views.student_create_attendance_detect, name="student_create_attendance_detect"),
+    
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

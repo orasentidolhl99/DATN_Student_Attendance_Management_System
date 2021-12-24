@@ -5,6 +5,12 @@ from django.core.files.storage import FileSystemStorage #To upload Profile Pictu
 from django.urls import reverse
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators import gzip
+from django.http.response import StreamingHttpResponse
+from django.http import HttpResponseServerError
+# common settings
+from ..camera import FaceDetect
+from ..utils import datetime_counter
 
 from student_management_app.models import Students, Courses, Subjects, CustomUser, Attendance, AttendanceReport, \
     LeaveReportStudent, FeedBackStudent, NotificationStudent, StudentResult, SessionYearModel, StudentSubjectLink
@@ -55,30 +61,84 @@ def student_create_attendance(request):
                                                              teacher_create=1)
     print(attendancer_report_ids)
     context = {
-        "attendancer_report_ids": attendancer_report_ids
+        "attendancer_report_ids": attendancer_report_ids,
+        "user": user,
+        "student": student
     }
     return render(request, "student_template/student_create_attendance.html", context)
 
 def student_create_attendance_detect(request):
     attendancer_report_id = request.GET.get('attendancer_report_id')
-    subject_id = request.GET.get('subject_id')
-    session_year_id = request.GET.get('session_year_id')
-    
     attendance_report_model = AttendanceReport.objects.get(id=attendancer_report_id)
-    subject_model = Subjects.objects.get(id=subject_id)
-    
+
     user = CustomUser.objects.get(id = request.user.id)
     student = Students.objects.get(admin = user)
-
+    
+    # print(attendance_report_model.attendance_id.subject_id.subject_name)
+    # print(attendance_report_model.attendance_id.session_year_id.session_start_year)
+    
     context = {
         "attendancer_report": attendance_report_model,
-        "subjects": subject_model,
-        "session_year_id": session_year_id,
         "user": user,
         "student": student
     }
-    
     return render(request, "student_template/student_create_attendance_detect.html", context)
+
+dict_check = dict()
+still_on = True
+
+def gen(camera, student_id, attendancer_report_id, request):
+
+    # attendance_report_model
+    print("++++++++++++++", attendancer_report_id)
+    print("++++++++++++++", student_id)
+    
+    while still_on:
+        frame, student_info = camera.get_frame()
+
+        if student_info:
+            list_unique_ids = dict_check.keys()
+
+            if int(student_info['student_code']) not in list_unique_ids:
+                dict_check[int(student_info['student_code'])] = []
+            else:
+                dict_check[int(student_info['student_code'])].append(student_info['check_time'])
+        
+        list_obj = datetime_counter(dict_check)
+        
+        if student_id in [student_id for student_id in list_obj.keys()]:
+            if int(list_obj[student_id]['counter']) > 5:
+                
+                attendance_report_model = AttendanceReport.objects.get(id=attendancer_report_id)
+                attendance_report_model.status = 1
+                attendance_report_model.teacher_create = 0
+                attendance_report_model.save()
+                print("face > 5", student_id)
+                
+        yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+@gzip.gzip_page
+def facecam_feed_student(request):
+    attendancer_report_id = request.GET.get('attendancer_report_id')
+    user = CustomUser.objects.get(id = request.user.id)
+    student = Students.objects.get(admin = user)
+
+    # init data detect
+    dict_check.clear()
+    try:
+        # take frame video stream from client
+        return StreamingHttpResponse(gen(FaceDetect(), student.admin.username, attendancer_report_id, request),
+                        content_type='multipart/x-mixed-replace; boundary=frame')
+    except:
+        # Return an "Internal Server Error" 500 response code.
+        return HttpResponseServerError()
+    
+def stop_camera_student(request):
+    global still_on
+    still_on = False
+    print(f"still_on -> {still_on}")
+    return redirect('student_create_attendance')
 
 def student_view_attendance(request):
     # Show image profile

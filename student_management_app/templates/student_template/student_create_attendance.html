@@ -1,7 +1,7 @@
 {% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
-Manage View Your Attendance
+Manage View Your Attendance 
 {% endblock page_title %}
 
 
@@ -53,14 +53,14 @@ Manage View Your Attendance
                     {% for attendancer_report in attendancer_report_ids %}
                     <tr>
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ student.admin.id }}</td> -->
-                        <td>{{ attendancer_report.attendance_id.id }}</td>
+                        <td>{{ attendancer_report.id }}</td>
                         <td>{{ attendancer_report.attendance_id.subject_id.subject_name }}</td>
                         <td>{{ attendancer_report.attendance_id.attendance_date|date:'D,d/m/Y - H:i:s' }}</td>
 
                         <td> pedding </td>
 
                         <td>
-                            <a class="btn btn-outline-danger btn-icon-text" href="{% url 'student_create_attendance_detect'%}?attendancer_report_id={{ attendancer_report.attendance_id.id }}&subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}">
+                            <a class="btn btn-outline-danger btn-icon-text" href="{% url 'student_create_attendance_detect'%}?attendancer_report_id={{ attendancer_report.id }}">
                                 Take Attendance
                             </a>
                         </td>

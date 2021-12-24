@@ -127,4 +127,7 @@ urlpatterns = [
     path('student_create_attendance/', student_views.student_create_attendance, name="student_create_attendance"),
     path('student_create_attendance_detect/', student_views.student_create_attendance_detect, name="student_create_attendance_detect"),
     
+    path('facecam_feed_student/', student_views.facecam_feed_student, name="facecam_feed_student"),
+    path('stop_camera_student/', student_views.stop_camera_student, name="stop_camera_student"),
+    
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

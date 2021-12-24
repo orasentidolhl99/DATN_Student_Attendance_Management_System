@@ -1,7 +1,7 @@
 {% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
-View Attendance | #{{ subjects.subject_name }}
+View Attendance | #{{ attendancer_report.attendance_id.subject_id.subject_name }} | Date: {{ attendancer_report.attendance_id.attendance_date |date:'D,d/m/Y - H:i:s'}}
 {% endblock page_title %}
 
 
@@ -38,10 +38,9 @@ View Attendance | #{{ subjects.subject_name }}
         
         <hr>
         <div class="card-body table-responsive p-0">
-            <center> <img src="{% url 'facecam_feed' %}"> </center>
+            <center> <img src="{% url 'facecam_feed_student' %}?attendancer_report_id={{ attendancer_report.id }}"> </center>
         </div>
-        <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}" role="button">Save</a>
-        <a class="btn btn-light" href="{% url 'test_stop_camera' %}" role="button">Stop Camera</a>
+        <a class="btn btn-light" href="{% url 'stop_camera_student' %}" role="button">Stop Camera</a>
     </div>
 </div>
 

@@ -114,10 +114,11 @@ def gen(camera, student_id, attendancer_report_id, request):
                 attendance_report_model.teacher_create = 0
                 attendance_report_model.save()
                 print("face > 5", student_id)
-                
+                messages.success(request, "Attendacne View Success")
+                return redirect('student_create_attendance')
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-
+    
 @gzip.gzip_page
 def facecam_feed_student(request):
     attendancer_report_id = request.GET.get('attendancer_report_id')

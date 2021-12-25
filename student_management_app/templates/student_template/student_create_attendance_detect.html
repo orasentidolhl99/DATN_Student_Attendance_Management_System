@@ -38,9 +38,11 @@ View Attendance | #{{ attendancer_report.attendance_id.subject_id.subject_name }
         
         <hr>
         <div class="card-body table-responsive p-0">
-            <center> <img src="{% url 'facecam_feed_student' %}?attendancer_report_id={{ attendancer_report.id }}"> </center>
+            <center> 
+                <img src="{% url 'facecam_feed_student' %}?attendancer_report_id={{ attendancer_report.id }}">
+                <a class="btn btn-light" href="{% url 'stop_camera_student' %}" role="button">Stop Camera</a>
+            </center>
         </div>
-        <a class="btn btn-light" href="{% url 'stop_camera_student' %}" role="button">Stop Camera</a>
     </div>
 </div>
 

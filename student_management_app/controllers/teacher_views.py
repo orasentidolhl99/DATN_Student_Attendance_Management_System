@@ -468,7 +468,7 @@ def get_attendance_student(request):
     list_data = []
 
     for student in attendance_data:
-        data_small={"id":student.student_id.admin.id, "name":student.student_id.admin.first_name+" "+student.student_id.admin.last_name, "status":student.status}
+        data_small={"id":student.student_id.admin.id, "name":student.student_id.admin.last_name+" "+student.student_id.admin.first_name, "status":student.status}
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)

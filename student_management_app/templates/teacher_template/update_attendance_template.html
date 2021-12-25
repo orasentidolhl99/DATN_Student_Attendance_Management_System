@@ -117,53 +117,52 @@ View Update Attendance
 {% block custom_js %}
 <script>
     $(document).ready(function(){
-        $("#fetch_attendance").click(function(){
-               var subject=$("#subject").val();
-               var session_year=$("#session_year_id").val();
+        $("#fetch_attendance").click(function()
+        {
+            var subject=$("#subject").val();
+            var session_year=$("#session_year_id").val();
 
             $.ajax({
                     url:"{% url 'get_attendance_dates' %}",
                     type:'POST',
                     data:{subject:subject,session_year_id:session_year},
-                })
-                .done(function(response){
-                    var json_data=JSON.parse(response);
-                    if(json_data.length>0)
+            })
+            .done(function(response){
+                var json_data=JSON.parse(response);
+                if(json_data.length>0)
+                {
+                    var html_data="";
+                    for(key in json_data)
                     {
-                        var html_data="";
-                        for(key in json_data)
-                        {
-                            html_data+="<option value="+json_data[key]["id"]+">"+json_data[key]["attendance_date"]+"</option>";
-                        }
-                        $("#error_attendance").html("");
-                        $("#error_attendance").hide();
-                        $("#attendance_block").show();
-                        $("#fetch_student_block").show();
-                        $("#attendance_date").html(html_data);
-                     }
-                     else
-                     {
-                        $("#error_attendance").html("No Attendance Data Found");
-                        $("#error_attendance").show();
-                        $("#attendance_block").hide();
-                        $("#fetch_student_block").hide();
-                        $("#attendance_date").html("");
-                     }
-                })
-                .fail(function(){
-                    alert("Error in Fetching Attendance")
+                        html_data+="<option value="+json_data[key]["id"]+">"+json_data[key]["attendance_date"]+"</option>";
+                    }
                     $("#error_attendance").html("");
+                    $("#error_attendance").hide();
+                    $("#attendance_block").show();
+                    $("#fetch_student_block").show();
+                    $("#attendance_date").html(html_data);
+                    }
+                    else
+                    {
+                    $("#error_attendance").html("No Attendance Data Found");
+                    $("#error_attendance").show();
                     $("#attendance_block").hide();
                     $("#fetch_student_block").hide();
+                    $("#attendance_date").html("");
+                    }
+            })
+            .fail(function(){
+                alert("Error in Fetching Attendance")
+                $("#error_attendance").html("");
+                $("#attendance_block").hide();
+                $("#fetch_student_block").hide();
 
-                });
-
-
+            });
         })
 
 
-        $("#fetch_student").click(function(){
-
+        $("#fetch_student").click(function()
+        {
             var attendance_date=$("#attendance_date").val()
 
             $.ajax({
@@ -173,35 +172,51 @@ View Update Attendance
             })
             .done(function(response){
                 var json_data=JSON.parse(response);
-                var div_data="<div class='form-group'><label>Student Attendance : </label></div><div class='form-group'><div class='row'>";
+                
+                var div_data = '<center><h5 style="font-weight:bold;" class="card-title">Student Attendance :</h5></center><br><div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 200px; width: 100%;">';
+                div_data += '<div class="jsgrid-grid-header jsgrid-header-scrollbar">';
+                div_data += '<table class="jsgrid-table">';
+                div_data += '<tr class="jsgrid-header-row">';
+                div_data += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 75px; font-weight:bold;"></th>';
+                div_data += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 120px; font-weight:bold;">Check Attendance</th>';
+                div_data += '<th class="jsgrid-header-cell jsgrid-align-right" style="width: 150px; font-weight:bold;">Full name</th>';
+                div_data += '<th class="jsgrid-header-cell" style="width: 95px; font-weight:bold;">Status</th>';
+                div_data += '</tr></table></div>';
+                
+                div_data += '<div class="jsgrid-grid-body" style="height: 400px;">';
+                div_data += '<table class="jsgrid-table"><tbody>';
                 for(key in json_data)
-                {
-                    div_data+="<div class='col-lg-3'><div class='form-check'><input type='checkbox' ";
+                {   
+                    div_data += '<tr class="jsgrid-row">';
+                    div_data += '<td class="jsgrid-cell" style="width: 80px;">';
+                    div_data += '<div class="form-check mt-0"';
+                    div_data += '<label class="form-check-label">';
+                    div_data += '<div class="col-lg-3"><div class="form-check"><input type="checkbox" ';
                     if(json_data[key]['status'])
                     {
-                        div_data+="checked='checked'";
+                        div_data +="checked='checked'";
                     }
                     else{
-                        div_data+="";
+                        div_data +="";
                     }
-                    div_data+="name='student_data[]' value='"+json_data[key]['id']+"'><label class='form-check-label'>"+json_data[key]['name']+"</label> ";
+                    div_data +="name='student_data[]' value='"+json_data[key]['id']+"'><label class='form-check-label'>"+json_data[key]['name']+"</label> ";
 
 
                      if(json_data[key]['status'])
                     {
-                        div_data+="<b> [ Present ]</b>";
+                        div_data +="<b> [ Present ]</b>";
                     }
                     else{
-                        div_data+="<b> [ Absent ]</b>";
+                        div_data +="<b> [ Absent ]</b>";
                     }
 
-                    div_data+="</div></div>";
+                    div_data +="</div></div></label></div></td></tr>";
                 }
-                div_data+="</div></div>";
-                div_data+="<div class='form-group'>";
-                div_data+="<button id='save_attendance' class='btn btn-success btn-block' type='button'>Save Attendance Data</button>";
-                div_data+="</div>";
-
+                div_data += '</tbody></table></div></div>';
+                div_data += '<div class="form-group">';
+                div_data += '<button id="save_attendance" class="btn btn-gradient-primary mr-2 btn-block" type="button" pattern="[A-Za-z]">Save Attendance Data</button>';
+                div_data += '</div>';
+                
                 $("#student_data").html(div_data);
 
             })

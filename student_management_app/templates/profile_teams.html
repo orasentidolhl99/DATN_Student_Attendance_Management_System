@@ -7,56 +7,101 @@ Profile Teams
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Vertical Pills</h4>
-                <p class="card-description">Add class <code>.nav-pills-vertical</code> to <code>.nav</code> and <code>.tab-content-vertical</code> to <code>.tab-content</code>
-                </p>
-                <div class="row">
-                  <div class="col-4">
-                    <ul class="nav nav-pills nav-pills-vertical nav-pills-success" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                          <i class="mdi mdi-home-outline"></i> Home </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                          <i class="mdi mdi-account-outline"></i> Profile </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
-                          <i class="mdi mdi-email-open-outline"></i> Messages </a>
-                      </li>
-                    </ul>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title" style="text-align: center;">Member 1</h4>
+            <!-- <p class="card-description">Basic nav pills</p> -->
+            <ul class="nav nav-pills nav-pills-success" id="pills-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="media">
+                  <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/12.jpg" alt="sample image">
+                  <div class="media-body">
+                    <h5 class="mt-0">I'm doing mental jumping jacks.</h5>
+                    <p>Only you could make those words cute. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. I am not a killer. I feel like a jigsaw puzzle missing a piece. And I'm not even sure what the picture should be.</p>
                   </div>
-                  <div class="col-8">
-                    <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/11.jpg" alt="sample image">
-                          <div class="media-body">
-                            <h5 class="mt-0">I'm doing mental jumping jacks.</h5>
-                            <p> Only you could make those words cute. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. I am not a killer. </p>
-                          </div>
-                        </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="media">
+                  <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300X300/10.jpg" alt="sample image">
+                  <div class="media-body">
+                    <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard when every straw is computerized. Tell him time is of the essence. Somehow, I doubt that. You have a good heart, Dexter.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="media">
+                  <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/14.jpg" alt="sample image">
+                  <div class="media-body">
+                    <p> I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter? </p>
+                    <p> I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title" style="text-align: center;">Member 2</h4>
+            <!-- <p class="card-description">Add class <code>.nav-pills-vertical</code> to <code>.nav</code> and <code>.tab-content-vertical</code> to <code>.tab-content</code> -->
+            </p>
+            <div class="row">
+              <div class="col-4">
+                <ul class="nav nav-pills nav-pills-vertical nav-pills-info" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
+                      <i class="mdi mdi-home-outline"></i> Home </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+                      <i class="mdi mdi-account-outline"></i> Profile </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+                      <i class="mdi mdi-email-open-outline"></i> Messages </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-8">
+                <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="media">
+                      <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/11.jpg" alt="sample image">
+                      <div class="media-body">
+                        <h5 class="mt-0">I'm doing mental jumping jacks.</h5>
+                        <p> Only you could make those words cute. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. I am not a killer. </p>
                       </div>
-                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300X300/10.jpg" alt="sample image">
-                          <div class="media-body">
-                            <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard when every straw is computerized. Tell him time is of the essence. Somehow, I doubt that. You have a good heart, Dexter.</p>
-                          </div>
-                        </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="media">
+                      <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300X300/10.jpg" alt="sample image">
+                      <div class="media-body">
+                        <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard when every straw is computerized. Tell him time is of the essence. Somehow, I doubt that. You have a good heart, Dexter.</p>
                       </div>
-                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/14.jpg" alt="sample image">
-                          <div class="media-body">
-                            <p> I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter? </p>
-                            <p> I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan. </p>
-                          </div>
-                        </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="media">
+                      <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/14.jpg" alt="sample image">
+                      <div class="media-body">
+                        <p> I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter? </p>
+                        <p> I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan. </p>
                       </div>
                     </div>
                   </div>
@@ -64,63 +109,8 @@ Profile Teams
               </div>
             </div>
           </div>
-          <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title">Vertical Pills</h4>
-                <p class="card-description">Add class <code>.nav-pills-vertical</code> to <code>.nav</code> and <code>.tab-content-vertical</code> to <code>.tab-content</code>
-                </p>
-                <div class="row">
-                  <div class="col-4">
-                    <ul class="nav nav-pills nav-pills-vertical nav-pills-info" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
-                          <i class="mdi mdi-home-outline"></i> Home </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                          <i class="mdi mdi-account-outline"></i> Profile </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
-                          <i class="mdi mdi-email-open-outline"></i> Messages </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="col-8">
-                    <div class="tab-content tab-content-vertical" id="v-pills-tabContent">
-                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/11.jpg" alt="sample image">
-                          <div class="media-body">
-                            <h5 class="mt-0">I'm doing mental jumping jacks.</h5>
-                            <p> Only you could make those words cute. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. I am not a killer. </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300X300/10.jpg" alt="sample image">
-                          <div class="media-body">
-                            <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard when every straw is computerized. Tell him time is of the essence. Somehow, I doubt that. You have a good heart, Dexter.</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                        <div class="media">
-                          <img class="mr-3 w-25 rounded" src="../../../assets/images/samples/300x300/14.jpg" alt="sample image">
-                          <div class="media-body">
-                            <p> I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to differ, I think we have a lot to discuss. After all, you are a client. You all right, Dexter? </p>
-                            <p> I'm generally confused most of the time. Cops, another community I'm not part of. You're a killer. I catch killers. Hello, Dexter Morgan. </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
     </div>
     
 {% endblock content %}

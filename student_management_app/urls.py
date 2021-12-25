@@ -102,6 +102,9 @@ urlpatterns = [
     path('teacher_manage_subject/', teacher_views.teacher_manage_subject, name="teacher_manage_subject"),
     path('teacher_manage_student_subject_link/<subject_id>/', teacher_views.teacher_manage_student_subject_link, name="teacher_manage_student_subject_link"),
     path('teacher_create_attendance/', teacher_views.teacher_create_attendance, name="teacher_create_attendance"),
+    path('teacher_view_attendance/', teacher_views.teacher_view_attendance, name="teacher_view_attendance"),
+    path('turn_off_attendance/', teacher_views.turn_off_attendance, name="turn_off_attendance"),
+    
     
     # URLS for Teacher - Detect student
     path('take_attendance_detect/', teacher_views.take_attendance_detect, name='take_attendance_detect'),
@@ -121,4 +124,10 @@ urlpatterns = [
     path('student_profile/', student_views.student_profile, name="student_profile"),
     path('student_profile_update/', student_views.student_profile_update, name="student_profile_update"),
     path('student_view_result/', student_views.student_view_result, name="student_view_result"),
+    path('student_create_attendance/', student_views.student_create_attendance, name="student_create_attendance"),
+    path('student_create_attendance_detect/', student_views.student_create_attendance_detect, name="student_create_attendance_detect"),
+    
+    path('facecam_feed_student/', student_views.facecam_feed_student, name="facecam_feed_student"),
+    path('stop_camera_student/', student_views.stop_camera_student, name="stop_camera_student"),
+    
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

@@ -31,7 +31,14 @@
         {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
       </a>
     </li>
-
+    <li class="nav-item">
+        {% url 'student_create_attendance' as student_create_attendance %}
+      <a class="nav-link {% if request.path == student_create_attendance %} active {% endif %}" href="{{ student_create_attendance }}">
+        <span class="menu-title">Waiting Attendance</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+        {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+      </a>
+    </li>
     <li class="nav-item">
         {% url 'student_view_attendance' as student_view_attendance %}
       <a class="nav-link {% if request.path == student_view_attendance %} active {% endif %}" href="{{ student_view_attendance }}">

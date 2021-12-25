@@ -56,7 +56,7 @@ class FaceDetect(object):
 		# self.vs.stop()
 		self.fps.stop()
 		self.vs.stream.stream.release()
-		cv2.destroyAllWindows()
+		# cv2.destroyAllWindows()
 		print("[INFO] destroy all windows...")
 
 	def get_frame(self):

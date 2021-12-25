@@ -1,0 +1,54 @@
+{% extends 'base_main.html'%}
+{% load static %}
+{% block page_title %} 
+View Attendance | #{{ attendancer_report.attendance_id.subject_id.subject_name }} | Date: {{ attendancer_report.attendance_id.attendance_date |date:'D,d/m/Y - H:i:s'}}
+{% endblock page_title %}
+
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        {% comment %} Display Messages {% endcomment %}
+        {% if messages %}
+        <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+                {% if message.tags == "error" %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% elif message.tags == "success" %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+        
+        <h4 class="card-title">View Attendance</h4>
+        <!-- <p class="card-description"> Detailed information sheet about Teacher feedback </p>-->
+        
+        <hr>
+        <div class="card-body table-responsive p-0">
+            <center> 
+                <img src="{% url 'facecam_feed_student' %}?attendancer_report_id={{ attendancer_report.id }}">
+                <a class="btn btn-light" href="{% url 'stop_camera_student' %}" role="button">Stop Camera</a>
+            </center>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}
+

@@ -22,8 +22,7 @@ from student_management_app.models import (
     Students, SessionYearModel, Attendance, 
     AttendanceReport, LeaveReportTeacher,
     FeedBackTeacher, StudentResult,
-    LeaveReportStudent, StudentSubjectLink,
-    AttendanceReportCreate
+    LeaveReportStudent, StudentSubjectLink
 )
 
 def teacher_home(request):
@@ -140,7 +139,10 @@ def teacher_create_attendance(request):
     
     try:
         # First Attendance Data is Saved on Attendance Model
-        attendance = Attendance(subject_id=subject_model, attendance_date=attendance_date, session_year_id=session_year_model)
+        attendance = Attendance(subject_id=subject_model,
+                                attendance_date=attendance_date,
+                                session_year_id=session_year_model,
+                                teacher_create=1)
         attendance.save()
         
         for stud in list_result:
@@ -148,15 +150,9 @@ def teacher_create_attendance(request):
             attendance_report = AttendanceReport(
                 student_id=stud.student_id,
                 attendance_id=attendance,
-                status=0
+                status=0, teacher_create = 1
             )
             attendance_report.save()
-            
-            attendance_report_create = AttendanceReportCreate(
-                attendance_report_id = attendance_report,
-                status_create = 0
-            )
-            attendance_report_create.save()
             
         messages.success(request, f"Successfully Create Attendance Report For [{subject_model.subject_name}]")
         return redirect('teacher_take_attendance')
@@ -164,8 +160,35 @@ def teacher_create_attendance(request):
         messages.error(request, f"Can't Create Attendance Report For [{subject_model.subject_name}]")
         return redirect('teacher_take_attendance')
 
-def teacher_take_attendance(request):
+def teacher_view_attendance(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+    
+    # get all subjects of teacher
+    subject_ids = Subjects.objects.filter(teacher_id=teacher.admin.id)
+    attendance_list = Attendance.objects.filter(subject_id__in=subject_ids,
+                                                teacher_create=1)
+    print(attendance_list)
+    context = {
+        "attendance_list": attendance_list
+    }
+    return render(request, "teacher_template/teacher_view_attendance.html", context)
 
+def turn_off_attendance(request):
+    attendance_id = request.GET.get('attendance_id')
+    print(attendance_id)
+    close_attendance = Attendance.objects.get(id=attendance_id)
+    close_attendance.teacher_create = 0
+    close_attendance.save()
+    
+    attendancer_report_ids = AttendanceReport.objects.filter(attendance_id=close_attendance)
+    for report_ids in attendancer_report_ids:
+        report_ids.teacher_create = 0
+        report_ids.save()
+        
+    return redirect('teacher_view_attendance')
+
+def teacher_take_attendance(request):
     user = CustomUser.objects.get(id = request.user.id)
     teacher = Teachers.objects.get(admin = user)
 

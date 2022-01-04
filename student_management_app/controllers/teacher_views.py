@@ -170,7 +170,9 @@ def teacher_view_attendance(request):
                                                 teacher_create=1)
     print(attendance_list)
     context = {
-        "attendance_list": attendance_list
+        "attendance_list": attendance_list,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/teacher_view_attendance.html", context)
 

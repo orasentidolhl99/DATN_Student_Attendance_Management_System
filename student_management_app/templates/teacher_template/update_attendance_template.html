@@ -175,7 +175,7 @@ View Update Attendance
                 
                 var div_data = '<center><h5 style="font-weight:bold;" class="card-title">Student Attendance :</h5></center><br><div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 200px; width: 100%;">';
                 div_data += '<div class="jsgrid-grid-header jsgrid-header-scrollbar">';
-                div_data += '<table class="jsgrid-table">';
+                div_data += '<table id="order-listing" class = "table table-striped table-hover text-nowrap " style="border:2px solid #ccc;">';
                 div_data += '<tr class="jsgrid-header-row">';
                 div_data += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 75px; font-weight:bold;"></th>';
                 div_data += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 120px; font-weight:bold;">Check Attendance</th>';
@@ -184,7 +184,7 @@ View Update Attendance
                 div_data += '</tr></table></div>';
                 
                 div_data += '<div class="jsgrid-grid-body" style="height: 400px;">';
-                div_data += '<table class="jsgrid-table"><tbody>';
+                div_data += '<table class=id="order-listing" class = "table table-striped table-hover text-nowrap " style="border:1px solid #ccc;"><tbody>';
                 for(key in json_data)
                 {   
                     div_data += '<tr class="jsgrid-row">';
@@ -219,7 +219,7 @@ View Update Attendance
                 
                 var div_data_2 = '<center><h4 style="font-weight:bold;" class="card-title">List of Students</h4></center><br><div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 500px; width: 100%;">';
                 div_data_2 += '<div class="jsgrid-grid-header jsgrid-header-scrollbar">';
-                div_data_2 += '<table class="jsgrid-table">';
+                div_data_2 += '<table id="order-listing" class = "table table-striped table-hover text-nowrap " style="border:2px solid #ccc;">';
                 div_data_2 += '<tr class="jsgrid-header-row">';
                 div_data_2 += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 82px; font-weight:bold;"></th>';
                 div_data_2 += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 120px; font-weight:bold;">Student ID</th>';
@@ -228,7 +228,7 @@ View Update Attendance
                 div_data_2 += '</tr></table></div>';
                 
                 div_data_2 += '<div class="jsgrid-grid-body" style="height: 400px;">';
-                div_data_2 += '<table class="jsgrid-table"><tbody>';
+                div_data_2 += '<table id="order-listing" class = "table table-striped table-hover text-nowrap " style="border:1px solid #ccc;"><tbody>';
 
                 for(key in json_data)
                 {

@@ -19,14 +19,14 @@ Leave Apply by Teachers
             <table id="order-listing" class="table table-striped table-hover text-nowrap " style="border:1px solid #ccc;">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th style="font-weight:bold;">ID</th>
                         {% comment %} <th>Teacher ID</th> {% endcomment %}
-                        <th>Teacher Name</th>
-                        <th>Subject Name</th>
-                        <th>Leave Date</th>
-                        <th>Leave Message</th>
-                        <th>Applied On</th>
-                        <th>Action</th>
+                        <th style="font-weight:bold;">Teacher Name</th>
+                        <th style="font-weight:bold;">Subject Name</th>
+                        <th style="font-weight:bold;">Leave Date</th>
+                        <th style="font-weight:bold;">Leave Message</th>
+                        <th style="font-weight:bold;">Applied On</th>
+                        <th style="font-weight:bold;">Action</th>
                     </tr>
                 </thead>
                 {% for leave in leaves %}
@@ -47,13 +47,13 @@ Leave Apply by Teachers
                                 </a> -->
                                 <div class="card-body">
                                     <p class="card-text">
-                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ leave.leave_message }}" style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ leave.leave_message }}" style="max-width: 270px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                             {{ leave.leave_message }}
                                         </a>
                                     </p>
                                 </div>
                             </td>
-                            <td>{{ leave.created_at|date:'D,d/m/Y - H:i:s' }}</td>
+                            <td>{{ leave.created_at|date:'H:i:s A - l, F d, Y' }}</td>
                             <td>
                                 {% if leave.leave_status == 0 %}
                                     <a href="{% url 'teacher_leave_approve' leave_id=leave.id %}" class="btn btn-success">Approve</a>

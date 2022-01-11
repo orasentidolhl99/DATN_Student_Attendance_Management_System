@@ -79,7 +79,7 @@ Manage Student
                             
                             <div class="card-body">
                                 <p class="card-text">
-                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ student.address }}" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student.address }}" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                         {{ student.address }}
                                     </a>
                                 </p>
@@ -91,11 +91,29 @@ Manage Student
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                             <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Start - End Year" data-content="{{ student.session_year_id.session_start_year }} - {{ student.session_year_id.session_end_year }}"> {{ student.session_year_id.session_start_year }} - {{ student.session_year_id.session_end_year }}</a>
                         </td> -->
-                        <td>{{ student.admin.last_login|date:'D,d/m/Y - H:i:s' }}</td>
+                        <!-- <td>{{ student.admin.last_login|date:'H:i:s A - l, F d, Y' }}</td> -->
+                        <td>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student.admin.last_login|date:'H:i:s A - l, F d, Y' }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        {{ student.admin.last_login|date:'H:i:s A - l, F d, Y' }}
+                                    </a>
+                                </p>
+                            </div>
+                        </td>
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                             <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Last Login" data-content="{{ student.admin.last_login|date:'D,d/m/Y - H:i:s' }}"> {{ student.admin.last_login|date:'D,d/m/Y - H:i:s' }}</a>
                         </td> -->
-                        <td>{{ student.admin.date_joined|date:'D,d/m/Y - H:i:s' }}</td>
+                        <!-- <td>{{ student.admin.date_joined|date:'H:i:s A - l, F d, Y' }}</td> -->
+                        <td>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student.admin.date_joined|date:'H:i:s A - l, F d, Y'  }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        {{ student.admin.date_joined|date:'H:i:s A - l, F d, Y'  }}
+                                    </a>
+                                </p>
+                            </div>
+                        </td>
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"> 
                             <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Date Joined" data-content="{{ student.admin.date_joined|date:'D,d/m/Y - H:i:s' }}"> {{ student.admin.date_joined|date:'D,d/m/Y - H:i:s' }}</a>
                         </td> -->

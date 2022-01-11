@@ -10,6 +10,8 @@ from datetime import datetime
 import os
 from ..extract_train import extract_embeddings
 from ..extract_train import train_model
+import pytz
+VN_TZ = pytz.timezone('Asia/Ho_Chi_Minh')
 
 from student_management_app.utils import (
     remove_accent, ten_image_students
@@ -936,7 +938,11 @@ def admin_get_attendance_dates(request):
     list_data = []
 
     for attendance_single in attendance:
-        data_small={"id":attendance_single.id, "attendance_date":str(attendance_single.attendance_date), "session_year_id":attendance_single.session_year_id.id}
+        data_small={
+            "id":attendance_single.id, 
+            "attendance_date":attendance_single.attendance_date.astimezone(VN_TZ).strftime("%H:%M:%S %p - %A, %B %d, %Y"), 
+            "session_year_id":attendance_single.session_year_id.id
+            }
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)

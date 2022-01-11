@@ -59,7 +59,7 @@ View Attendance Data
                 <tbody>
                     {% for attendance_report in attendance_reports %}
                     <tr>
-                        <td><center>{{ attendance_report.attendance_id.attendance_date|date:'D, d/m/Y - H:i:s' }}</center></td>
+                        <td><center>{{ attendance_report.attendance_id.attendance_date|date:'H:i:s A - l, F d, Y'  }}</center></td>
                         <td>
                             {% if attendance_report.status == True %}
                                 <div class="alert alert-success"><center>[ Status : Present ]</center></div>

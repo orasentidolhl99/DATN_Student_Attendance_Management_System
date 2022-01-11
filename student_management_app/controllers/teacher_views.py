@@ -8,6 +8,9 @@ from django.core import serializers
 import json
 from datetime import datetime
 from django.views.decorators import gzip
+import pytz
+VN_TZ = pytz.timezone('Asia/Ho_Chi_Minh')
+
 # import unidecode
 
 from django.http.response import StreamingHttpResponse
@@ -482,7 +485,11 @@ def get_attendance_dates(request):
     list_data = []
 
     for attendance_single in attendance:
-        data_small={"id":attendance_single.id, "attendance_date":str(attendance_single.attendance_date), "session_year_id":attendance_single.session_year_id.id}
+        data_small={
+            "id":attendance_single.id,
+            "attendance_date":attendance_single.attendance_date.astimezone(VN_TZ).strftime("%H:%M:%S %p - %A, %B %d, %Y"), 
+            "session_year_id":attendance_single.session_year_id.id
+        }
         list_data.append(data_small)
 
     return JsonResponse(json.dumps(list_data), content_type="application/json", safe=False)

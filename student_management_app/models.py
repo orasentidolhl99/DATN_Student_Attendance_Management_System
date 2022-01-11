@@ -116,7 +116,7 @@ class Attendance(models.Model):
 class AttendanceReport(models.Model):
     # Individual Student Attendance
     id = models.AutoField(primary_key=True)
-    student_id = models.ForeignKey(Students, on_delete=models.DO_NOTHING)
+    student_id = models.ForeignKey(Students, on_delete=models.CASCADE)
     attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
     teacher_create = models.BooleanField(default=False)

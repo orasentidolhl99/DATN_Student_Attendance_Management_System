@@ -12,6 +12,9 @@ from django.http import HttpResponseServerError
 from ..camera import FaceDetect
 from ..utils import datetime_counter
 
+import pytz
+VN_TZ = pytz.timezone('Asia/Ho_Chi_Minh')
+
 from student_management_app.models import Students, Courses, Subjects, CustomUser, Attendance, AttendanceReport, \
     LeaveReportStudent, FeedBackStudent, NotificationStudent, StudentResult, SessionYearModel, StudentSubjectLink
 

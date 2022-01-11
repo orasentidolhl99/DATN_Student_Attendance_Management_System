@@ -208,8 +208,41 @@ View Attendance
                     div_data+="</div></div> ";
                 }
                 div_data+="</div></div>";
+
+                var div_data_2 = '<center><h4 style="font-weight:bold;" class="card-title">List of Students</h4></center><br><div id="js-grid-sortable" class="jsgrid" style="position: relative; height: 500px; width: 100%;">';
+                div_data_2 += '<div class="jsgrid-grid-header jsgrid-header-scrollbar">';
+                div_data_2 += '<table class="jsgrid-table">';
+                div_data_2 += '<tr class="jsgrid-header-row">';
+                div_data_2 += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 82px; font-weight:bold;"></th>';
+                div_data_2 += '<th class="jsgrid-header-cell jsgrid-header-sort jsgrid-header-sort-asc" style="width: 120px; font-weight:bold;">Student ID</th>';
+                div_data_2 += '<th class="jsgrid-header-cell jsgrid-align-right" style="width: 145px; font-weight:bold;">Full name</th>';
+                div_data_2 += '<th class="jsgrid-header-cell" style="width: 95px; font-weight:bold;">Status</th>';
+                div_data_2 += '</tr></table></div>';
                 
-                $("#student_data").html(div_data);
+                div_data_2 += '<div class="jsgrid-grid-body" style="height: 400px;">';
+                div_data_2 += '<table class="jsgrid-table"><tbody>';
+
+                for(key in json_data)
+                {
+                    div_data_2 += '<tr class="jsgrid-row">';
+                    div_data_2 += '<td class="jsgrid-cell" style="width: 90px;"></td>';
+                    div_data_2 += '<td class="jsgrid-cell" style="width: 120px;">'+json_data[key]['studentId']+'</td>';
+                    div_data_2 += '<td class="jsgrid-cell" style="width: 180px;">'+json_data[key]['name']+'</td>';
+                    div_data_2 += '<td class="jsgrid-cell" style="width: 90px;">';
+                    div_data_2 += '<div class="form-check mt-0"';
+                    div_data_2 += '<label class="form-check-label">';
+                    if(json_data[key]['status'])
+                    {
+                        div_data_2 += "<input type='checkbox' checked='checked' name='student_data[]' value='"+json_data[key]['id']+"' class='form-check-input'>";
+                    }
+                    else{
+                        div_data_2 += "<input type='checkbox' name='student_data[]' value='"+json_data[key]['id']+"' class='form-check-input'>";
+                    }
+                    div_data_2 += '<i class="input-helper"></i></label></div></td></tr>';
+                }
+
+                div_data_2 += '</tbody></table></div></div>';
+                $("#student_data").html(div_data_2);
 
             })
             .fail(function(){

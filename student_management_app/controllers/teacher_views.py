@@ -259,6 +259,9 @@ def test_stop_camera(request):
     return redirect('teacher_home')
 
 def attendance_result_stream(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     subject_id = request.GET.get('subject_id')
     session_year_id = request.GET.get('session_year_id')
     
@@ -317,7 +320,9 @@ def attendance_result_stream(request):
         "subject_id": subject_id,
         "session_year_id": session_year_id,
         "students": list_obj,
-        "result_stream": list_result
+        "result_stream": list_result,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, "teacher_template/attendance_result_stream.html", context=context)
 

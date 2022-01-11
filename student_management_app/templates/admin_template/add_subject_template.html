@@ -57,7 +57,7 @@ Add Subject
             <label >Teacher</label>
             <select class="form-control" name="teacher">
                 {% for teacher in teachers %}
-                    <option value="{{ teacher.id }}">{{ teacher.first_name }} {{teacher.last_name}}</option>
+                    <option value="{{ teacher.id }}">{{teacher.last_name}} {{ teacher.first_name }}</option>
                 {% endfor%}
             </select>
         </div>

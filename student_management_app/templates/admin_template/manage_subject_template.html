@@ -69,39 +69,39 @@ Manage Subject
                             {{ subject.subject_name }}
                         </a>
                     </td> -->
-                    <td>{{ subject.subject_name }}</td>
-                    <!-- <td>
+                    <!-- <td>{{ subject.subject_name }}</td> -->
+                    <td>
                             
-                        <div class="card-body">
-                            <p class="card-text">
-                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ subject.subject_name }}" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                        <div class="body">
+                            <!-- <p class="card-text"> -->
+                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.subject_name }}" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                     {{ subject.subject_name }}
                                 </a>
-                            </p>
+                            <!-- </p> -->
                         </div>
-                    </td> -->
+                    </td>
                     <td> {{ subject.teacher_id.last_name }} {{ subject.teacher_id.first_name }}</td>
                     <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         <a type="text" data-toggle="popover" data-custom-class="popover-info" title="Teacher" data-content="{{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}"> {{ subject.teacher_id.first_name }} {{ subject.teacher_id.last_name }}</a>
                     </td> -->
                     <!-- <td>{{ subject.created_at|date:'H:i:s A - l, F d, Y' }}</td> -->
                     <td>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.created_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                        <div class="body">
+                            <!-- <p class="card-text"> -->
+                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.created_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                     {{ subject.created_at|date:'H:i:s A - l, F d, Y' }}
                                 </a>
-                            </p>
+                            <!-- </p> -->
                         </div>
                     </td>
                     <!-- <td>{{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}</td> -->
                     <td>
                         <div class="card-body">
-                            <p class="card-text">
-                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                            <!-- <p class="card-text"> -->
+                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                     {{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}
                                 </a>
-                            </p>
+                            <!-- </p> -->
                         </div>
                     </td>
                     <td>

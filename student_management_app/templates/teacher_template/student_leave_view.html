@@ -42,15 +42,24 @@ Leave Apply by Students
                             </td> -->
                             <td>
                             
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ leave.leave_message }}" style="max-width: 280px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                <div class="body">
+                                    <!-- <p class="card-text"> -->
+                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ leave.leave_message }}" style="max-width: 230px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                             {{ leave.leave_message }}
                                         </a>
-                                    </p>
+                                    <!-- </p> -->
                                 </div>
                             </td>
-                            <td>{{ leave.created_at|date:'H:i:s A - l, F d, Y' }}</td>
+                            <!-- <td>{{ leave.created_at|date:'H:i:s A - l, F d, Y' }}</td> -->
+                            <td>
+                                <div class="card-body">
+                                    <!-- <p class="card-text"> -->
+                                        <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ leave.created_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                            {{ leave.created_at|date:'H:i:s A - l, F d, Y' }}
+                                        </a>
+                                    <!-- </p> -->
+                                </div>
+                            </td>
                             <td>
                                 {% if leave.leave_status == 0 %}
                                     <a href="{% url 'student_leave_approve' leave_id=leave.id %}" class="btn btn-success">Approve</a>

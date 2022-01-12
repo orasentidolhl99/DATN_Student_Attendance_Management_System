@@ -233,10 +233,10 @@ View Attendance
                     div_data_2 += '<label class="form-check-label">';
                     if(json_data[key]['status'])
                     {
-                        div_data_2 += "<input type='checkbox' checked='checked' name='student_data[]' value='"+json_data[key]['id']+"' class='form-check-input'>";
+                        div_data_2 += "<input type='checkbox' checked='checked' name='student_data[]' value='"+json_data[key]['id']+"' class='input-helper'>";
                     }
                     else{
-                        div_data_2 += "<input type='checkbox' name='student_data[]' value='"+json_data[key]['id']+"' class='form-check-input'>";
+                        div_data_2 += "<input type='checkbox' name='student_data[]' value='"+json_data[key]['id']+"' class='input-helper'>";
                     }
                     div_data_2 += '<i class="input-helper"></i></label></div></td></tr>';
                 }

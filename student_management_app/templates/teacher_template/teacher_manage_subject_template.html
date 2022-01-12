@@ -60,16 +60,34 @@ View Subjects
                     <td style="bottom:1px solid #ccc;">{{ subject.id }}</td>
                     <td>{{ subject.course_id.course_name }}</td>
                     <td>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-info" title="{{ subject.subject_name }}" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                        <div class="body">
+                            <!-- <p class="card-text"> -->
+                                <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.subject_name }}" style="max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                     {{ subject.subject_name }}
                                 </a>
-                            </p>
+                            <!-- </p> -->
                         </div>
                     </td>
-                    <td>{{ subject.created_at|date:'D,d/m/Y - H:i:s' }}</td>
-                    <td>{{ subject.updated_at|date:'D,d/m/Y - H:i:s' }}</td>
+                    <!-- <td>{{ subject.created_at|date:'H:i:s A - l, F d, Y' }}</td> -->
+                    <td>
+                        <div class="body">
+                            <!-- <p class="card-text"> -->
+                                <!-- <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.created_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" > -->
+                                    {{ subject.created_at|date:'H:i:s A - l, F d, Y' }}
+                                <!-- </a> -->
+                            <!-- </p> -->
+                        </div>
+                    </td>
+                    <!-- <td>{{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}</td> -->
+                    <td>
+                        <div class="card-body">
+                            <!-- <p class="card-text"> -->
+                                <!-- <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" > -->
+                                    {{ subject.updated_at|date:'H:i:s A - l, F d, Y' }}
+                                <!-- </a> -->
+                            <!-- </p> -->
+                        </div>
+                    </td>
                     <td>
                         <a class="btn btn-outline-info btn-icon-text" href="{% url 'teacher_manage_student_subject_link' subject.id %}">
                             View Students

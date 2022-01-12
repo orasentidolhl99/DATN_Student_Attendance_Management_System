@@ -110,19 +110,29 @@ def teacher_home(request):
 
 
 def teacher_manage_subject(request):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     subjects = Subjects.objects.filter(teacher_id=request.user.id)
     context = {
-        "subjects": subjects
+        "subjects": subjects,
+        "user": user,
+        "teacher": teacher
     }
     return render(request, 'teacher_template/teacher_manage_subject_template.html', context)
 
 
 def teacher_manage_student_subject_link(request, subject_id):
+    user = CustomUser.objects.get(id = request.user.id)
+    teacher = Teachers.objects.get(admin = user)
+
     subject = Subjects.objects.get(id=subject_id)
     student_subject_link = StudentSubjectLink.objects.filter(subject_id=subject)
     context = {
         'subject': subject,
-        'student_subject_link': student_subject_link
+        'student_subject_link': student_subject_link,
+        "user": user,
+        "teacher": teacher
     }
     return render(request,"teacher_template/teacher_manage_student_subject_link.html", context=context)
 

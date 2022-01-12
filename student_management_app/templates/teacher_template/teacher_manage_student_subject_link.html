@@ -34,7 +34,8 @@ View Students in Subject
 
     <div class="card">
         <div class="card-body">
-            <center><h4 style="font-weight:bold;" class="card-title">{{ subject.subject_name }} </h4></center><hr>
+            <!-- <code style="color:crimson;"> <b> {{ subject.subject_name }} - {{subject.teacher_id.last_name}} {{ subject.teacher_id.first_name }} </b> </code> -->
+            <center><h4 style="font-weight:bold; color: crimson;" class="card-title">{{ subject.subject_name }} </h4></center><hr>
             <table id="order-listing" class="table table-striped p-0 card-body" style="border:1px solid #ccc;">
                 <!-- id="order-listing" -->
             <thead>
@@ -54,8 +55,17 @@ View Students in Subject
                         <td>{{ student_subject.student_id.admin.username }}</td>
                         <td>{{ student_subject.student_id.admin.last_name }}</td>
                         <td>{{ student_subject.student_id.admin.first_name }}</td>
-                        <td>{{ student_subject.created_at }}</td>
-                        <td>{{ student_subject.updated_at }}</td>
+                        <td>{{ student_subject.created_at|date:'H:i:s A - l, F d, Y' }}</td>
+                        <!-- <td>{{ student_subject.updated_at }}</td> -->
+                        <td>
+                            <div class="card-body">
+                                <!-- <p class="card-text"> -->
+                                    <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student_subject.updated_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 550px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
+                                        {{ student_subject.updated_at|date:'H:i:s A - l, F d, Y' }}
+                                    </a>
+                                <!-- </p> -->
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

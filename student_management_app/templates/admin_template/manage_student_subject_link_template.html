@@ -62,22 +62,22 @@ Manage Student to Subject
                         <td>{{ student_subject.student_id.admin.last_name }} {{ student_subject.student_id.admin.first_name }}</td>
                         <!-- <td>{{ student_subject.created_at }}</td> -->
                         <td>
-                            <div class="card-body">
-                                <p class="card-text">
+                            <div class="body">
+                                <!-- <p class="card-text"> -->
                                     <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student_subject.created_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                         {{ student_subject.created_at|date:'H:i:s A - l, F d, Y' }}
                                     </a>
-                                </p>
+                                <!-- </p> -->
                             </div>
                         </td>
                         <!-- <td>{{ student_subject.updated_at }}</td> -->
                         <td>
                             <div class="card-body">
-                                <p class="card-text">
+                                <!-- <p class="card-text"> -->
                                     <a type="button" data-toggle="tooltip" data-custom-class="tooltip-primary" title="{{ student_subject.updated_at|date:'H:i:s A - l, F d, Y' }}" style="max-width: 170px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-placement="left" >
                                         {{ student_subject.updated_at|date:'H:i:s A - l, F d, Y' }}
                                     </a>
-                                </p>
+                                <!-- </p> -->
                             </div>
                         </td>
                         <td>

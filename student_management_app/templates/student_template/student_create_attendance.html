@@ -55,7 +55,7 @@ Manage View Your Attendance
                         <!-- <td style="max-width: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ student.admin.id }}</td> -->
                         <td>{{ attendancer_report.id }}</td>
                         <td>{{ attendancer_report.attendance_id.subject_id.subject_name }}</td>
-                        <td>{{ attendancer_report.attendance_id.attendance_date|date:'D,d/m/Y - H:i:s' }}</td>
+                        <td>{{ attendancer_report.attendance_id.attendance_date|date:'H:i:s A - l, F d, Y'  }}</td>
 
                         <td> pedding </td>
 

@@ -1,7 +1,7 @@
 {% extends 'base_main.html'%}
 {% load static %}
 {% block page_title %} 
-View Attendance | #{{ attendancer_report.attendance_id.subject_id.subject_name }} | Date: {{ attendancer_report.attendance_id.attendance_date |date:'D,d/m/Y - H:i:s'}}
+View Attendance | <code style="color:crimson; font-weight: bold;"> <b>#{{ attendancer_report.attendance_id.subject_id.subject_name }}</b></code> | Date: {{ attendancer_report.attendance_id.attendance_date |date:'H:i:s A - l, F d, Y'}}
 {% endblock page_title %}
 
 

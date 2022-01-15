@@ -534,10 +534,10 @@ def add_image_detect_save(request):
                 username=student_id,
                 images=request.FILES.get(f'images{file_num}')
             )
-        # # initialize data train in file, for initialize variable
-        # extract_embeddings.init_data()
-        # extract_embeddings.embeddings()
-        # train_model.model_train()
+        # initialize data train in file, for initialize variable
+        extract_embeddings.init_data()
+        extract_embeddings.embeddings()
+        train_model.model_train()
     return redirect('add_student')
         
 

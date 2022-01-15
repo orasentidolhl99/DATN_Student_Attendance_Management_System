@@ -39,10 +39,10 @@ class FaceDetect(object):
 		elif status_camera == 0:
 			self.camera_ip = 0
      
-		# initialize data train in file, for initialize variable
-		extract_embeddings.init_data()
-		extract_embeddings.embeddings()
-		train_model.model_train()
+		# # initialize data train in file, for initialize variable
+		# extract_embeddings.init_data()
+		# extract_embeddings.embeddings()
+		# train_model.model_train()
   
 		print('--------- t met qua r, chay auto load dum t cai -------------')
 		# initialize variable, then detect face for attendence

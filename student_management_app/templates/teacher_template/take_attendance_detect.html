@@ -40,8 +40,10 @@ View Attendance | #{{ subjects.subject_name }}
         <div class="card-body table-responsive p-0">
             <center> <img src="{% url 'facecam_feed' %}"> </center>
         </div>
-        <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}" role="button">Save</a>
-        <a class="btn btn-light" href="{% url 'test_stop_camera' %}" role="button">Stop Camera</a>
+        <center>
+            <a class="btn btn-light" href="{% url 'attendance_result_stream' %}?subject_id={{ subjects.id }}&session_year_id={{ session_year_id }}" role="button">Save</a>
+            <a class="btn btn-light" href="{% url 'test_stop_camera' %}" role="button">Stop Camera</a>
+        </center>
     </div>
 </div>
 

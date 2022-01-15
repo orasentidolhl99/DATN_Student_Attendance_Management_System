@@ -8,7 +8,7 @@ from .extract_train import extract_embeddings
 from .extract_train import train_model
 import datetime
 from .antispoofing.anti_spoofing import AntiSpoofing
-
+import requests
 
 tz_hcm = datetime.timezone(datetime.timedelta(hours=7))
 
@@ -32,7 +32,13 @@ datasetPath = os.path.sep.join([settings.BASE_DIR, "media\\datasets"])
 user_list = [ f.name for f in os.scandir(datasetPath) if f.is_dir() ]
 
 class FaceDetect(object):
-	def __init__(self):
+	def __init__(self, status_camera):
+		# init camera ip
+		if status_camera == 1:
+			self.camera_ip = "http://192.168.1.43:8080/shot.jpg"
+		elif status_camera == 0:
+			self.camera_ip = 0
+     
 		# initialize data train in file, for initialize variable
 		extract_embeddings.init_data()
 		extract_embeddings.embeddings()
@@ -45,9 +51,11 @@ class FaceDetect(object):
 		self.recognizer = pickle.loads(open(recognizerPath, "rb").read())
 		self.le = pickle.loads(open(lePath, "rb").read())
 
-		# initialize the video stream, then allow the camera sensor to warm up
-		self.vs = VideoStream(src=0)
-		self.vs.start()
+		if self.camera_ip == 0:
+			# initialize the video stream, then allow the camera sensor to warm up
+			self.vs = VideoStream(src=0)
+			self.vs.start()
+   
 		# start the FPS throughput estimator
 		self.fps = FPS()
 		self.fps.start()
@@ -55,23 +63,41 @@ class FaceDetect(object):
 	def __del__(self):
 		# self.vs.stop()
 		self.fps.stop()
-		self.vs.stream.stream.release()
-		# cv2.destroyAllWindows()
+
+		if self.camera_ip == 0:
+			self.vs.stream.stream.release()
+
+		cv2.destroyAllWindows()
 		print("[INFO] destroy all windows...")
 
 	def get_frame(self):
-		# grab the frame from the threaded video stream
-		frame = self.vs.read()
-		frame = cv2.flip(frame,1)
+     	# img_resp = requests.get(self.camera_ip)
+		# img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8)
+		if self.camera_ip == 0:
+			# grab the frame from the threaded video stream
+			frame = self.vs.read()
+		else:
+			try:
+				img_resp = urllib.request.urlopen(self.camera_ip)
+				img_arr = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+				frame = cv2.imdecode(img_arr, -1)
+				frame = imutils.resize(frame, width=1000, height=1800)
+			except Exception as e:
+				print(str(e))
+		
+		frame = cv2.flip(frame, 1)
 
 		AntiSpoofing.anti_spoofing(frame)
 		# init student
 		result ={}
-  
-		# resize the frame to have a width of 600 pixels (while
-		# maintaining the aspect ratio), and then grab the image
-		# dimensions
-		frame = imutils.resize(frame, width=600)
+		try:
+			# resize the frame to have a width of 600 pixels (while
+			# maintaining the aspect ratio), and then grab the image
+			# dimensions
+			frame = imutils.resize(frame, width=600)
+		except Exception as e:
+			print(str(e))
+
 		(h, w) = frame.shape[:2]
 
 		# construct a blob from the image

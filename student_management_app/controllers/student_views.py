@@ -110,8 +110,7 @@ def gen(camera, student_id, attendancer_report_id, request):
         list_obj = datetime_counter(dict_check)
         
         if student_id in [student_id for student_id in list_obj.keys()]:
-            if int(list_obj[student_id]['counter']) > 5:
-                
+            if int(list_obj[student_id]['counter']) > 10:
                 attendance_report_model = AttendanceReport.objects.get(id=attendancer_report_id)
                 attendance_report_model.status = 1
                 attendance_report_model.teacher_create = 0
@@ -121,7 +120,7 @@ def gen(camera, student_id, attendancer_report_id, request):
                 return redirect('student_create_attendance')
         yield (b'--frame\r\n'
                 b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-    
+
 @gzip.gzip_page
 def facecam_feed_student(request):
     attendancer_report_id = request.GET.get('attendancer_report_id')
@@ -132,7 +131,7 @@ def facecam_feed_student(request):
     dict_check.clear()
     try:
         # take frame video stream from client
-        return StreamingHttpResponse(gen(FaceDetect(), student.admin.username, attendancer_report_id, request),
+        return StreamingHttpResponse(gen(FaceDetect(0), student.admin.username, attendancer_report_id, request),
                         content_type='multipart/x-mixed-replace; boundary=frame')
     except:
         # Return an "Internal Server Error" 500 response code.

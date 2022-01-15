@@ -259,7 +259,7 @@ def facecam_feed(request):
     dict_check.clear()
     try:
         # take frame video stream from client
-        return StreamingHttpResponse(gen(FaceDetect()),
+        return StreamingHttpResponse(gen(FaceDetect(1)),
                         content_type='multipart/x-mixed-replace; boundary=frame')
     except:
         # Return an "Internal Server Error" 500 response code.
@@ -294,7 +294,7 @@ def attendance_result_stream(request):
     
     for item in student_subject_link:
         if item["student_id"] in list_obj.keys():
-            if  int(list_obj[item["student_id"]]['counter']) > 3:
+            if  int(list_obj[item["student_id"]]['counter']) > 5:
                 time_in_class = datetime.strptime(list_obj[item["student_id"]]['datetime'], "%m-%d-%Y, %H:%M:%S")
                 
                 print("+++++++++++++" + item["student_id"])

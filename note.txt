@@ -15,3 +15,13 @@ error: (-215:Assertion failed) !ssize.empty() in function 'cv::resize'
 
 Incremental Learning with sklearn: warm_start, partial_fit(), fit()
 partial_fit()
+
+
+
+"<------------------------- ĐỒ ÁN TỐT NGHIỆP ------------------------->"
+Đề tài: "Xây dựng hệ thống nhận dạng khuôn mặt dùng cho điểm danh lớp học trực tuyến"
+
+GVHD: ThS. Trần Trọng Tuyên
+SVTH: - Nguyễn Thành Trung - 17050042
+      - Lê Quang Hướng - 17050036
+<------------------------------------------------------------------------------------->
